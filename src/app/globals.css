@@ -41,3 +41,24 @@ body {
 /*     width: 2rem; */
 /*     height: 2rem; */
 /* } */
+
+.slider-dot {
+    /* all: unset; */
+    display: block;
+    cursor: pointer;
+    width: 1rem;
+    height: 1rem;
+    transition: scale 100ms ease-in-out;
+}
+
+.slider-dot:hover,
+.slider-dot:focus-visible {
+    scale: 1.2;
+}
+
+/* .slider-dot > * { */
+/*     stroke: white; */
+/*     fill: black; */
+/*     height: 100%; */
+/*     width: 100%; */
+/* } */
