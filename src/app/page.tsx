@@ -3,7 +3,7 @@ import Slider from "@/components/Slider";
 import img_plocha from '../assets/slider-plocha.jpg'
 import img_rulo from '../assets/slider-rulo.jpeg'
 import img_turf from '../assets/slider-turf.jpg'
-import img_mat from '../assets/slider-mat.png'
+import img_mat from '../assets/slider-mat.jpg'
 
 const IMAGES = [
     { url: img_plocha, alt: 'Настилка на плоча' },
@@ -16,7 +16,9 @@ const Home = () => {
     return (
         <div>
             <Navbar />
-            <Slider images={IMAGES} />
+            <div className="w-full aspect-[10/3] my-0 mx-auto">
+                <Slider images={IMAGES} />
+            </div>
         </div>
     );
 }

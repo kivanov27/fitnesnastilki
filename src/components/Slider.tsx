@@ -1,16 +1,15 @@
 'use client'
 
 import { useState } from "react";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
-import { RadioButtonChecked } from "@mui/icons-material";
 
 interface SliderProps {
     images: {
-        url: string
+        url: StaticImageData,
         alt: string
     }[]
 }
@@ -45,7 +44,7 @@ const Slider = ({ images }: SliderProps) => {
                         src={url}
                         alt={alt}
                         aria-hidden={index !== i}
-                        className="object-cover w-full h-full block shrink-0 grow-0"
+                        className="slider-img object-cover w-full h-full block shrink-0 grow-0"
                         style={{ translate: `${-100 * index}%` }}
                     />         
                 ))}
@@ -67,7 +66,7 @@ const Slider = ({ images }: SliderProps) => {
                 <ArrowCircleRightIcon aria-hidden />
             </button>
 
-            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex gap-1">
+            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex gap-2">
                 {images.map((_, i) => (
                     <button 
                         key={i}
