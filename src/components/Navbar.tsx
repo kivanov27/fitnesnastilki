@@ -6,7 +6,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 const Navbar = () => {
     return (
-        <div className="flex justify-around items-center">
+        <div className="flex justify-between items-center px-[420px]">
             <div className='border p-10'>
                 logo
             </div>
