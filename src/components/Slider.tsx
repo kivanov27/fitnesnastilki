@@ -6,6 +6,7 @@ import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
+import { useSwipeable } from "react-swipeable";
 
 interface SliderProps {
     images: {
@@ -31,22 +32,46 @@ const Slider = ({ images }: SliderProps) => {
         });
     };
 
+    const handleSwipe = (delta: number) => {
+        if (delta > 0 && index > 0) {
+            setIndex(index - 1);
+        }
+        else if (delta < 0 && index < images.length - 1) {
+            setIndex(index + 1);
+        }
+    };
+
+    const swipeHandlers = useSwipeable({
+        onSwipedLeft: () => handleSwipe(-1),
+        onSwipedRight: () => handleSwipe(1),
+        trackMouse: true,
+    });
+
     return (
         <section
             aria-label="Image Slider"
             className="w-full h-full relative"
         >
-            <div className="w-full h-full flex overflow-hidden">
+            <div {...swipeHandlers} className="w-full h-full flex overflow-hidden">
                 {images.map(({ url, alt}, i) => (
-                    <Image
-                        // key={url}
+                    <div 
                         key={i}
-                        src={url}
-                        alt={alt}
-                        aria-hidden={index !== i}
-                        className="slider-img object-cover w-full h-full block shrink-0 grow-0"
-                        style={{ translate: `${-100 * index}%` }}
-                    />         
+                        style={{
+                            transform: `translateX(${-100 * index}%)`,
+                            transition: "transform 0.3s ease-in-out",
+                            minWidth: "100%",
+                        }}
+                    >
+                        <Image
+                            key={alt}
+                            src={url}
+                            alt={alt}
+                            aria-hidden={index !== i}
+                            className="slider-img object-cover w-full h-full block shrink-0 grow-0"
+                            draggable="false"
+                            // style={{ translate: `${-100 * index}%` }}
+                        />         
+                    </div>
                 ))}
             </div>
 

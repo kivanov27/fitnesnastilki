@@ -1,20 +1,20 @@
 import Image, { StaticImageData } from "next/image";
 
-interface PopularProductsProps {
+interface PopularCategoriesProps {
     images: {
         url: StaticImageData,
         alt: string
     }[]
 }
 
-const PopularProducts = ({ images }: PopularProductsProps) => {
+const PopularCategories = ({ images }: PopularCategoriesProps) => {
     return (
         <div className="pt-24 px-[420px]">
-            <h2 className="mb-12 text-4xl text-center uppercase">Популярни продукти</h2>
-            <div className="flex flex-wrap">
+            <h2 className="mb-12 text-4xl text-center uppercase">Популярни категории</h2>
+            <div className="flex flex-wrap justify-between">
                 {images.map(image => (
                     <div key={image.alt}>
-                        <Image src={image.url} alt={image.alt} className="w-1/4 px-[10px] mb-4 border drop-shadow-md" />
+                        <Image src={image.url} alt={image.alt} className="w-[500px] h-[500px] mb-4 border drop-shadow-md" />
                         <h3 className="text-center uppercase mb-8">{image.alt}</h3>
                     </div>
                 ))}
@@ -23,4 +23,4 @@ const PopularProducts = ({ images }: PopularProductsProps) => {
     );
 };
 
-export default PopularProducts;
+export default PopularCategories;
