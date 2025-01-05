@@ -19,10 +19,10 @@ const Footer = () => {
             <div className="w-1/3 px-12">
                 <h3 className='text-center font-medium text-lg mb-4'>Продукти</h3>
                 <ul className=''>
-                    <li className='list-disc list-inside'>Настилка на плоча</li>
-                    <li className='list-disc list-inside'>Настилка на руло</li>
-                    <li className='list-disc list-inside'>Настилка татами</li>
-                    <li className='list-disc list-inside'>Настилка изкуствена трева</li>
+                    <li className='list-disc list-inside'>Настилки на плоча</li>
+                    <li className='list-disc list-inside'>Настилки на руло</li>
+                    <li className='list-disc list-inside'>Настилки татами</li>
+                    <li className='list-disc list-inside'>Настилки изкуствена трева</li>
                     <li className='list-disc list-inside'>Постелки за фитнес и йога</li>
                     <li className='list-disc list-inside'>Лепило за настилки</li>
                     <li className='list-disc list-inside'>Платформи и подиуми</li>

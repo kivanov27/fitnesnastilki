@@ -33,11 +33,11 @@ const Slider = ({ images }: SliderProps) => {
     };
 
     const handleSwipe = (delta: number) => {
-        if (delta > 0 && index > 0) {
-            setIndex(index - 1);
+        if (delta > 0) {
+            prevImage();
         }
-        else if (delta < 0 && index < images.length - 1) {
-            setIndex(index + 1);
+        else if (delta < 0) {
+            nextImage();
         }
     };
 
