@@ -9,7 +9,7 @@ interface PopularProductsProps {
 
 const PopularProducts = ({ images }: PopularProductsProps) => {
     return (
-        <div className="pt-24 px-[420px]">
+        <div className="pt-24 w-[1080px] mx-auto">
             <h2 className="mb-12 text-4xl text-center uppercase">Популярни продукти</h2>
             <div className="flex flex-wrap">
                 {images.map(image => (
