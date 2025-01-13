@@ -1,9 +1,11 @@
 import Image, { StaticImageData } from "next/image";
+import Link from "next/link";
 
 interface PopularCategoriesProps {
     images: {
         url: StaticImageData,
-        alt: string
+        alt: string,
+        link: string
     }[]
 }
 
@@ -14,7 +16,13 @@ const PopularCategories = ({ images }: PopularCategoriesProps) => {
             <div className="flex flex-wrap justify-between">
                 {images.map(image => (
                     <div key={image.alt}>
-                        <Image src={image.url} alt={image.alt} className="w-[500px] h-[500px] mb-4 border drop-shadow-md" />
+                        <Link href={`/katalog/${image.link}`}>
+                            <Image 
+                                src={image.url} 
+                                alt={image.alt} 
+                                className="w-[500px] h-[500px] mb-4 border drop-shadow-md" 
+                            />
+                        </Link>
                         <h3 className="text-center uppercase mb-8">{image.alt}</h3>
                     </div>
                 ))}

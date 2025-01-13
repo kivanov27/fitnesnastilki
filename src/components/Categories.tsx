@@ -16,7 +16,10 @@ const Categories = ({ images }: CategoriesProps) => {
             <div className="flex flex-wrap justify-between">
                 {images.map(image => (
                     <div key={image.alt}>
-                        <Link href={`/katalog/${image.link}`}>
+                        <Link 
+                            href={`/katalog/${image.link}`}
+                            className="cursor-pointer"
+                        >
                             <Image 
                                 src={image.url} 
                                 alt={image.alt} 

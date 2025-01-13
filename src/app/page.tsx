@@ -34,10 +34,10 @@ const SLIDER_IMAGES = [
 ];
 
 const CATEGORIES_IMAGES = [
-    { url: categories_plate, alt: 'Настилка на плоча' },
-    { url: categories_roll, alt: 'Настилка на руло' },
-    { url: categories_turf, alt: 'Настилка изкуствена трева' },
-    { url: categories_tatami, alt: 'Настилка татами' }
+    { url: categories_plate, alt: 'Настилка на плоча', link: 'plocha' },
+    { url: categories_roll, alt: 'Настилка на руло', link: 'rulo' },
+    { url: categories_turf, alt: 'Настилка изкуствена трева', link: 'izkustvena-treva' },
+    { url: categories_tatami, alt: 'Настилка татами', link: 'postelki' }
 ];
 
 const POPULAR_PRODUCTS = [
