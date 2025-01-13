@@ -11,7 +11,7 @@ interface CategoriesProps {
 
 const Categories = ({ images }: CategoriesProps) => {
     return (
-        <div className="pt-24 w-[1080px] mx-auto">
+        <div className="pt-24 w-[75rem] mx-auto">
             <h2 className="mb-12 text-4xl text-center uppercase">Kатегории</h2>
             <div className="flex flex-wrap justify-between">
                 {images.map(image => (
@@ -19,11 +19,13 @@ const Categories = ({ images }: CategoriesProps) => {
                         <Link 
                             href={`/katalog/${image.link}`}
                             className="cursor-pointer"
+                            draggable="false"
                         >
                             <Image 
                                 src={image.url} 
                                 alt={image.alt} 
-                                className="w-[500px] h-[500px] mb-4 border drop-shadow-md" 
+                                className="w-[35rem] h-[35rem] mb-4 border drop-shadow-md" 
+                                draggable="false"
                             />
                         </Link>
                         <h3 className="text-center mb-8">

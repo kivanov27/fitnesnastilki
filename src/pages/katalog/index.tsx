@@ -1,6 +1,7 @@
 import '../../app/globals.css'
 import Navbar from "@/components/Navbar";
 import Categories from '@/components/Categories';
+import Footer from '@/components/Footer';
 
 import plate from '../../assets/categories/plate.jpg';
 import roll from '../../assets/categories/roll.jpg';
@@ -21,9 +22,10 @@ const CATEGORY_IMAGES = [
 
 const Catalogue = () => {
     return (
-        <div>
+        <div className='bg-gray-200'>
             <Navbar />
             <Categories images={CATEGORY_IMAGES} />
+            <Footer />
         </div>
     );
 };

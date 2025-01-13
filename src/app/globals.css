@@ -25,6 +25,7 @@ body {
 
 .slider-btn {
     /* all: unset; */
+    color: white;
     display: block;
     position: absolute;
     top: 0;
@@ -40,8 +41,8 @@ body {
 }
 
 .slider-btn > * {
-    /* stroke: white; */
-    /* fill: black; */
+    /* stroke: black; */
+    /* fill: white; */
     width: 2rem;
     height: 2rem;
 }
@@ -53,6 +54,7 @@ body {
 
 .slider-dot {
     /* all: unset; */
+    color: white;
     display: block;
     cursor: pointer;
     width: 1rem;
@@ -70,4 +72,9 @@ body {
     /* fill: black; */
     height: 100%;
     width: 100%;
+}
+
+.footer-li::before {
+    content: '›';
+    margin-right: 1rem;
 }
