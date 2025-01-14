@@ -15,9 +15,26 @@ const Navbar = () => {
                 </div>
 
                 <div className='flex justify-between gap-x-14'>
-                    <Link href="/" className='cursor-pointer hover:scale-110 transition duration-150 ease-in-out'>Начало</Link>
-                    <Link href="/katalog" className='cursor-pointer hover:scale-110 transition duration-150 ease-in-out'>Каталог</Link>
-                    <div className='cursor-pointer hover:scale-110 transition duration-150 ease-in-out'>За Нас</div>
+                    <Link 
+                        href="/" 
+                        className='nav-btn relative cursor-pointer text-2xl hover:text-primary duration-300'
+                    >
+                        Начало
+                        <div className='nav-btn-underline' />
+                    </Link>
+                    <Link 
+                        href="/katalog" 
+                        className='nav-btn relative cursor-pointer text-2xl hover:text-primary'
+                    >
+                        Каталог
+                        <div className='nav-btn-underline' />
+                    </Link>
+                    <div 
+                        className='nav-btn relative cursor-pointer text-2xl hover:text-primary'
+                    >
+                        За Нас
+                        <div className='nav-btn-underline' />
+                    </div>
                 </div>
 
                 <div className='flex justify-between gap-x-6'>
