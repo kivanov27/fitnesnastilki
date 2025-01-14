@@ -2,6 +2,7 @@ import '../../app/globals.css'
 import Navbar from "@/components/Navbar";
 import Categories from '@/components/Categories';
 import Footer from '@/components/Footer';
+import { Montserrat } from 'next/font/google';
 
 import plate from '../../assets/categories/plate.jpg';
 import roll from '../../assets/categories/roll.jpg';
@@ -9,6 +10,11 @@ import tatami from '../../assets/categories/tatami.jpg';
 import grass from '../../assets/categories/turf.jpg';
 import mat from '../../assets/categories/mat.jpg';
 import platform from '../../assets/categories/platform.jpg';
+
+const montserrat = Montserrat({
+    variable: "--font-montserrat",
+    subsets: ["latin", "cyrillic"]
+});
 
 const CATEGORY_IMAGES = [
     { url: plate, alt: 'Настилки на плоча', link: 'plocha' },
@@ -22,7 +28,7 @@ const CATEGORY_IMAGES = [
 
 const Catalogue = () => {
     return (
-        <div className='bg-gray-200'>
+        <div className={`${montserrat.className} bg-gray-200`}>
             <Navbar />
             <Categories images={CATEGORY_IMAGES} />
             <Footer />
