@@ -13,18 +13,18 @@ import categories_roll from '../assets/categories/roll.jpg';
 import categories_turf from '../assets/categories/turf.jpg';
 import categories_tatami from '../assets/categories/tatami.jpg';
 
-import plate_black_100x100x2cm from '../assets/plates/black-100x100x2cm.jpg';
-import plate_darkGray_100x100x2cm from '../assets/plates/darkGray-100x100x2cm.png';
-import roll_epdmBlue_6mm from '../assets/rolls/epdm-blue-6mm.jpg';
-import roll_epdmYellow_6mm from '../assets/rolls/epdm-yellow-6mm.jpg';
-import roll_sbrm_10mm from '../assets/rolls/sbr-10mm.jpg';
-import grass_plate_50x50x2cm from '../assets/grass/grass-50x50x2cm.jpg';
-import grass_plate_98x98x2cm from '../assets/grass/grass-98x98x2cm.jpg';
-import grassGreen_plate_98x98x2cm from '../assets/grass/grassGreen-98x98x2cm.jpg';
-import tatami_100x100x25mm from '../assets/tatami/tatami-100x100x2,5cm.jpg';
-import tatami_wood_100x100x25mm from '../assets/tatami/tatami-wood-100x100x2,5cm.jpg';
-import mat_aerobics_15mm from '../assets/mats/aerobics-15mm.jpg';
-import mat_yoga_purple_6mm from '../assets/mats/yoga-purple-6mm.jpg';
+import plate_black_100x100x2cm from '../assets/plates/black-100x100x2cm/1.jpg';
+import plate_darkGray_100x100x2cm from '../assets/plates/darkGray-100x100x2cm/1.png';
+import roll_epdmBlue_6mm from '../assets/rolls/epdm-blue-6mm/1.jpg';
+import roll_epdmYellow_6mm from '../assets/rolls/epdm-yellow-6mm/1.jpg';
+import roll_sbrm_10mm from '../assets/rolls/sbr-10mm/1.jpg';
+import grass_plate_50x50x2cm from '../assets/grass/grass-50x50x2cm/1.jpg';
+import grass_plate_98x98x2cm from '../assets/grass/grass-98x98x2cm/1.jpg';
+import grassGreen_plate_98x98x2cm from '../assets/grass/grassGreen-98x98x2cm/1.jpg';
+import tatami_100x100x25mm from '../assets/tatami/tatami-100x100x2,5cm/1.jpg';
+import tatami_wood_100x100x25mm from '../assets/tatami/tatami-wood-100x100x2,5cm/1.jpg';
+import mat_aerobics_15mm from '../assets/mats/aerobics-15mm/1.jpg';
+import mat_yoga_purple_6mm from '../assets/mats/yoga-purple-6mm/1.jpg';
 
 const SLIDER_IMAGES = [
     { url: slider_plate, alt: 'Настилка на плоча' },

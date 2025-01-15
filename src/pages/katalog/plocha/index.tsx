@@ -6,11 +6,11 @@ import { Breadcrumbs, Typography } from "@mui/material";
 import Link from "next/link";
 import { Montserrat } from "next/font/google";
 
-import black_100x100x2cm from '../../../assets/plates/black-100x100x2cm.jpg';
-import black_100x100x15mm from '../../../assets/plates/black-100x100x1,5cm.jpg';
-import darkGray_100x100x2cm from '../../../assets/plates/darkGray-100x100x2cm.png';
-import black_100x50x2cm from '../../../assets/plates/black-100x50x2cm.jpg';
-import darkGray_100x50x2cm from '../../../assets/plates/darkGray-100x50x2cm.jpg';
+import black_100x100x2cm from '../../../assets/plates/black-100x100x2cm/1.jpg';
+import black_100x100x15mm from '../../../assets/plates/black-100x100x1,5cm/1.jpg';
+import darkGray_100x100x2cm from '../../../assets/plates/darkGray-100x100x2cm/1.png';
+import black_100x50x2cm from '../../../assets/plates/black-100x50x2cm/1.jpg';
+import darkGray_100x50x2cm from '../../../assets/plates/darkGray-100x50x2cm/1.jpg';
 import Footer from "@/components/Footer";
 
 const montserrat = Montserrat({
