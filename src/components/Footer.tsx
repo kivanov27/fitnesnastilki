@@ -1,10 +1,11 @@
 import StoreIcon from '@mui/icons-material/Store';
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
+import Link from 'next/link';
 
 const Footer = () => {
     return (
-        <div className="mt-24 py-8 bg-gray-600 text-white">
+        <div className="mt-24 py-8 bg-primary text-white">
             <div className='w-[75rem] mx-auto flex'>
 
                 <div className="w-1/3">
@@ -20,13 +21,41 @@ const Footer = () => {
                 <div className="w-1/3">
                     <h3 className='font-medium text-lg mb-4 underline underline-offset-8'>Продукти</h3>
                     <ul className=''>
-                        <li className='footer-li'>Настилки на плоча</li>
-                        <li className='footer-li'>Настилки на руло</li>
-                        <li className='footer-li'>Настилки татами</li>
-                        <li className='footer-li'>Настилки изкуствена трева</li>
-                        <li className='footer-li'>Постелки за фитнес и йога</li>
-                        <li className='footer-li'>Лепило за настилки</li>
-                        <li className='footer-li'>Платформи и подиуми</li>
+                        <li className='footer-li'>
+                            <Link href='/katalog/plocha' className='hover:text-gray-300'>
+                                Настилки на плоча
+                            </Link>
+                        </li>
+                        <li className='footer-li'>
+                            <Link href='/katalog/rulo' className='hover:text-gray-300'>
+                                Настилки на руло
+                            </Link>
+                        </li>
+                        <li className='footer-li'>
+                            <Link href='/katalog/tatami' className='hover:text-gray-300'>
+                                Настилки татами
+                            </Link>
+                        </li>
+                        <li className='footer-li'>
+                            <Link href='/katalog/izkustvena-treva' className='hover:text-gray-300'>
+                                Настилки изкуствена трева
+                            </Link>
+                        </li>
+                        <li className='footer-li'>
+                            <Link href="/katalog/postelki" className='hover:text-gray-300'>
+                                Постелки за фитнес и йога
+                            </Link>
+                        </li>
+                        <li className='footer-li'>
+                            <Link href='/katalog/lepilo' className='hover:text-gray-300'>
+                                Лепило за настилки
+                            </Link>
+                        </li>
+                        <li className='footer-li'>
+                            <Link href='/katalog/platformi-podiumi' className='hover:text-gray-300'>
+                                Платформи и подиуми
+                            </Link>
+                        </li>
                     </ul>
                 </div>
 

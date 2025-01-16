@@ -12,7 +12,7 @@ interface PopularCategoriesProps {
 const PopularCategories = ({ images }: PopularCategoriesProps) => {
     return (
         <div className="pt-24 w-[75rem] mx-auto">
-            <h2 className="mb-12 text-4xl text-center uppercase">Популярни категории</h2>
+            <h2 className="mb-12 text-4xl text-center uppercase text-primary">Популярни категории</h2>
             <div className="flex flex-wrap justify-between">
                 {images.map(image => (
                     <div key={image.alt}>
