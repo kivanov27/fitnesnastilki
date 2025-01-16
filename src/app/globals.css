@@ -93,8 +93,9 @@ body {
 }
 
 .footer-li::before {
-    content: '›';
-    margin-right: 1rem;
+    /* content: '›'; */
+    content: '•';
+    margin-right: 0.5rem;
 }
 
 .addToCart-btn:hover {

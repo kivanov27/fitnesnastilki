@@ -19,11 +19,11 @@ const montserrat = Montserrat({
 });
 
 const PRODUCTS = [
-    { url: black_100x100x2cm, name: 'Гумена Настилка - Плоча 100х100х2 см', price: 90.00, discount: 22, link: '' },
-    { url: black_100x100x15mm, name: 'Гумена Настилка - Плоча 100х100х1.5 см', price: 85.00, discount: 19, link: '' },
-    { url: darkGray_100x100x2cm, name: 'Гумена Настилка - Плоча 100х100х2 см, Тъмно Сив', price: 100.00, discount: 20, link: '' },
-    { url: black_100x50x2cm, name: 'Гумена Настилка - Плоча 100х50х2 см', price: 45, discount: 22, link: '' },
-    { url: darkGray_100x50x2cm, name: 'Гумена Настилка - Плоча 100х50х2 см', price: 45, discount: 0, link: '' },
+    { url: black_100x100x2cm, name: 'Гумена Настилка - Плоча 100х100х2 см', price: 90.00, discount: 22, link: 'gumena-plocha-100x100x2cm' },
+    { url: black_100x100x15mm, name: 'Гумена Настилка - Плоча 100х100х1.5 см', price: 85.00, discount: 19, link: 'gumena-plocha-100x100x1,5cm' },
+    { url: darkGray_100x100x2cm, name: 'Гумена Настилка - Плоча 100х100х2 см, Тъмно Сив', price: 100.00, discount: 20, link: 'gumena-plocha-100x100x2cm-siv' },
+    { url: black_100x50x2cm, name: 'Гумена Настилка - Плоча 100х50х2 см', price: 45, discount: 22, link: 'gumena-plocha-100x50x2cm' },
+    { url: darkGray_100x50x2cm, name: 'Гумена Настилка - Плоча 100х50х2 см, Тъмно Сив', price: 45, discount: 0, link: 'gumena-plocha-100x50x2cm-siv' },
 ];
 
 const Plocha = () => {
@@ -35,7 +35,7 @@ const Plocha = () => {
                 className="w-[75rem] mx-auto"
                 sx={{ marginX: 'auto', marginY: '2rem' }}
             >
-                <Link href="/katalog" className="hover:underline">
+                <Link href="/katalog" className="hover:underline hover:text-primary">
                     Каталог
                 </Link>
                 <Typography sx={{ fontWeight: '600' }}>Настилки на плоча</Typography>
