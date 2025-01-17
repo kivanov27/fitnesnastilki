@@ -1,9 +1,41 @@
+// remove if no copy functionality
+'use client'
+
+import Link from 'next/link';
 import StoreIcon from '@mui/icons-material/Store';
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
-import Link from 'next/link';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 const Footer = () => {
+    const copyText = (target: EventTarget | null) => {
+        if (target instanceof HTMLElement) {
+            const text = target.textContent;
+            if (text) {
+                navigator.clipboard.writeText(text);
+            }
+
+            if (text == 'fitnesnastilki@gmail.com') {
+                const element = document.querySelector('.email-copy');
+                if (element) {
+                    element.setAttribute('style', 'opacity: 0.9');
+                    setTimeout(() => {
+                        element.setAttribute('style', 'opacity: 0');
+                    }, 1500);
+                }
+            }
+            else {
+                const element = document.querySelector('.tel-copy');
+                if (element) {
+                    element.setAttribute('style', 'opacity: 0.9');
+                    setTimeout(() => {
+                        element.setAttribute('style', 'opacity: 0');
+                    }, 1500);
+                }
+            }
+        }
+    };
+
     return (
         <div className="mt-24 py-8 bg-primary text-white">
             <div className='w-[75rem] mx-auto flex'>
@@ -61,17 +93,25 @@ const Footer = () => {
 
                 <div className="w-1/3">
                     <h3 className='font-medium text-lg mb-4 underline underline-offset-8'>Контакти</h3>
-                    <div className='flex items-center gap-x-4 mb-2'>
+                    <div className='relative flex items-center gap-x-4 mb-2'>
                         <EmailIcon />
-                        <span>fitnesnastilki@gmail.com</span>
+                        <span className='cursor-pointer' onClick={({ target }) => copyText(target)}>fitnesnastilki@gmail.com</span>
+                        <span className='email-copy absolute bottom-8 bg-gray-950 p-2 rounded-lg opacity-0 transition-opacity duration-500 ease-in-out'>
+                            <ContentCopyIcon />
+                            Копирано
+                        </span>
                     </div>
-                    <div className='flex items-center gap-x-4 mb-2'>
+                    <div className='relative flex items-center gap-x-4 mb-2'>
                         <PhoneIcon />
-                        <span>0878150520</span>
+                        <span className='cursor-pointer' onClick={({ target }) => copyText(target)}>0878150520</span>
+                        <span className='tel-copy absolute bottom-8 bg-gray-950 p-2 rounded-lg opacity-0 transition-opacity duration-500 ease-in-out'>
+                            <ContentCopyIcon />
+                            Копирано
+                        </span>
                     </div>
                     <div className='flex items-center gap-x-4'>
                         <StoreIcon />
-                        <a href='' className='cursor-pointer'>olx: фитнес настилки</a>
+                        <Link href='' className='hover:text-gray-300'>olx: фитнес настилки</Link>
                     </div>
                 </div>
 
