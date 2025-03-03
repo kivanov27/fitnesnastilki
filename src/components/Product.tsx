@@ -1,20 +1,14 @@
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@mui/material";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { Product as ProductType } from "@/types";
 
 interface ProductProps {
-    product: {
-        url: StaticImageData,
-        name: string,
-        price: number,
-        discount: number,
-        link: string
-    },
-    i: number
+    product: ProductType;
 }
 
-const Product = ({ product, i }: ProductProps) => {
+const Product = ({ product }: ProductProps) => {
     return (
         <div 
             key={product.name}
@@ -28,8 +22,10 @@ const Product = ({ product, i }: ProductProps) => {
                 }
                 <Link href={`/katalog/plocha/${product.link}`} className='border border-gray-100'>
                     <Image
-                        src={product.url}
+                        src={product.image1}
                         alt={product.name}
+                        width={500}
+                        height={500}
                         draggable="false"
                     />
                 </Link>

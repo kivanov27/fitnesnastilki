@@ -1,22 +1,16 @@
 import '../app/globals.css';
-import { StaticImageData } from "next/image";
 import Product from './Product';
+import { Product as ProductType } from '@/types';
 
 interface ProductsProps {
-    products: {
-        url: StaticImageData,
-        name: string,
-        price: number,
-        discount: number,
-        link: string,
-    }[],
+    products: ProductType[];
 }
 
 const Products = ({ products }: ProductsProps) => {
     return (
         <div className="w-[57.5rem] flex flex-wrap gap-y-[0.625rem] text-sm">
-            {products.map((product, i) => (
-                <Product product={product} i={i} />
+            {products.map((product) => (
+                <Product product={product} key={product.name} />
             ))}
         </div>
     );

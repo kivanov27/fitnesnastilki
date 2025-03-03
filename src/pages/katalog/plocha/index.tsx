@@ -5,13 +5,16 @@ import Products from "@/components/Products";
 import { Breadcrumbs, Typography } from "@mui/material";
 import Link from "next/link";
 import { Montserrat } from "next/font/google";
-
 import black_100x100x2cm from '../../../assets/plates/black-100x100x2cm/1.jpg';
 import black_100x100x15mm from '../../../assets/plates/black-100x100x1,5cm/1.jpg';
 import darkGray_100x100x2cm from '../../../assets/plates/darkGray-100x100x2cm/1.png';
 import black_100x50x2cm from '../../../assets/plates/black-100x50x2cm/1.jpg';
 import darkGray_100x50x2cm from '../../../assets/plates/darkGray-100x50x2cm/1.jpg';
 import Footer from "@/components/Footer";
+import { Product } from '@/types';
+
+// remove if not using
+import { useEffect, useState } from 'react';
 
 const montserrat = Montserrat({
     variable: "--font-montserrat",
@@ -27,6 +30,15 @@ const PRODUCTS = [
 ];
 
 const Plocha = () => {
+    const [products, setProducts] = useState<Product[]>([]);
+
+    useEffect(() => {
+        fetch('/api/products', { method: 'GET' })
+            .then(res => res.json())
+            .then(data => setProducts(data))
+            .catch(err => console.error('Error fetching products:', err));
+    }, []);
+
     return (
         <div className={`${montserrat.className}`}>
             <Navbar />
@@ -43,7 +55,7 @@ const Plocha = () => {
 
             <div className="flex justify-center w-[75rem] mx-auto">
                 <Sidebar />
-                <Products products={PRODUCTS} />
+                <Products products={products} />
             </div>
             <Footer />
         </div>
