@@ -8,7 +8,6 @@ import { Montserrat } from "next/font/google";
 import Footer from "@/components/Footer";
 import { Product } from '@/types';
 
-// remove if not using
 import { useEffect, useState } from 'react';
 
 const montserrat = Montserrat({
@@ -16,7 +15,7 @@ const montserrat = Montserrat({
     subsets: ["latin", "cyrillic"]
 });
 
-const Plocha = () => {
+const Rulo = () => {
     const [products, setProducts] = useState<Product[]>([]);
 
     useEffect(() => {
@@ -37,7 +36,7 @@ const Plocha = () => {
                 <Link href="/katalog" className="hover:underline hover:text-primary">
                     Каталог
                 </Link>
-                <Typography sx={{ fontWeight: '600' }}>Настилки на плоча</Typography>
+                <Typography sx={{ fontWeight: '600' }}>Настилки на руло</Typography>
             </Breadcrumbs>
 
             <div className="flex justify-center w-[75rem] mx-auto">
@@ -49,4 +48,4 @@ const Plocha = () => {
     );
 };
 
-export default Plocha;
+export default Rulo;
