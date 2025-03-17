@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import '../../../app/globals.css';
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
@@ -7,9 +8,6 @@ import Link from "next/link";
 import { Montserrat } from "next/font/google";
 import Footer from "@/components/Footer";
 import { Product } from '@/types';
-
-// remove if not using
-import { useEffect, useState } from 'react';
 
 const montserrat = Montserrat({
     variable: "--font-montserrat",

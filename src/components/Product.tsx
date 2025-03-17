@@ -20,17 +20,17 @@ const Product = ({ product }: ProductProps) => {
                         -{product.discount}%
                     </div>
                 }
-                <Link href={`/katalog/plocha/${product.link}`} className='border border-gray-100'>
+                <Link href={`/katalog/plocha/${product.link}`} className='border border-gray-100 w-48 h-48 min-w-48 min-h-48 max-w-48 max-h-48'>
                     <Image
                         src={product.image1}
                         alt={product.name}
-                        width={500}
-                        height={500}
+                        width={200}
+                        height={200}
                         draggable="false"
                     />
                 </Link>
-                <Link href=''>
-                    <p className="font-medium hover:text-gray-600">
+                <Link href={`/katalog/plocha/${product.link}`}>
+                    <p className="font-medium hover:text-gray-600 h-14">
                         {product.name}
                     </p>
                 </Link>

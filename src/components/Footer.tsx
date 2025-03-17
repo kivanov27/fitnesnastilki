@@ -95,7 +95,12 @@ const Footer = () => {
                     <h3 className='font-medium text-lg mb-4 underline underline-offset-8'>Контакти</h3>
                     <div className='relative flex items-center gap-x-4 mb-2'>
                         <EmailIcon />
-                        <span className='cursor-pointer' onClick={({ target }) => copyText(target)}>fitnesnastilki@gmail.com</span>
+                        <span 
+                            className='cursor-pointer hover:text-gray-300' 
+                            onClick={({ target }) => copyText(target)}
+                        >
+                            fitnesnastilki@gmail.com
+                        </span>
                         <span className='email-copy absolute bottom-8 bg-gray-950 p-2 rounded-lg opacity-0 transition-opacity duration-500 ease-in-out'>
                             <ContentCopyIcon />
                             Копирано
@@ -103,7 +108,7 @@ const Footer = () => {
                     </div>
                     <div className='relative flex items-center gap-x-4 mb-2'>
                         <PhoneIcon />
-                        <span className='cursor-pointer' onClick={({ target }) => copyText(target)}>0878150520</span>
+                        <span className='cursor-pointer hover:text-gray-300' onClick={({ target }) => copyText(target)}>0878150520</span>
                         <span className='tel-copy absolute bottom-8 bg-gray-950 p-2 rounded-lg opacity-0 transition-opacity duration-500 ease-in-out'>
                             <ContentCopyIcon />
                             Копирано

@@ -56,8 +56,6 @@ const POPULAR_PRODUCTS = [
 ];
 
 const Home = () => {
-    console.log(process.memoryUsage()); // remove when done
-
     return (
         <div>
             <Navbar />
