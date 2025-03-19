@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from "react";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
@@ -9,25 +9,25 @@ import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
 import { useSwipeable } from "react-swipeable";
 
 interface SliderProps {
-    images: {
-        url: StaticImageData,
-        alt: string
+    slides: {
+        image: string,
+        text: string
     }[]
 }
 
-const Slider = ({ images }: SliderProps) => {
+const Slider = ({ slides }: SliderProps) => {
     const [index, setIndex] = useState<number>(0);
 
     const nextImage = () => {
         setIndex(i => {
-            if (i === images.length - 1) return 0;
+            if (i === slides.length - 1) return 0;
             return i + 1;
         });
     };
 
     const prevImage = () => {
         setIndex(i => {
-            if (i === 0) return images.length - 1;
+            if (i === 0) return slides.length - 1;
             return i - 1;
         });
     };
@@ -53,7 +53,7 @@ const Slider = ({ images }: SliderProps) => {
             className="w-full h-full relative"
         >
             <div {...swipeHandlers} className="w-full h-full flex overflow-hidden">
-                {images.map(({ url, alt}, i) => (
+                {slides.map(({ image, text}, i) => (
                     <div 
                         key={i}
                         style={{
@@ -63,9 +63,11 @@ const Slider = ({ images }: SliderProps) => {
                         }}
                     >
                         <Image
-                            key={alt}
-                            src={url}
-                            alt={alt}
+                            key={text}
+                            src={image}
+                            alt={text}
+                            width={1920}
+                            height={600}
                             aria-hidden={index !== i}
                             className="slider-img object-cover w-full h-full block shrink-0 grow-0"
                             draggable="false"
@@ -92,7 +94,7 @@ const Slider = ({ images }: SliderProps) => {
             </button>
 
             <div className="absolute bottom-2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex gap-2">
-                {images.map((_, i) => (
+                {slides.map((_, i) => (
                     <button 
                         key={i}
                         className="slider-dot"

@@ -1,31 +1,31 @@
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 
 interface PopularProductsProps {
-    images: {
-        url: StaticImageData,
-        alt: string
+    products: {
+        name: string,
+        image1: string
     }[]
 }
 
-const PopularProducts = ({ images }: PopularProductsProps) => {
+const PopularProducts = ({ products }: PopularProductsProps) => {
     return (
         <div className="pt-24 w-[75rem] mx-auto">
             <h2 className="mb-12 text-4xl text-center uppercase text-primary">Популярни продукти</h2>
             <div className="flex flex-wrap justify-between">
-                {images.map(image => (
+                {products.map(product => (
                     <div 
-                        key={image.alt}
+                        key={product.name}
                         className="w-[24%]"
                     >
                         <Image 
-                            src={image.url} 
-                            alt={image.alt} 
+                            src={product.image1} 
+                            alt={product.name} 
                             className="min-h-[288px] mb-4 border border-gray-400 drop-shadow-md" 
                             draggable="false"
-                            // width={250}
-                            // height={250}
+                            width={288}
+                            height={288}
                         />
-                        <h3 className="text-center mb-8">{image.alt}</h3>
+                        <h3 className="text-center mb-8">{product.name}</h3>
                     </div>
                 ))}
             </div>

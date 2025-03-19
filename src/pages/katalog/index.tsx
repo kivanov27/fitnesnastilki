@@ -4,33 +4,29 @@ import Categories from '@/components/Categories';
 import Footer from '@/components/Footer';
 import { Montserrat } from 'next/font/google';
 
-import plate from '../../assets/categories/plate.jpg';
-import roll from '../../assets/categories/roll.jpg';
-import tatami from '../../assets/categories/tatami.jpg';
-import grass from '../../assets/categories/turf.jpg';
-import mat from '../../assets/categories/mat.jpg';
-import platform from '../../assets/categories/platform.jpg';
-
 const montserrat = Montserrat({
     variable: "--font-montserrat",
     subsets: ["latin", "cyrillic"]
 });
 
-const CATEGORY_IMAGES = [
-    { url: plate, alt: 'Настилки на плоча', link: 'plocha' },
-    { url: roll, alt: 'Настилки на руло', link: 'rulo' },
-    { url: tatami, alt: 'Настилки татами', link: 'tatami' },
-    { url: grass, alt: 'Настилки изкуствена трева', link: 'izkustvena-treva' },
-    { url: mat, alt: 'Постелки за фитнес и йога', link: 'postelki' },
-    { url: platform, alt: 'Платформи и подиуми', link: 'platformi-podiumi' },
-    // { url: glue, alt: 'Лепило за настилки', link: 'lepilo' },
-];
+export async function getServerSideProps() {
+    try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/categories`);
+        if (!res.ok) throw new Error('Failed to fetch categories.');
+        const categories = await res.json();
+        return { props: { categories } };
+    }
+    catch (error) {
+        console.error(error);
+        return { props: { categories: [] } };
+    }
+}
 
-const Catalogue = () => {
+const Catalogue = ({ categories }: { categories: any[] }) => {
     return (
         <div className={`${montserrat.className} bg-gray-200`}>
             <Navbar />
-            <Categories images={CATEGORY_IMAGES} />
+            <Categories categories={categories} />
             <Footer />
         </div>
     );
