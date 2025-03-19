@@ -4,10 +4,10 @@ import PopularCategories from "@/components/PopularCategories";
 import PopularProducts from "@/components/PopularProducts";
 import Footer from "@/components/Footer";
 
-import slider_plate from '../assets/slider/plate.jpg';
-import slider_roll from '../assets/slider/roll.jpeg';
-import slider_turf from '../assets/slider/turf.jpg';
-import slider_mat from '../assets/slider/mat.jpg';
+// import slider_plate from '../assets/slider/plate.jpg';
+// import slider_roll from '../assets/slider/roll.jpeg';
+// import slider_turf from '../assets/slider/turf.jpg';
+// import slider_mat from '../assets/slider/mat.jpg';
 import categories_plate from '../assets/categories/plate.jpg';
 import categories_roll from '../assets/categories/roll.jpg';
 import categories_turf from '../assets/categories/turf.jpg';
@@ -26,12 +26,12 @@ import tatami_wood_100x100x25mm from '../assets/tatami/tatami-wood-100x100x2,5cm
 import mat_aerobics_15mm from '../assets/mats/aerobics-15mm/1.jpg';
 import mat_yoga_purple_6mm from '../assets/mats/yoga-purple-6mm/1.jpg';
 
-const SLIDER_IMAGES = [
-    { url: slider_plate, alt: 'Настилка на плоча' },
-    { url: slider_roll, alt: 'Настилка на руло' },
-    { url: slider_turf, alt: 'Настилка изкуствена трева' },
-    { url: slider_mat, alt: 'Постелки за фитнес и йога' }
-];
+// const SLIDER_IMAGES = [
+//     { url: slider_plate, alt: 'Настилка на плоча' },
+//     { url: slider_roll, alt: 'Настилка на руло' },
+//     { url: slider_turf, alt: 'Настилка изкуствена трева' },
+//     { url: slider_mat, alt: 'Постелки за фитнес и йога' }
+// ];
 
 const CATEGORIES_IMAGES = [
     { url: categories_plate, alt: 'Настилка на плоча', link: 'plocha' },
@@ -55,12 +55,21 @@ const POPULAR_PRODUCTS = [
     { url: mat_yoga_purple_6mm, alt: 'Постелка за Йога 0,6 см - Лилав' }
 ];
 
-const Home = () => {
+const getSliderData = async () => {
+    const res = await fetch(`${process.env.BASE_URL}/api/slider`);
+    if (!res.ok) throw new Error("Failed to fetch slider data");
+    return res.json()
+}
+
+const Home = async () => {
+    const sliderData = await getSliderData();
+    console.log(sliderData);
+
     return (
         <div>
             <Navbar />
             <div className="w-full aspect-[10/3] my-0 mx-auto">
-                <Slider images={SLIDER_IMAGES} />
+                {/* <Slider images={SLIDER_IMAGES} /> */}
             </div>
             <PopularCategories images={CATEGORIES_IMAGES} />
             <PopularProducts images={POPULAR_PRODUCTS} />

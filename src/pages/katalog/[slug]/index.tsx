@@ -26,7 +26,7 @@ const Category = () => {
     useEffect(() => {
         async function fetchProducts() {
             try {
-                const res = await fetch(`api/products/category/${slug}`);
+                const res = await fetch(`/api/products/category/${slug}`);
                 if (!res.ok) throw new Error("Couldn't fetch products");
 
                 const data = await res.json();
