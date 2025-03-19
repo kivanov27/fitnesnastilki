@@ -1,4 +1,3 @@
-
 "use client"
 
 import Image from "next/image";
@@ -8,14 +7,17 @@ import { Product } from "@/types";
 
 const ProductPage = () => {
     const params = useParams();
-    const slug = params?.slug;
+    const categorySlug = params?.slug;
+    const productSlug = params?.productSlug;
     const [product, setProduct] = useState<Product | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         async function fetchProduct() {
+            if (!categorySlug || !productSlug) return;
+
             try {
-                const res = await fetch(`/api/products/${slug}`);
+                const res = await fetch(`/api/products/${categorySlug}/${productSlug}`);
                 if (!res.ok) throw new Error("Product not found");
                 
                 const data = await res.json();
@@ -27,8 +29,8 @@ const ProductPage = () => {
             }
         }
 
-        if (slug) fetchProduct()
-    }, [slug]);
+        fetchProduct();
+    }, [categorySlug, productSlug]);
 
     if (loading) return <p>Loading...</p>;
     if (!product) return <p>Product not found.</p>
