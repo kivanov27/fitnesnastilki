@@ -7,17 +7,16 @@ import { Product } from "@/types";
 
 const ProductPage = () => {
     const params = useParams();
-    const categorySlug = params?.slug;
-    const productSlug = params?.productSlug;
+    const slug = params?.productSlug;
     const [product, setProduct] = useState<Product | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         async function fetchProduct() {
-            if (!categorySlug || !productSlug) return;
+            if (!slug) return;
 
             try {
-                const res = await fetch(`/api/products/${categorySlug}/${productSlug}`);
+                const res = await fetch(`/api/products/${slug}`);
                 if (!res.ok) throw new Error("Product not found");
                 
                 const data = await res.json();
@@ -30,7 +29,7 @@ const ProductPage = () => {
         }
 
         fetchProduct();
-    }, [categorySlug, productSlug]);
+    }, [slug]);
 
     if (loading) return <p>Loading...</p>;
     if (!product) return <p>Product not found.</p>
