@@ -1,9 +1,18 @@
 "use client"
 
-import Image from "next/image";
+import "../../../app/globals.css";
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { Product } from "@/types";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import ProductView from "@/components/ProductView";
+import { Montserrat } from 'next/font/google';
+
+const montserrat = Montserrat({
+    variable: "--font-montserrat",
+    subsets: ["latin", "cyrillic"]
+});
 
 const ProductPage = () => {
     const params = useParams();
@@ -35,14 +44,10 @@ const ProductPage = () => {
     if (!product) return <p>Product not found.</p>
 
     return (
-        <div>
-            <p>{product.name} | {product.id}</p>
-            <Image 
-                src={product.image1} 
-                alt={product.name} 
-                width={500}
-                height={500}
-            />
+        <div className={`${montserrat.className} bg-gray-200`}>
+            <Navbar />
+            <ProductView product={product} />
+            <Footer />
         </div>
     );
 };

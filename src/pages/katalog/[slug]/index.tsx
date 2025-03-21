@@ -23,6 +23,23 @@ const Category = () => {
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
+    const renderBreadcrumb = () => {
+        switch (slug) {
+            case "plocha":
+                return <Typography sx={{ fontWeight: '600' }}>Настилки на плоча</Typography>;
+            case "rulo":
+                return <Typography sx={{ fontWeight: '600' }}>Настилки на руло</Typography>;
+            case "izkustvena-treva":
+                return <Typography sx={{ fontWeight: '600' }}>Настилки изкуствена трева</Typography>;
+            case "tatami":
+                return <Typography sx={{ fontWeight: '600' }}>Настилки татами</Typography>;
+            case "postelki":
+                return <Typography sx={{ fontWeight: '600' }}>Постелки за фитнес и йога</Typography>;
+            case "platformi-podiumi":
+                return <Typography sx={{ fontWeight: '600' }}>Платформи и подиуми</Typography>;
+        }
+    };
+
     useEffect(() => {
         async function fetchProducts() {
             try {
@@ -44,7 +61,7 @@ const Category = () => {
     if (loading) return <p>Loading...</p>;
 
     return (
-        <div className={`${montserrat.className}`}>
+        <div className={`${montserrat.className} bg-gray-200 min-h-screen flex flex-col`}>
             <Navbar />
             <Breadcrumbs 
                 aria-label="breadcrumbs" 
@@ -54,10 +71,10 @@ const Category = () => {
                 <Link href="/katalog" className="hover:underline hover:text-primary">
                     Каталог
                 </Link>
-                <Typography sx={{ fontWeight: '600' }}>Настилки на плоча</Typography> // fix this
+                {renderBreadcrumb()}
             </Breadcrumbs>
 
-            <div className="flex justify-center w-[75rem] mx-auto">
+            <div className="flex flex-grow justify-center w-[75rem] mx-auto mb-20">
                 <Sidebar />
                 <Products products={products} />
             </div>

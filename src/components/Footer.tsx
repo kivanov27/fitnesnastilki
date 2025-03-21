@@ -37,7 +37,7 @@ const Footer = () => {
     };
 
     return (
-        <div className="mt-24 py-8 bg-primary text-white">
+        <div className="py-8 bg-primary text-white">
             <div className='w-[75rem] mx-auto flex'>
 
                 <div className="w-1/3">
