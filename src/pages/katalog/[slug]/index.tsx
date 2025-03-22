@@ -59,6 +59,7 @@ const Category = () => {
     }, [slug]);
 
     if (loading) return <p>Loading...</p>;
+    if (!slug) return null;
 
     return (
         <div className={`${montserrat.className} bg-gray-200 min-h-screen flex flex-col`}>
@@ -76,7 +77,7 @@ const Category = () => {
 
             <div className="flex flex-grow justify-center w-[75rem] mx-auto mb-20">
                 <Sidebar />
-                <Products products={products} />
+                <Products products={products} category={slug} />
             </div>
             <Footer />
         </div>

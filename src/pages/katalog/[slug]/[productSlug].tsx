@@ -16,16 +16,18 @@ const montserrat = Montserrat({
 
 const ProductPage = () => {
     const params = useParams();
-    const slug = params?.productSlug;
+
+    const productSlug = params?.productSlug;
+    const categorySlug = params?.slug;
     const [product, setProduct] = useState<Product | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         async function fetchProduct() {
-            if (!slug) return;
+            if (!productSlug || !categorySlug) return;
 
             try {
-                const res = await fetch(`/api/products/${slug}`);
+                const res = await fetch(`/api/products/${productSlug}`);
                 if (!res.ok) throw new Error("Product not found");
                 
                 const data = await res.json();
@@ -38,7 +40,7 @@ const ProductPage = () => {
         }
 
         fetchProduct();
-    }, [slug]);
+    }, [productSlug, categorySlug]);
 
     if (loading) return <p>Loading...</p>;
     if (!product) return <p>Product not found.</p>
@@ -46,7 +48,7 @@ const ProductPage = () => {
     return (
         <div className={`${montserrat.className} bg-gray-200`}>
             <Navbar />
-            <ProductView product={product} />
+            <ProductView product={product} category={categorySlug} />
             <Footer />
         </div>
     );

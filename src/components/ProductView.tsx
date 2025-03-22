@@ -1,14 +1,15 @@
 import { Product } from "@/types";
-import { Breadcrumbs } from "@mui/material";
+import { Breadcrumbs, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useRef } from "react";
 
 interface ProductViewProps {
-    product: Product
+    product: Product,
+    category: string | string[] | undefined
 }
 
-const ProductView = ({ product }: ProductViewProps) => {
+const ProductView = ({ product, category }: ProductViewProps) => {
     const [index, setIndex] = useState<number>(0);
     const scrollContainerRef = useRef<HTMLDivElement>(null);
 
@@ -23,7 +24,24 @@ const ProductView = ({ product }: ProductViewProps) => {
                 scrollContainerRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
             }
         }
-    }
+    };
+
+    const renderCategoryBreadcrumb = () => {
+        switch (category) {
+            case "plocha":
+                return <Link href="/katalog/plocha" className="hover:underline hover:text-primary">Настилки на плоча</Link>;
+            case "rulo":
+                return <Link href="/katalog/rulo" className="hover:underline hover:text-primary">Настилки на руло</Link>;
+            case "izkustvena-treva":
+                return <Link href="/katalog/izkustvena-treva" className="hover:underline hover:text-primary">Настилки изкуствена трева</Link>;
+            case "tatami":
+                return <Link href="/katalog/tatami" className="hover:underline hover:text-primary">Настилки татами</Link>;
+            case "postelki":
+                return <Link href="/katalog/postelki" className="hover:underline hover:text-primary">Постелки за фитнес и йога</Link>;
+            case "platformi-podiumi":
+                return <Link href="/katalog/platformi-podiumi" className="hover:underline hover:text-primary">Платформи и подиуми</Link>;
+        }
+    };
 
     return (
         <div className="w-[75rem] mx-auto my-10 flex">
@@ -97,12 +115,16 @@ const ProductView = ({ product }: ProductViewProps) => {
                 </div>
             </div>
 
-            <div className="w-1/2 bg-white ms-2 shadow-lg border border-gray-400 p-10">
-                <Breadcrumbs aria-label="breadcrumbs">
-                    <Link href="/katalog" className="hover:underline hover:text-primary">
-                        Каталог
-                    </Link>
-                </Breadcrumbs>
+            <div className="w-1/2 bg-white ms-2 shadow-lg border border-gray-400 p-8">
+                {category && 
+                    <Breadcrumbs aria-label="breadcrumbs" sx={{ fontSize: "0.75rem" }} className="mb-8">
+                        <Link href="/katalog" className="hover:underline hover:text-primary">
+                            Каталог
+                        </Link>
+                        {renderCategoryBreadcrumb()}
+                        <Typography sx={{ fontWeight: 600, fontSize: "0.75rem" }}>{product.name}</Typography>
+                    </Breadcrumbs>
+                }
                 <h2>{product.name}</h2>
                 {product.discount ?
                     <div>

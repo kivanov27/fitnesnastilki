@@ -5,13 +5,14 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Product as ProductType } from "@/types";
 
 interface ProductProps {
-    product: ProductType;
+    product: ProductType,
+    category: string | string[]
 }
 
-const Product = ({ product }: ProductProps) => {
+const Product = ({ product, category }: ProductProps) => {
     return (
         <div 
-            key={product.name}
+            key={product.id}
             className="w-[14.375rem] ps-2 relative"
         >
             <div className="relative border border-gray-400 p-4 flex flex-col gap-y-2 hover:scale-105 transition duration-300 ease-in-out">
@@ -20,7 +21,7 @@ const Product = ({ product }: ProductProps) => {
                         -{product.discount}%
                     </div>
                 }
-                <Link href={`/katalog/plocha/${product.link}`} className='border border-gray-100 w-48 h-48 min-w-48 min-h-48 max-w-48 max-h-48'>
+                <Link href={`/katalog/${category}/${product.link}`} className='border border-gray-100 w-48 h-48 min-w-48 min-h-48 max-w-48 max-h-48'>
                     <Image
                         src={product.image1}
                         alt={product.name}
@@ -29,7 +30,7 @@ const Product = ({ product }: ProductProps) => {
                         draggable="false"
                     />
                 </Link>
-                <Link href={`/katalog/plocha/${product.link}`}>
+                <Link href={`/katalog/${category}/${product.link}`}>
                     <p className="font-medium hover:text-gray-600 h-14">
                         {product.name}
                     </p>
