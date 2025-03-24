@@ -11,6 +11,7 @@ interface ProductViewProps {
 
 const ProductView = ({ product, category }: ProductViewProps) => {
     const [index, setIndex] = useState<number>(0);
+    const [quantity, setQuantity] = useState<number>(0);
     const scrollContainerRef = useRef<HTMLDivElement>(null);
 
     const images = [product.image1, product.image2, product.image3, product.image4].filter((img): img is string => Boolean(img));
@@ -45,6 +46,8 @@ const ProductView = ({ product, category }: ProductViewProps) => {
 
     return (
         <div className="w-[75rem] mx-auto my-10 flex">
+
+            {/* Left side */}
             <div className="w-1/2 pe-2">
 
                 {/* Main image */}
@@ -107,7 +110,8 @@ const ProductView = ({ product, category }: ProductViewProps) => {
 
                     {/* Right arrow */}
                     <button 
-                        className="bg-gray-200 hover:bg-gray-400 border border-gray-400 px-1 text-gray-800 transition-colors duration-300 ms-1"
+                        className="bg-gray-200 border border-gray-400 px-1 text-gray-800 
+                        hover:bg-gray-400 transition-colors duration-300 ms-1"
                         onClick={() => scrollThumbnails("right")}
                     >
                         ▶
@@ -115,9 +119,11 @@ const ProductView = ({ product, category }: ProductViewProps) => {
                 </div>
             </div>
 
+            {/* Right side */}
             <div className="w-1/2 bg-white ms-2 shadow-lg border border-gray-400 p-8">
+                {/* Breadcrumbs */}
                 {category && 
-                    <Breadcrumbs aria-label="breadcrumbs" sx={{ fontSize: "0.75rem" }} className="mb-8">
+                    <Breadcrumbs aria-label="breadcrumbs" sx={{ fontSize: "0.75rem", marginBottom: "2rem" }}>
                         <Link href="/katalog" className="hover:underline hover:text-primary">
                             Каталог
                         </Link>
@@ -125,14 +131,53 @@ const ProductView = ({ product, category }: ProductViewProps) => {
                         <Typography sx={{ fontWeight: 600, fontSize: "0.75rem" }}>{product.name}</Typography>
                     </Breadcrumbs>
                 }
-                <h2>{product.name}</h2>
+
+                {/* Product name */}
+                <h2 className="text-3xl font-medium mb-8">{product.name}</h2>
+
+                {/* Price */}
                 {product.discount ?
-                    <div>
-                        <p><span>{product.price}</span> {product.discount}</p>
+                    <div className="mb-8">
+                        <p className="text-2xl text-primary font-medium">
+                            <span className="font-normal text-gray-400 me-3 line-through">{product.price}лв.</span>
+                            {product.price - (product.price * product.discount / 100)}лв.
+                        </p>
                     </div>
                     :
-                    <p>{product.price}</p>
+                    <p className="text-2xl">{product.price}</p>
                 }
+
+                {/* Add to cart */}
+                <div className="flex gap-x-6">
+                    <div className="flex">
+                        <div 
+                            className="border border-gray-300 p-2 cursor-pointer transition-colors
+                            hover:bg-primary hover:border-primary hover:text-white duration-300"
+                            onClick={() => setQuantity(quantity - 1)}
+                        >
+                            -
+                        </div>
+                        <input 
+                            className="border border-gray-300 w-14 p-2 text-center" 
+                            value={quantity} 
+                            onChange={({ target }) => setQuantity(Number(target.value))}
+                        />
+                        <div
+                            className="border border-gray-300 p-2 cursor-pointer transition-colors
+                            hover:bg-primary hover:border-primary hover:text-white duration-300"
+                            onClick={() => setQuantity(quantity + 1)}
+                        >
+                            +
+                        </div>
+                    </div>
+
+                    <button 
+                        className="border border-primary bg-primary uppercase text-white text-xs font-bold px-2 
+                        hover:bg-primaryDim hover:border-primaryDim transition-colors duration-300"
+                    >
+                        Добавяне в количката
+                    </button>
+                </div>
             </div>
         </div>
     );

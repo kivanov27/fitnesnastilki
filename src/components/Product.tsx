@@ -21,7 +21,7 @@ const Product = ({ product, category }: ProductProps) => {
                         -{product.discount}%
                     </div>
                 }
-                <Link href={`/katalog/${category}/${product.link}`} className='border border-gray-100 w-48 h-48 min-w-48 min-h-48 max-w-48 max-h-48'>
+                <Link href={`/katalog/${category}/${product.link}`} className='border border-gray-300 w-48 h-48 min-w-48 min-h-48 max-w-48 max-h-48'>
                     <Image
                         src={product.image1}
                         alt={product.name}

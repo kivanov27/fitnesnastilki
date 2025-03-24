@@ -12,6 +12,7 @@ export default {
                 background: "var(--background)",
                 foreground: "var(--foreground)",
                 primary: "var(--color-primary)",
+                primaryDim: "var(--color-primary-dim)",
             },
         },
     },
