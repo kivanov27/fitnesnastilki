@@ -3,6 +3,7 @@ import { Breadcrumbs, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useRef } from "react";
+import { useCart } from "@/context/CartContext";
 
 interface ProductViewProps {
     product: Product,
@@ -12,9 +13,10 @@ interface ProductViewProps {
 const ProductView = ({ product, category }: ProductViewProps) => {
     const [index, setIndex] = useState<number>(0);
     const [quantity, setQuantity] = useState<number>(0);
-    const scrollContainerRef = useRef<HTMLDivElement>(null);
 
+    const scrollContainerRef = useRef<HTMLDivElement>(null);
     const images = [product.image1, product.image2, product.image3, product.image4].filter((img): img is string => Boolean(img));
+    const { dispatch } = useCart();
 
     const scrollThumbnails = (direction: "left" | "right") => {
         if (scrollContainerRef.current) {
@@ -174,6 +176,18 @@ const ProductView = ({ product, category }: ProductViewProps) => {
                     <button 
                         className="border border-primary bg-primary uppercase text-white text-xs font-bold px-2 
                         hover:bg-primaryDim hover:border-primaryDim transition-colors duration-300"
+                        onClick={() => dispatch({ 
+                            type: "ADD_TO_CART", 
+                            payload: { 
+                                id: product.id, 
+                                name: product.name, 
+                                price: product.discount 
+                                    ? product.price - (product.price * product.discount / 100)
+                                    : product.price,
+                                quantity: quantity,
+                                image: product.image1
+                            } 
+                        })}
                     >
                         Добавяне в количката
                     </button>
