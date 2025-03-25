@@ -12,11 +12,13 @@ interface ProductViewProps {
 
 const ProductView = ({ product, category }: ProductViewProps) => {
     const [index, setIndex] = useState<number>(0);
-    const [quantity, setQuantity] = useState<number>(0);
+    const [quantity, setQuantity] = useState<number>(1);
+    const [quantityInput, setQuantityInput] = useState<string>("1");
+    const [quantityError, setQuantityError] = useState<string | null>(null);
 
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const images = [product.image1, product.image2, product.image3, product.image4].filter((img): img is string => Boolean(img));
-    const { dispatch } = useCart();
+    const { addToCart } = useCart();
 
     const scrollThumbnails = (direction: "left" | "right") => {
         if (scrollContainerRef.current) {
@@ -43,6 +45,21 @@ const ProductView = ({ product, category }: ProductViewProps) => {
                 return <Link href="/katalog/postelki" className="hover:underline hover:text-primary">Постелки за фитнес и йога</Link>;
             case "platformi-podiumi":
                 return <Link href="/katalog/platformi-podiumi" className="hover:underline hover:text-primary">Платформи и подиуми</Link>;
+        }
+    };
+
+    const handleQuantitySet = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === "Enter") {
+            const num = Number(quantityInput);
+
+            if (isNaN(num)) {
+                setQuantityError("Моля въведете валидно число");
+            } else if (num < 1) {
+                setQuantityError("Моля въведете число по-голямо от 0");
+            } else {
+                setQuantity(num);
+                setQuantityError(null);
+            }
         }
     };
 
@@ -146,7 +163,7 @@ const ProductView = ({ product, category }: ProductViewProps) => {
                         </p>
                     </div>
                     :
-                    <p className="text-2xl">{product.price}</p>
+                    <p className="text-2xl text-primary font-medium mb-8">{product.price}лв.</p>
                 }
 
                 {/* Add to cart */}
@@ -154,20 +171,29 @@ const ProductView = ({ product, category }: ProductViewProps) => {
                     <div className="flex">
                         <div 
                             className="border border-gray-300 p-2 cursor-pointer transition-colors
-                            hover:bg-primary hover:border-primary hover:text-white duration-300"
-                            onClick={() => setQuantity(quantity - 1)}
+                            hover:bg-primary hover:border-primary hover:text-white duration-300 select-none"
+                            onClick={() => {
+                                if (quantity > 1) {
+                                    setQuantity(quantity - 1);
+                                    setQuantityInput(String(quantity - 1));
+                                }
+                            }}
                         >
                             -
                         </div>
                         <input 
                             className="border border-gray-300 w-14 p-2 text-center" 
-                            value={quantity} 
-                            onChange={({ target }) => setQuantity(Number(target.value))}
+                            value={quantityInput} 
+                            onChange={({ target }) => setQuantityInput(target.value)}
+                            onKeyDown={handleQuantitySet}
                         />
                         <div
                             className="border border-gray-300 p-2 cursor-pointer transition-colors
-                            hover:bg-primary hover:border-primary hover:text-white duration-300"
-                            onClick={() => setQuantity(quantity + 1)}
+                            hover:bg-primary hover:border-primary hover:text-white duration-300 select-none"
+                            onClick={() => {
+                                setQuantity(quantity + 1);
+                                setQuantityInput(String(quantity + 1));
+                            }}
                         >
                             +
                         </div>
@@ -176,22 +202,22 @@ const ProductView = ({ product, category }: ProductViewProps) => {
                     <button 
                         className="border border-primary bg-primary uppercase text-white text-xs font-bold px-2 
                         hover:bg-primaryDim hover:border-primaryDim transition-colors duration-300"
-                        onClick={() => dispatch({ 
-                            type: "ADD_TO_CART", 
-                            payload: { 
-                                id: product.id, 
-                                name: product.name, 
-                                price: product.discount 
-                                    ? product.price - (product.price * product.discount / 100)
-                                    : product.price,
+                        onClick={() => {
+                            addToCart({ 
+                                ...product, 
+                                price: product.discount ? product.price - (product.price * product.discount / 100) : product.price,
                                 quantity: quantity,
                                 image: product.image1
-                            } 
-                        })}
+                            });
+                        }}
                     >
                         Добавяне в количката
                     </button>
                 </div>
+                {quantityError &&
+                    <p className="w-fit mt-1 p-3 bg-gray-700 rounded-md text-white text-sm">{quantityError}</p>
+                }
+
             </div>
         </div>
     );

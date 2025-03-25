@@ -1,5 +1,4 @@
-// remove if no copy functionality
-'use client'
+"use client" // remove if no copy functionality
 
 import Link from 'next/link';
 import StoreIcon from '@mui/icons-material/Store';

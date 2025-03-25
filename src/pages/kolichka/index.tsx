@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 
 const CartPage = () => {
     return (
-        <div>
+        <div className="min-h-screen flex flex-col">
             <Navbar />
             <Cart />
             <Footer />

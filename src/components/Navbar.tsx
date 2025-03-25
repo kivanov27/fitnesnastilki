@@ -4,8 +4,11 @@ import SearchIcon from '@mui/icons-material/Search';
 import PersonOutline from '@mui/icons-material/Person';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Link from 'next/link';
+import { useCart } from '@/context/CartContext';
 
 const Navbar = () => {
+    const { cart } = useCart();
+
     return (
         <div className='border border-b-gray-400'>
             <div className="flex justify-between items-center w-[75rem] mx-auto">
@@ -40,10 +43,15 @@ const Navbar = () => {
                 <div className='flex justify-between gap-x-6'>
                     <SearchIcon />
                     <PersonOutline />
-                    <div className='flex'>
+                    <Link 
+                        className='flex'
+                        href="/kolichka"
+                    >
                         <ShoppingCartIcon />
-                        <div>0</div>
-                    </div>
+                        <div>
+                            {cart.length}
+                        </div>
+                    </Link>
                 </div>
 
             </div>
