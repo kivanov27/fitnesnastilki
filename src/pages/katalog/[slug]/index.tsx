@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
-import '../../../app/globals.css';
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
 import Products from "@/components/Products";

@@ -1,15 +1,15 @@
 import Navbar from "@/components/Navbar";
-import Cart from "@/components/Cart";
+import Checkout from "@/components/Checkout";
 import Footer from "@/components/Footer";
 
-const CartPage = () => {
+const CheckoutPage = () => {
     return (
         <div className="min-h-screen flex flex-col">
             <Navbar />
-            <Cart />
+            <Checkout />
             <Footer />
         </div>
     );
 };
 
-export default CartPage;
+export default CheckoutPage;
