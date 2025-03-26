@@ -10,6 +10,7 @@ type CartContextType = {
     clearCart: () => void;
     increaseQuantity: (id: number) => void;
     decreaseQuantity: (id: number) => void;
+    totalPrice: number;
 };
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -17,9 +18,11 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     const [cart, setCart] = useState<CartItem[]>([]);
 
+    const totalPrice = cart.reduce((acc, product) => acc + product.price * product.quantity, 0);
+
     // load cart from localStorage
     useEffect(() => {
-        const storedCart = localStorage.getItem("cart");
+        const storedCart = localStorage.getItem("fitnesnastilki-cart");
         if (storedCart) {
             setCart(JSON.parse(storedCart));
         }
@@ -27,7 +30,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
 
     // save cart to localStorage
     useEffect(() => {
-        localStorage.setItem("cart", JSON.stringify(cart));
+        localStorage.setItem("fitnesnastilki-cart", JSON.stringify(cart));
     }, [cart]);
 
     const addToCart = (item: CartItem) => {
@@ -79,7 +82,8 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
             removeFromCart, 
             clearCart, 
             increaseQuantity, 
-            decreaseQuantity 
+            decreaseQuantity,
+            totalPrice
         }}>
             {children}
         </CartContext.Provider>

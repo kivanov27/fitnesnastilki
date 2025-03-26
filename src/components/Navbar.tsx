@@ -44,7 +44,7 @@ const Navbar = () => {
                     <SearchIcon />
                     <PersonOutline />
                     <Link 
-                        className='flex'
+                        className='flex hover:text-primary'
                         href="/kolichka"
                     >
                         <ShoppingCartIcon />

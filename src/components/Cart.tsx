@@ -1,18 +1,19 @@
 import { useCart } from "@/context/CartContext";
 import Image from "next/image";
 import CloseIcon from '@mui/icons-material/Close';
+import Link from "next/link";
 
 const Cart = () => {
-    const { cart, removeFromCart, clearCart, increaseQuantity, decreaseQuantity } = useCart();
+    const { cart, removeFromCart, clearCart, increaseQuantity, decreaseQuantity, totalPrice } = useCart();
 
     return (
         <div className="w-[75rem] mx-auto my-10 flex-1">
             {cart.length === 0 ? (
                 <h1>Вашата количка е празна</h1>
             ) : (
-                <table>
+                <table className="w-full">
                     <thead>
-                        <tr className="border-b-2 border-gray-400">
+                        <tr className="border-b-2 border-gray-300">
                             <th />
                             <th />
                             <th className="text-2xl text-semibold pe-10 pb-5">Продукт</th>
@@ -23,12 +24,14 @@ const Cart = () => {
                     </thead>
                     <tbody>
                         {cart.map(product => (
-                            <tr key={product.id} className="border-b border-gray-400">
+                            <tr key={product.id} className="border-b border-gray-300">
                                 <td 
-                                    className="pe-10 cursor-pointer hover:text-gray-500 transition-colors duration-300"
-                                    onClick={() => removeFromCart(product.id)}
+                                    className="pe-10"
                                 >
-                                    <CloseIcon />
+                                    <CloseIcon 
+                                        className="cursor-pointer hover:text-primary transition-colors duration-300" 
+                                        onClick={() => removeFromCart(product.id)}
+                                    />
                                 </td>
                                 <td className="pe-10">
                                     <Image 
@@ -59,13 +62,32 @@ const Cart = () => {
                                 <td className="text-center">{(product.price * product.quantity).toFixed(2)}лв.</td>
                             </tr>
                         ))}
+                        <tr>
+                            <td colSpan={2} className="pt-6">
+                                <button 
+                                    className="border border-primary bg-primary text-white p-4 rounded-md uppercase font-semibold
+                                    hover:bg-primaryDim transition-colors duration-300"
+                                    onClick={() => clearCart()}
+                                >
+                                    Изчисти количката
+                                </button>
+                            </td>
+                            <td colSpan={1} className="text-center pt-6">
+                                <Link 
+                                    href="/checkout"
+                                    className="border border-primary bg-primary text-white p-4 rounded-md uppercase font-semibold
+                                    hover:bg-primaryDim transition-colors duration-300"
+                                >
+                                    Приключване на поръчката
+                                </Link>
+                            </td>
+                            <td colSpan={2} className="text-right text-2xl font-semibold pe-10 pt-4">Общо:</td>
+                            <td className="text-center text-2xl font-semibold pt-4">{totalPrice.toFixed(2)}лв.</td>
+                        </tr>
                     </tbody>
                 </table>
             )}
 
-            <button onClick={() => clearCart()}>
-                Изчисти количката
-            </button>
         </div>
     );
 };

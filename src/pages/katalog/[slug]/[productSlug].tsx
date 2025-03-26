@@ -7,12 +7,6 @@ import { Product } from "@/types";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ProductView from "@/components/ProductView";
-import { Montserrat } from 'next/font/google';
-
-const montserrat = Montserrat({
-    variable: "--font-montserrat",
-    subsets: ["latin", "cyrillic"]
-});
 
 const ProductPage = () => {
     const params = useParams();
@@ -46,7 +40,7 @@ const ProductPage = () => {
     if (!product) return <p>Product not found.</p>
 
     return (
-        <div className={`${montserrat.className} bg-gray-200`}>
+        <div>
             <Navbar />
             <ProductView product={product} category={categorySlug} />
             <Footer />

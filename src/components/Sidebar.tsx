@@ -3,6 +3,7 @@ import Link from "next/link";
 const Sidebar = () => {
     return (
         <div className="w-[17.5rem] flex flex-col border border-gray-400 h-fit p-4">
+            <Link href="/katalog/vsichki" className="hover:underline hover:text-primary">Всички продукти</Link>
             <Link href="/katalog/plocha" className="hover:underline hover:text-primary">Настилки на плоча</Link>
             <Link href="/katalog/rulo" className="hover:underline hover:text-primary">Настилки на руло</Link>
             <Link href="/katalog/tatami" className="hover:underline hover:text-primary">Настилки татами</Link>

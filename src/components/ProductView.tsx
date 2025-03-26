@@ -33,6 +33,8 @@ const ProductView = ({ product, category }: ProductViewProps) => {
 
     const renderCategoryBreadcrumb = () => {
         switch (category) {
+            case "vsichki":
+                    return <Link href="/katalog/vsichki" className="hover:underline hover:text-primary">Всички продукти</Link>;
             case "plocha":
                 return <Link href="/katalog/plocha" className="hover:underline hover:text-primary">Настилки на плоча</Link>;
             case "rulo":

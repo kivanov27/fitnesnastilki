@@ -21,7 +21,7 @@ export default function RootLayout({
     return (
         <html lang="bg">
             <body
-                className={`${montserrat.className} antialiased bg-gray-200`}
+                className={`${montserrat.className} antialiased`}
             >
                 <CartProvider>
                     {children}

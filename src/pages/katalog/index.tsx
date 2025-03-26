@@ -1,13 +1,6 @@
-import '../../app/globals.css'
 import Navbar from "@/components/Navbar";
 import Categories from '@/components/Categories';
 import Footer from '@/components/Footer';
-import { Montserrat } from 'next/font/google';
-
-const montserrat = Montserrat({
-    variable: "--font-montserrat",
-    subsets: ["latin", "cyrillic"]
-});
 
 export async function getServerSideProps() {
     try {
@@ -24,7 +17,7 @@ export async function getServerSideProps() {
 
 const Catalogue = ({ categories }: { categories: any[] }) => {
     return (
-        <div className={`${montserrat.className} bg-gray-200`}>
+        <div>
             <Navbar />
             <Categories categories={categories} />
             <Footer />

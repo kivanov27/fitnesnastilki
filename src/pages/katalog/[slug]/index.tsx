@@ -8,14 +8,8 @@ import Sidebar from "@/components/Sidebar";
 import Products from "@/components/Products";
 import { Breadcrumbs, Typography } from "@mui/material";
 import Link from "next/link";
-import { Montserrat } from "next/font/google";
 import Footer from "@/components/Footer";
 import { Product } from '@/types';
-
-const montserrat = Montserrat({
-    variable: "--font-montserrat",
-    subsets: ["latin", "cyrillic"]
-});
 
 const Category = () => {
     const params = useParams();
@@ -25,6 +19,8 @@ const Category = () => {
 
     const renderBreadcrumb = () => {
         switch (slug) {
+            case "vsichki":
+                return <Typography sx={{ fontWeight: '600' }}>Всички продукти</Typography>;
             case "plocha":
                 return <Typography sx={{ fontWeight: '600' }}>Настилки на плоча</Typography>;
             case "rulo":
@@ -43,11 +39,18 @@ const Category = () => {
     useEffect(() => {
         async function fetchProducts() {
             try {
-                const res = await fetch(`/api/products/category/${slug}`);
-                if (!res.ok) throw new Error("Couldn't fetch products");
-
-                const data = await res.json();
-                setProducts(data);
+                if (slug === "vsichki") {
+                    const res = await fetch(`/api/products`);
+                    if (!res.ok) throw new Error("Couldn't fetch products");
+                    const data = await res.json();
+                    setProducts(data);
+                }
+                else {
+                    const res = await fetch(`/api/products/category/${slug}`);
+                    if (!res.ok) throw new Error("Couldn't fetch products");
+                    const data = await res.json();
+                    setProducts(data);
+                }
             } catch (error) {
                 console.error(error);
             } finally {
@@ -58,11 +61,11 @@ const Category = () => {
         if (slug) fetchProducts();
     }, [slug]);
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return null;
     if (!slug) return null;
 
     return (
-        <div className={`${montserrat.className} bg-gray-200 min-h-screen flex flex-col`}>
+        <div className="min-h-screen flex flex-col">
             <Navbar />
             <Breadcrumbs 
                 aria-label="breadcrumbs" 
