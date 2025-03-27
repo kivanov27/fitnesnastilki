@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
-import { createTheme, ThemeProvider } from "@mui/material";
+// import { createTheme, ThemeProvider } from "@mui/material";
 
 export const metadata: Metadata = {
     title: "Фитнес Настилки",
@@ -14,14 +14,14 @@ const montserrat = Montserrat({
     subsets: ["latin", "cyrillic"]
 });
 
-const theme = createTheme({
-    palette: {
-        primary: {
-            main: "#870000",
-            dark: "#620000",
-        },
-    },
-});
+// const theme = createTheme({
+//     palette: {
+//         primary: {
+//             main: "#870000",
+//             dark: "#620000",
+//         },
+//     },
+// });
 
 export default function RootLayout({
     children,
@@ -34,9 +34,9 @@ export default function RootLayout({
                 className={`${montserrat.className} antialiased`}
             >
                 <CartProvider>
-                    <ThemeProvider theme={theme}>
+                    {/* <ThemeProvider theme={theme}> */}
                         {children}
-                    </ThemeProvider>
+                    {/* </ThemeProvider> */}                
                 </CartProvider>
             </body>
         </html>

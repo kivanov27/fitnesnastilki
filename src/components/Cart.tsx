@@ -7,9 +7,12 @@ const Cart = () => {
     const { cart, removeFromCart, clearCart, increaseQuantity, decreaseQuantity, totalPrice } = useCart();
 
     return (
-        <div className="w-[75rem] mx-auto my-10 flex-1">
+        <div className="w-[75rem] h-full mx-auto my-10 flex-1">
             {cart.length === 0 ? (
-                <h1>Вашата количка е празна</h1>
+                <div className="w-full h-full flex flex-col gap-y-14 justify-center items-center mt-40">
+                    <h1 className="text-6xl text-center">Вашата количка е празна</h1>
+                    <button className="uppercase p-4 bg-primary text-white hover:bg-primaryDim rounded-md font-medium w-fit">Към магазина</button>
+                </div>
             ) : (
                 <table className="w-full">
                     <thead>
