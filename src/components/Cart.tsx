@@ -11,7 +11,12 @@ const Cart = () => {
             {cart.length === 0 ? (
                 <div className="w-full h-full flex flex-col gap-y-14 justify-center items-center mt-40">
                     <h1 className="text-6xl text-center">Вашата количка е празна</h1>
-                    <button className="uppercase p-4 bg-primary text-white hover:bg-primaryDim rounded-md font-medium w-fit">Към магазина</button>
+                    <Link 
+                        href="/katalog/vsichki" 
+                        className="uppercase p-4 bg-primary text-white hover:bg-primaryDim rounded-md font-medium w-fit"
+                    >
+                        Към магазина
+                    </Link>
                 </div>
             ) : (
                 <table className="w-full">

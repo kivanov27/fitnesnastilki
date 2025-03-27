@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Button } from "@mui/material";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Product as ProductType } from "@/types";
+import { useCart } from "@/context/CartContext";
 
 interface ProductProps {
     product: ProductType,
@@ -10,6 +11,8 @@ interface ProductProps {
 }
 
 const Product = ({ product, category }: ProductProps) => {
+    const { addToCart } = useCart();
+
     return (
         <div 
             key={product.id}
@@ -51,6 +54,14 @@ const Product = ({ product, category }: ProductProps) => {
                     variant="contained" 
                     sx={{ width: '100%' , display: 'block', marginX: 'auto', backgroundColor: 'var(--color-primary)' }}
                     className='addToCart-btn'
+                    onClick={() => 
+                        addToCart({ 
+                            ...product, 
+                            price: product.discount ? product.price - (product.price * product.discount / 100) : product.price, 
+                            quantity: 1, 
+                            image: product.image1 
+                        })
+                    }
                 >
                     <ShoppingCartIcon />
                 </Button>
