@@ -15,3 +15,7 @@ export function generateToken(user: user) {
         { expiresIn: '90d' }
     );
 }
+
+export async function comparePassword(plainPassword: string, hashedPassword: string) {
+    return await bcrypt.compare(plainPassword, hashedPassword);
+}
