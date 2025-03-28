@@ -1,10 +1,10 @@
 'use client'
 
-import SearchIcon from '@mui/icons-material/Search';
-import PersonOutline from '@mui/icons-material/Person';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import Link from 'next/link';
 import { useCart } from '@/context/CartContext';
+import Link from 'next/link';
+import SearchIcon from '@mui/icons-material/Search';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import ProfileMenu from './ProfileMenu';
 
 const Navbar = () => {
     const { cart } = useCart();
@@ -40,9 +40,9 @@ const Navbar = () => {
                     </div>
                 </div>
 
-                <div className='flex justify-between gap-x-6'>
+                <div className='flex justify-between items-end gap-x-6'>
                     <SearchIcon />
-                    <PersonOutline />
+                    <ProfileMenu />
                     <Link 
                         className='flex hover:text-primary'
                         href="/kolichka"

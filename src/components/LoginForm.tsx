@@ -40,7 +40,7 @@ const LoginForm = () => {
     };
 
     return (
-        <div className="max-w-md mx-auto p-6 border rounded-md shadow">
+        <div className="max-w-md mx-auto p-6 flex-1 flex flex-col items-center justify-center">
             <h2 className="text-2xl font-bold mb-6">Влезте в акаунта си</h2>
             {error && <div className="text-red-500 mb-4">{error}</div>}
 
@@ -79,10 +79,8 @@ const LoginForm = () => {
                 </button>
             </form>
 
-            <div className="mt-4 text-center">
-                <span className="text-gray-600">Нямате акаунт?</span>
-                <Link href="/registration" className="text-primary hover:underline">Регистрация</Link>
-            </div>
+            <span className="mt-4 text-gray-600">Нямате акаунт?</span>
+            <Link href="/registration" className="text-primary hover:underline">Регистрация</Link>
         </div>
     );
 };
