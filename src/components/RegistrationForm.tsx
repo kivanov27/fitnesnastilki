@@ -41,7 +41,7 @@ const RegistrationForm = () => {
             const user = await response.json();
 
             // store token and redirect (might want to use context or state management)
-            localStorage.setItem('fitnesnastilki_token', user.token);
+            localStorage.setItem('fitnesnastilki-token', user.token);
             router.push('/');
         }
         catch (error: unknown) {

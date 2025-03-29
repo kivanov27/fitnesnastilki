@@ -3,6 +3,7 @@ import type { AppProps } from "next/app";
 import { Montserrat } from "next/font/google";
 import "../app/globals.css";
 import { createTheme, ThemeProvider } from "@mui/material";
+import { SessionProvider } from "next-auth/react";
 
 const montserrat = Montserrat({
     subsets: ["latin", "cyrillic"],
@@ -18,15 +19,18 @@ const theme = createTheme({
     },
 });
 
+
 function MyApp({ Component, pageProps }: AppProps) {
     return (
-        <CartProvider>
-            <ThemeProvider theme={theme}>
-                <div className={montserrat.className}>
-                    <Component {...pageProps} />
-                </div>
-            </ThemeProvider>
-        </CartProvider>
+        <SessionProvider session={pageProps.session}>
+            <CartProvider>
+                <ThemeProvider theme={theme}>
+                    <div className={montserrat.className}>
+                        <Component {...pageProps} />
+                    </div>
+                </ThemeProvider>
+            </CartProvider>
+        </SessionProvider>
     );
 }
 

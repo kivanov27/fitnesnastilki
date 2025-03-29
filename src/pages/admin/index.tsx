@@ -1,26 +1,71 @@
-import { useState, useEffect } from "react";
+import { GetServerSideProps } from "next";
+import { getServerSession } from "next-auth";
+import prisma from "@/lib/prisma";
+import { authOptions } from "@/lib/authOptions";
+import { Order, Product } from "@/types";
 
-const AdminPage = () => {
-    const [orders, setOrders] = useState([]);
-    const [products, setProducts] = useState([]);
+interface AdminPageProps {
+    orders: Order[];
+    products: Product[];
+}
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const ordersRes = await fetch("/api/orders");
-            const productsRes = await fetch("/api/products");
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    const session = await getServerSession(context.req, context.res, authOptions);
+    
+    console.log("Session: ", session); // REMOVE AFTER DEBUGGING
 
-            setOrders(await ordersRes.json());
-            setProducts(await productsRes.json());
+    // admin check
+    if (!session?.user?.isAdmin) {
+        return {
+            redirect: {
+                destination: '/login',
+                permanent: false
+            }
         }
-        fetchData();
-    }, [])
+    }
 
-    console.log("Orders: ", orders);
-    console.log("Products: ", products);
+    const orders = await prisma.orders.findMany({});
+    const products = await prisma.product.findMany({});
+
+    return {
+        props: {
+            orders: JSON.parse(JSON.stringify(orders)),
+            products: JSON.parse(JSON.stringify(products))
+        }
+    }
+};
+
+const AdminPage = ({ orders, products }: AdminPageProps) => {
+
+    const deleteProduct = async (id: number) => {
+        await fetch(`/api/products/${id}`, { method: "DELETE" });
+        products.filter(product => product.id !== id);
+    };
 
     return (
         <div>
-            admin page
+            <h1>Admin Dashboard</h1>
+
+            <h2>Поръчки</h2>
+            <ul>
+                {orders.map(order => (
+                    <li key={order.id}>
+                        Поръчка #{order.id} - {order.status} - {order.total_price}лв.
+                    </li>
+                ))}
+            </ul>
+
+            <h2>Продукти</h2>
+            <ul>
+                {products.map(product => (
+                    <li key={product.id}>
+                        {product.name} - {product.price}
+                        <button onClick={() => deleteProduct(product.id)}>
+                            Изтрий
+                        </button>
+                    </li>
+                ))}
+            </ul>
         </div>
     );
 };

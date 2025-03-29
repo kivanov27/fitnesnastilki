@@ -1,5 +1,7 @@
+import { isAdmin } from "@/lib/auth";
 import { NextResponse } from "next/server";
 import { Pool } from 'pg';
+import prisma from "@/lib/prisma";
 
 // Create a PostgreSQL connection pool
 const pool = new Pool({
@@ -18,4 +20,16 @@ export async function GET() {
         console.error('Error fetching products:', error);
         return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
     }
+}
+
+export async function POST(req: Request) {
+    const isAdminUser = await isAdmin();
+    if (!isAdminUser) {
+        return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+    }
+
+    const data = await req.json();
+    const newProduct = await prisma.product.create({ data });
+
+    return NextResponse.json(newProduct, { status: 201 });
 }

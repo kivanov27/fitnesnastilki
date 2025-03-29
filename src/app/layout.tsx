@@ -35,7 +35,7 @@ export default function RootLayout({
             >
                 <CartProvider>
                     {/* <ThemeProvider theme={theme}> */}
-                        {children}
+                    {children}
                     {/* </ThemeProvider> */}                
                 </CartProvider>
             </body>

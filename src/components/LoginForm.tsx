@@ -29,7 +29,7 @@ const LoginForm = () => {
             const { token } = await res.json();
 
             // store token and redirect
-            localStorage.setItem('fitnesnastilki_token', token);
+            localStorage.setItem('fitnesnastilki-token', token);
             router.push('/');
         }
         catch(error: unknown) {

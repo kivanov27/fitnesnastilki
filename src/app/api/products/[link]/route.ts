@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { Pool } from "pg";
+import prisma from "@/lib/prisma";
+import { isAdmin } from "@/lib/auth";
 
 const pool = new Pool({
     user: "admin",
@@ -29,4 +31,18 @@ export async function GET(_req: Request, { params }: { params: { link: string } 
         console.error("Error fetching product:", error);
         return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
     }
+}
+
+export async function DELETE(_req: Request, { params }: { params: { link: string } }) {
+    if (!(await isAdmin())) {
+        return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+    }
+
+    const product = await prisma.product.findFirst({ where: { link: params.link } });
+    if (!product) {
+        return NextResponse.json({ error: "Product not found" }, { status: 404 });
+    }
+
+    await prisma.product.delete({ where: { id: product.id } });
+    return NextResponse.json({ message: "Product deleted" });
 }

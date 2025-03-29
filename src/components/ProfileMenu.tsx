@@ -10,7 +10,7 @@ const ProfileMenu = () => {
 
     // check auth status
     useEffect(() => {
-        const token = localStorage.getItem('fitnesnastilki_token');
+        const token = localStorage.getItem('fitnesnastilki-token');
         setIsLoggedIn(!!token);
     }, []);
 
@@ -27,7 +27,7 @@ const ProfileMenu = () => {
     // }, []);
 
     const handleLogout = () => {
-        localStorage.removeItem('fitnesnastilki_token');
+        localStorage.removeItem('fitnesnastilki-token');
         setIsLoggedIn(false);
         setIsOpen(false);
         router.push('/');

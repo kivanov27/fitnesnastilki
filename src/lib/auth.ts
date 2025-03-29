@@ -1,6 +1,8 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { user } from "@prisma/client";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./authOptions";
 
 const JWT_SECRET = process.env.JWT_SECRET || '34yt987hsad123';
 
@@ -18,4 +20,13 @@ export function generateToken(user: user) {
 
 export async function comparePassword(plainPassword: string, hashedPassword: string) {
     return await bcrypt.compare(plainPassword, hashedPassword);
+}
+
+export async function getSession() {
+    return await getServerSession(authOptions);
+}
+
+export async function isAdmin() {
+    const session = await getSession();
+    return session?.user?.isAdmin || false;
 }
