@@ -1,20 +1,24 @@
-import { NextResponse } from "next/server";
+import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "@/lib/prisma";
 import { hashPassword, generateToken } from "@/lib/auth";
 
-export async function POST(req: Request) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+    if (req.method !== "POST") {
+        return res.status(405).json({ error: "Method not allowed" });
+    }
+
     try {
-        const { email, password, phone, address, firstName, lastName } = await req.json();
+        const { email, password, phone, address, firstName, lastName } = await req.body;
 
         if (!email || !password || !phone || !address) {
-            return NextResponse.json({ error: "Email, password, phone and address are required." }, { status: 400 });
+            return res.status(400).json({ error: "Email, password, phone and address are required." });
         }
 
         // Check if user with this email exists
         const existingUser = await prisma.user.findUnique({ where: { email } });
 
         if (existingUser) {
-            return NextResponse.json({ error: "Email already in use" }, { status: 409 });
+            return res.status(409).json({ error: "Email already in use" });
         }
 
         // Create new user
@@ -34,10 +38,10 @@ export async function POST(req: Request) {
         const token = generateToken(newUser);
         const { password: _, ...userWithoutPassword } = newUser;
 
-        return NextResponse.json({ user: userWithoutPassword, token }, { status: 201 });
+        return res.status(201).json({ user: userWithoutPassword, token });
     } 
     catch (error) {
         console.error("Registration error: ", error);
-        return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+        return res.status(500).json({ error: "Internal Server Error" });
     }
 }
