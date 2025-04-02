@@ -11,7 +11,9 @@ interface AdminPageProps {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const session = await getServerSession(context.req, context.res, authOptions);
-    
+
+    console.log("Context.req: ", context.req); // REMOVE AFTER DEBUGGING
+    console.log("Context.res: ", context.res); // REMOVE AFTER DEBUGGING
     console.log("Session: ", session); // REMOVE AFTER DEBUGGING
 
     // admin check
