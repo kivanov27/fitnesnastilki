@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import prisma from "@/lib/prisma";
 import { authOptions } from "@/lib/authOptions";
 import { Order, Product } from "@/types";
+import ProductForm from "@/components/ProductForm";
 
 interface AdminPageProps {
     orders: Order[];
@@ -12,9 +13,6 @@ interface AdminPageProps {
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const session = await getServerSession(context.req, context.res, authOptions);
 
-    console.log("Session: ", session); // REMOVE AFTER DEBUGGING
-
-    // admin check
     if (!session?.user?.isAdmin) {
         return {
             redirect: {
@@ -64,8 +62,10 @@ const AdminPage = ({ orders, products }: AdminPageProps) => {
                             Изтрий
                         </button>
                     </li>
-                ))}
+                 ))}
             </ul>
+
+            <ProductForm />
         </div>
     );
 };

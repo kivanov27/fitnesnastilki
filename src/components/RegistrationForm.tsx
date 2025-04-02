@@ -45,12 +45,8 @@ const RegistrationForm = () => {
             router.push('/');
         }
         catch (error: unknown) {
-            if (error instanceof Error) {
-                setError(error.message) 
-            }
-            else {
-                setError("Encountered an error when trying to register.");
-            }
+            if (error instanceof Error) setError(error.message)
+            else setError("Encountered an error when trying to register.");
         }
     }
 

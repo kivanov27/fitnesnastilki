@@ -13,6 +13,8 @@ export interface Product {
     manufacturer_description: string;
 }
 
+export type NewProduct = Omit<Product, 'id'>;
+
 export interface CartItem {
     id: number;
     name: string;
