@@ -33,10 +33,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 const OrdersPage = ({ orders }: OrdersPageProps) => {
     return (
-        <div className="flex flex-col min-h-screen">
+        <div className="flex flex-col min-h-screen w-full">
             <Navbar />
-            <div className="flex-1">
-                <h2>Поръчки</h2>
+            <div className="w-[75rem] mx-auto flex-1 flex flex-col">
+                <h2 className="text-center text-2xl my-6">Поръчки</h2>
                 <ul>
                     {orders.map(order => (
                         <li key={order.id}>

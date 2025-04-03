@@ -1,11 +1,11 @@
 import { NewProduct } from "@/types";
-import { useState } from "react";
+import React, { useState } from "react";
 
 const ProductForm = () => {
     const [formData, setFormData] = useState<NewProduct>({
         name: '',
         price: 0,
-        discount: undefined,
+        discount: 0,
         link: '',
         image1: '',
         image2: '',
@@ -20,12 +20,22 @@ const ProductForm = () => {
     const [error, setError] = useState<string>('');
     const [categoryInput, setCategoryInput] = useState<string>('');
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value, type, checked } = e.target;
-        setFormData({
-            ...formData,
-            [name]: type === 'checkbox' ? checked : value
-        });
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        const checked = e.target.type === "checkbox" ? (e.target as HTMLInputElement).checked : undefined;
+
+        if (name === "price" || name === "discount") {
+            setFormData({
+                ...formData,
+                [name]: value === "" ? 0 : Number(value)
+            });
+        }
+        else {
+            setFormData({
+                ...formData,
+                [name]: checked !== undefined ? checked : value
+            });
+        }
     };
 
     const handleCategoryAdd = () => {
@@ -50,7 +60,7 @@ const ProductForm = () => {
         setError('');
 
         try {
-            const response = await fetch('/api/product', {
+            const response = await fetch('/api/products', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -65,8 +75,7 @@ const ProductForm = () => {
 
             const data = await response.json();
 
-            // Add success message
-            alert(`Продукт ${data.product.name} беше добавен`);
+            alert(`Продукт ${data.name} беше добавен`);
         }
         catch (error) {
             if (error instanceof Error) setError(error.message);
@@ -75,120 +84,127 @@ const ProductForm = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="max-w-md mx-auto">
+        <form onSubmit={handleSubmit} className="w-[75rem] mx-auto mt-6">
             {error && <div className="text-red-500 mb-4">{error}</div>}
 
-            {/* Name */}
-            <div className="mb-4">
-                <label htmlFor="name" className="block mb-2">Име</label>
-                <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    className="w-full p-2 border rounded-md"
-                />
+            <div className="w-full flex gap-x-10">
+                {/* Name */}
+                <div className="w-full mb-4">
+                    <label htmlFor="name" className="block mb-2 text-center">Име</label>
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
+                        className="w-full p-2 border rounded-md"
+                    />
+                </div>
+                {/* Link */}
+                <div className="w-full mb-4">
+                    <label htmlFor="link" className="block mb-2 text-center">Линк</label>
+                    <input
+                        type="text"
+                        id="link"
+                        name="link"
+                        value={formData.link}
+                        onChange={handleChange}
+                        required
+                        className="w-full p-2 border rounded-md"
+                    />
+                </div>
             </div>
 
-            {/* Price */}
-            <div className="mb-4">
-                <label htmlFor="price" className="block mb-2">Цена</label>
-                <input
-                    type="number"
-                    id="price"
-                    name="price"
-                    value={formData.price}
-                    onChange={handleChange}
-                    required
-                    className="w-full p-2 border rounded-md"
-                />
+            <div className="w-full flex gap-x-10">
+                {/* Price */}
+                <div className="w-full mb-4">
+                    <label htmlFor="price" className="block mb-2 text-center">Цена</label>
+                    <input
+                        type="number"
+                        id="price"
+                        name="price"
+                        value={formData.price}
+                        onChange={handleChange}
+                        required
+                        className="w-full p-2 border rounded-md"
+                    />
+                </div>
+
+                {/* Discount */}
+                <div className="w-full mb-4">
+                    <label htmlFor="discount" className="block mb-2 text-center">Отстъпка</label>
+                    <input
+                        type="number"
+                        id="discount"
+                        name="discount"
+                        value={formData.discount}
+                        onChange={handleChange}
+                        className="w-full p-2 border rounded-md"
+                    />
+                </div>
             </div>
 
-            {/* Discount */}
-            <div className="mb-4">
-                <label htmlFor="discount" className="block mb-2">Отстъпка</label>
-                <input
-                    type="number"
-                    id="discount"
-                    name="discount"
-                    value={formData.discount}
-                    onChange={handleChange}
-                    className="w-full p-2 border rounded-md"
-                />
+            <div className="w-full flex gap-x-10">
+                {/* Image1 */}
+                <div className="w-full mb-4">
+                    <label htmlFor="image1" className="block mb-2 text-center">Първа снимка</label>
+                    <input
+                        type="text"
+                        id="image1"
+                        name="image1"
+                        value={formData.image1}
+                        onChange={handleChange}
+                        required
+                        className="w-full p-2 border rounded-md"
+                    />
+                </div>
+
+                {/* Image2 */}
+                <div className="w-full mb-4">
+                    <label htmlFor="image2" className="block mb-2 text-center">Втора снимка</label>
+                    <input
+                        type="text"
+                        id="image2"
+                        name="image2"
+                        value={formData.image2}
+                        onChange={handleChange}
+                        className="w-full p-2 border rounded-md"
+                    />
+                </div>
             </div>
 
-            {/* Link */}
-            <div className="mb-4">
-                <label htmlFor="link" className="block mb-2">Линк</label>
-                <input
-                    type="text"
-                    id="link"
-                    name="link"
-                    value={formData.link}
-                    onChange={handleChange}
-                    required
-                    className="w-full p-2 border rounded-md"
-                />
-            </div>
+            <div className="w-full flex gap-x-10">
+                {/* Image3 */}
+                <div className="w-full mb-4">
+                    <label htmlFor="image3" className="block mb-2 text-center">Трета снимка</label>
+                    <input
+                        type="text"
+                        id="image3"
+                        name="image3"
+                        value={formData.image3}
+                        onChange={handleChange}
+                        className="w-full p-2 border rounded-md"
+                    />
+                </div>
 
-            {/* Image1 */}
-            <div className="mb-4">
-                <label htmlFor="image1" className="block mb-2">Първа снимка</label>
-                <input
-                    type="text"
-                    id="image1"
-                    name="image1"
-                    value={formData.image1}
-                    onChange={handleChange}
-                    required
-                    className="w-full p-2 border rounded-md"
-                />
-            </div>
-
-            {/* Image2 */}
-            <div className="mb-4">
-                <label htmlFor="image2" className="block mb-2">Втора снимка</label>
-                <input
-                    type="text"
-                    id="image2"
-                    name="image2"
-                    value={formData.image2}
-                    onChange={handleChange}
-                    className="w-full p-2 border rounded-md"
-                />
-            </div>
-
-            {/* Image3 */}
-            <div className="mb-4">
-                <label htmlFor="image3" className="block mb-2">Трета снимка</label>
-                <input
-                    type="text"
-                    id="image3"
-                    name="image3"
-                    value={formData.image3}
-                    onChange={handleChange}
-                    className="w-full p-2 border rounded-md"
-                />
-            </div>
-
-            {/* Image4 */}
-            <div className="mb-4">
-                <label htmlFor="image4" className="block mb-2">Четвърта снимка</label>
-                <input
-                    type="text"
-                    id="image4"
-                    name="image4"
-                    value={formData.image4}
-                    onChange={handleChange}
-                    className="w-full p-2 border rounded-md"
-                />
+                {/* Image4 */}
+                <div className="w-full mb-4">
+                    <label htmlFor="image4" className="block mb-2 text-center">Четвърта снимка</label>
+                    <input
+                        type="text"
+                        id="image4"
+                        name="image4"
+                        value={formData.image4}
+                        onChange={handleChange}
+                        className="w-full p-2 border rounded-md"
+                    />
+                </div>
             </div>
 
             {/* Category */}
-            <div className="mb-4">
-                <label htmlFor="category" className="block mb-2">Категории</label>
+            <div className="w-full mb-4">
+                <label htmlFor="category" className="block mb-2 text-center">Категории (plocha, rulo, izkustvena-treva, tatami, postelki, platformi-podiumi)</label>
                 <div className="flex">
                     <input
                         type="text"
@@ -229,7 +245,7 @@ const ProductForm = () => {
             </div>
 
             {/* Popular */}
-            <div className="mb-4 flex items-center">
+            <div className="w-full mb-4 flex items-center justify-center">
                 <input
                     type="checkbox"
                     id="popular"
@@ -244,13 +260,13 @@ const ProductForm = () => {
             {/* Description */}
             <div className="mb-4">
                 <label htmlFor="description" className="block mb-2">Описание</label>
-                <input
-                    type="text"
+                <textarea
                     id="description"
                     name="description"
                     value={formData.description}
                     onChange={handleChange}
                     className="w-full p-2 border rounded-md"
+                    rows={6}
                 />
             </div>
 
@@ -270,16 +286,19 @@ const ProductForm = () => {
             {/* Manufacturer_description */}
             <div className="mb-4">
                 <label htmlFor="manufacturer_description" className="block mb-2">Описание на производител</label>
-                <input
-                    type="text"
+                <textarea
                     id="manufacturer_description"
                     name="manufacturer_description"
                     value={formData.manufacturer_description}
                     onChange={handleChange}
                     className="w-full p-2 border rounded-md"
+                    rows={6}
                 />
             </div>
-            <button type="submit" className="w-full bg-primary text-white p-2 rounded-md hover:bg-primaryDim transition-colors duration-300">
+            <button 
+                type="submit" 
+                className="block mx-auto p-2 mb-4 bg-primary text-white rounded-md hover:bg-primaryDim transition-colors duration-300"
+            >
                 Създаване
             </button>
         </form>
