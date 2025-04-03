@@ -1,71 +1,26 @@
-import { GetServerSideProps } from "next";
-import { getServerSession } from "next-auth";
-import prisma from "@/lib/prisma";
-import { authOptions } from "@/lib/authOptions";
-import { Order, Product } from "@/types";
-import ProductForm from "@/components/ProductForm";
+import Link from "next/link";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
-interface AdminPageProps {
-    orders: Order[];
-    products: Product[];
-}
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-    const session = await getServerSession(context.req, context.res, authOptions);
-
-    if (!session?.user?.isAdmin) {
-        return {
-            redirect: {
-                destination: '/login',
-                permanent: false
-            }
-        }
-    }
-
-    const orders = await prisma.orders.findMany({});
-    const products = await prisma.product.findMany({});
-
-    return {
-        props: {
-            orders: JSON.parse(JSON.stringify(orders)),
-            products: JSON.parse(JSON.stringify(products))
-        }
-    }
-};
-
-const AdminPage = ({ orders, products }: AdminPageProps) => {
-
-    const deleteProduct = async (id: number) => {
-        await fetch(`/api/products/${id}`, { method: "DELETE" });
-        products.filter(product => product.id !== id);
-    };
-
+const AdminPage = () => {
     return (
-        <div>
-            <h1>Admin Dashboard</h1>
-
-            <h2>Поръчки</h2>
-            <ul>
-                {orders.map(order => (
-                    <li key={order.id}>
-                        Поръчка #{order.id} - {order.status} - {order.total_price}лв.
-                    </li>
-                ))}
-            </ul>
-
-            <h2>Продукти</h2>
-            <ul>
-                {products.map(product => (
-                    <li key={product.id}>
-                        {product.name} - {product.price}
-                        <button onClick={() => deleteProduct(product.id)}>
-                            Изтрий
-                        </button>
-                    </li>
-                 ))}
-            </ul>
-
-            <ProductForm />
+        <div className="min-h-screen flex flex-col">
+            <Navbar />
+            <div className="flex flex-col flex-1 items-center justify-center gap-y-10">
+                <h1 className="text-5xl">Admin Dashboard</h1>
+                <div className="flex gap-6">
+                    <Link href="/admin/orders" className="bg-primary text-white p-4 rounded-lg hover:bg-primaryDim transition-colors duration-300">
+                        Поръчки
+                    </Link>
+                    <Link href="/admin/products" className="bg-primary text-white p-4 rounded-lg hover:bg-primaryDim transition-colors duration-300">
+                        Продукти
+                    </Link>
+                    <Link href="/admin/addProduct" className="bg-primary text-white p-4 rounded-lg hover:bg-primaryDim transition-colors duration-300">
+                        Добави продукт
+                    </Link>
+                </div>
+            </div>
+            <Footer />
         </div>
     );
 };

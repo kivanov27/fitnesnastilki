@@ -8,9 +8,11 @@ export interface Product {
     image2?: string;
     image3?: string;
     image4?: string;
-    description: string;
-    manufacturer: string;
-    manufacturer_description: string;
+    category: string[];
+    popular?: boolean;
+    description?: string;
+    manufacturer?: string;
+    manufacturer_description?: string;
 }
 
 export type NewProduct = Omit<Product, 'id'>;
