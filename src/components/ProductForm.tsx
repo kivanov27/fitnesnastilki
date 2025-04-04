@@ -145,66 +145,64 @@ const ProductForm = () => {
                 </div>
             </div>
 
-            <div className="w-full flex gap-x-10">
-                {/* Image1 */}
-                <div className="w-full mb-4">
-                    <label htmlFor="image1" className="block mb-2 text-center">Първа снимка</label>
-                    <input
-                        type="text"
-                        id="image1"
-                        name="image1"
-                        value={formData.image1}
-                        onChange={handleChange}
-                        required
-                        className="w-full p-2 border rounded-md"
-                    />
-                </div>
-
-                {/* Image2 */}
-                <div className="w-full mb-4">
-                    <label htmlFor="image2" className="block mb-2 text-center">Втора снимка</label>
-                    <input
-                        type="text"
-                        id="image2"
-                        name="image2"
-                        value={formData.image2}
-                        onChange={handleChange}
-                        className="w-full p-2 border rounded-md"
-                    />
-                </div>
+            {/* Image1 */}
+            <div className="w-full mb-4">
+                <label htmlFor="image1" className="block mb-2 text-center">Първа снимка</label>
+                <input
+                    type="text"
+                    id="image1"
+                    name="image1"
+                    value={formData.image1}
+                    onChange={handleChange}
+                    required
+                    className="w-full p-2 border rounded-md"
+                />
             </div>
 
-            <div className="w-full flex gap-x-10">
-                {/* Image3 */}
-                <div className="w-full mb-4">
-                    <label htmlFor="image3" className="block mb-2 text-center">Трета снимка</label>
-                    <input
-                        type="text"
-                        id="image3"
-                        name="image3"
-                        value={formData.image3}
-                        onChange={handleChange}
-                        className="w-full p-2 border rounded-md"
-                    />
-                </div>
+            {/* Image2 */}
+            <div className="w-full mb-4">
+                <label htmlFor="image2" className="block mb-2 text-center">Втора снимка</label>
+                <input
+                    type="text"
+                    id="image2"
+                    name="image2"
+                    value={formData.image2}
+                    onChange={handleChange}
+                    className="w-full p-2 border rounded-md"
+                />
+            </div>
 
-                {/* Image4 */}
-                <div className="w-full mb-4">
-                    <label htmlFor="image4" className="block mb-2 text-center">Четвърта снимка</label>
-                    <input
-                        type="text"
-                        id="image4"
-                        name="image4"
-                        value={formData.image4}
-                        onChange={handleChange}
-                        className="w-full p-2 border rounded-md"
-                    />
-                </div>
+            {/* Image3 */}
+            <div className="w-full mb-4">
+                <label htmlFor="image3" className="block mb-2 text-center">Трета снимка</label>
+                <input
+                    type="text"
+                    id="image3"
+                    name="image3"
+                    value={formData.image3}
+                    onChange={handleChange}
+                    className="w-full p-2 border rounded-md"
+                />
+            </div>
+
+            {/* Image4 */}
+            <div className="w-full mb-4">
+                <label htmlFor="image4" className="block mb-2 text-center">Четвърта снимка</label>
+                <input
+                    type="text"
+                    id="image4"
+                    name="image4"
+                    value={formData.image4}
+                    onChange={handleChange}
+                    className="w-full p-2 border rounded-md"
+                />
             </div>
 
             {/* Category */}
             <div className="w-full mb-4">
-                <label htmlFor="category" className="block mb-2 text-center">Категории (plocha, rulo, izkustvena-treva, tatami, postelki, platformi-podiumi)</label>
+                <label htmlFor="category" className="block mb-2 text-center">
+                    Категории (plocha, rulo, izkustvena-treva, tatami, postelki, platformi-podiumi, lepilo)
+                </label>
                 <div className="flex">
                     <input
                         type="text"

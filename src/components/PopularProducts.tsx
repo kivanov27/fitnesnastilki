@@ -2,8 +2,9 @@ import Image from "next/image";
 
 interface PopularProductsProps {
     products: {
-        name: string,
-        image1: string
+        id: number;
+        name: string;
+        image1: string;
     }[]
 }
 
@@ -14,7 +15,7 @@ const PopularProducts = ({ products }: PopularProductsProps) => {
             <div className="flex flex-wrap justify-between">
                 {products.map(product => (
                     <div 
-                        key={product.name}
+                        key={product.id}
                         className="w-[24%]"
                     >
                         <Image 
