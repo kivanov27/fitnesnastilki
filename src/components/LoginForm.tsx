@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { Button, TextField } from "@mui/material";
 
 const LoginForm = () => {
     const [email, setEmail] = useState('');
@@ -40,43 +41,36 @@ const LoginForm = () => {
     };
 
     return (
-        <div className="max-w-md mx-auto p-6 flex-1 flex flex-col items-center justify-center">
+        <div className="w-[75rem] mx-auto p-6 flex-1 flex flex-col items-center justify-center">
             <h2 className="text-2xl font-bold mb-6">Влезте в акаунта си</h2>
             {error && <div className="text-red-500 mb-4">{error}</div>}
 
-            <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                    <label htmlFor="email" className="block mb-1">Имейл</label>
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                        className="w-full p-2 border rounded-md"
-                    />
-                </div>
+            <form onSubmit={handleSubmit} className="flex flex-col gap-y-4">
+                <TextField
+                    type="email"
+                    id="email"
+                    name="email"
+                    label="Имейл"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                />
+                <TextField
+                    type="password"
+                    id="password"
+                    name="password"
+                    label="Парола"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                />
 
-                <div>
-                    <label htmlFor="password" className="block mb-1">Парола</label>
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                        className="w-full p-2 border rounded-md"
-                    />
-                </div>
-
-                <button
+                <Button
                     type="submit"
-                    className="w-full bg-primary text-white p-2 rounded-md hover:bg-primaryDim transition-colors duration-300"
+                    variant="contained"
                 >
                     Вход
-                </button>
+                </Button>
             </form>
 
             <span className="mt-4 text-gray-600">Нямате акаунт?</span>

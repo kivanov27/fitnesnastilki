@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { Button, TextField } from "@mui/material";
 
 const RegistrationForm = () => {
     const [formData, setFormData] = useState({
@@ -51,81 +52,75 @@ const RegistrationForm = () => {
     }
 
     return (
-        <form onSubmit={handleSubmit} className="max-w-md mx-auto">
+        <form onSubmit={handleSubmit} className="w-[75rem] mx-auto my-10 flex-1 flex flex-col justify-center gap-y-6">
             {error && <div className="text-red-500 mb-4">{error}</div>}
-            <div className="mb-4">
-                <label htmlFor="email" className="block mb-2">Имейл</label>
-                <input
+            <div className="flex justify-center gap-x-10">
+                <TextField
                     type="email"
                     id="email"
                     name="email"
+                    label="Имейл"
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full p-2 border rounded-md"
+                    variant="outlined"
                 />
-            </div>
-            <div className="mb-4">
-                <label htmlFor="password" className="block mb-2">Парола</label>
-                <input
+                <TextField
                     type="password"
                     id="password"
                     name="password"
+                    label="Парола"
                     value={formData.password}
                     onChange={handleChange}
                     required
-                    className="w-full p-2 border rounded-md"
+                    variant="outlined"
                 />
             </div>
-            <div className="mb-4">
-                <label htmlFor="phone" className="block mb-2">Телефон</label>
-                <input
-                    type="tel"
+            <div className="flex justify-center gap-x-10">
+                <TextField
+                    type="text"
                     id="phone"
                     name="phone"
+                    label="Телефон"
                     value={formData.phone}
                     onChange={handleChange}
                     required
-                    className="w-full p-2 border rounded-md"
+                    variant="outlined"
                 />
-            </div>
-            <div className="mb-4">
-                <label htmlFor="address" className="block mb-2">Адрес</label>
-                <input
+                <TextField
                     type="text"
                     id="address"
                     name="address"
+                    label="Адрес"
                     value={formData.address}
                     onChange={handleChange}
                     required
-                    className="w-full p-2 border rounded-md"
+                    variant="outlined"
                 />
             </div>
-            <div className="mb-4">
-                <label htmlFor="firstName" className="block mb-2">Име</label>
-                <input
+            <div className="flex justify-center gap-x-10">
+                <TextField
                     type="text"
                     id="firstName"
                     name="firstName"
+                    label="Име"
                     value={formData.firstName}
                     onChange={handleChange}
-                    className="w-full p-2 border rounded-md"
+                    variant="outlined"
                 />
-            </div>
-            <div className="mb-4">
-                <label htmlFor="lastName" className="block mb-2">Фамилия</label>
-                <input
+                <TextField
                     type="text"
                     id="lastName"
                     name="lastName"
+                    label="Фамилия"
                     value={formData.lastName}
                     onChange={handleChange}
-                    className="w-full p-2 border rounded-md"
+                    variant="outlined"
                 />
             </div>
-            <button type="submit" className="w-full bg-primary text-white p-2 rounded-md hover:bg-primaryDim transition-colors duration-300">
+            <Button type="submit" variant="contained" className="w-fit" sx={{ marginX: "auto" }}>
                 Регистрация
-            </button>
+            </Button>
         </form>
     );
 };
