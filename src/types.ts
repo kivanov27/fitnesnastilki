@@ -17,6 +17,16 @@ export interface Product {
 
 export type NewProduct = Omit<Product, 'id'>;
 
+export interface Category {
+    id: number;
+    name: string;
+    image: string;
+    link: string;
+    popular: boolean;
+}
+
+export type NewCategory = Omit<Category, 'id'>;
+
 export interface CartItem {
     id: number;
     name: string;

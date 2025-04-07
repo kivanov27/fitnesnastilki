@@ -60,6 +60,7 @@ const Slider = ({ slides }: SliderProps) => {
                             transform: `translateX(${-100 * index}%)`,
                             transition: "transform 0.3s ease-in-out",
                             minWidth: "100%",
+                            position: "relative",
                         }}
                     >
                         <Image
@@ -73,6 +74,12 @@ const Slider = ({ slides }: SliderProps) => {
                             draggable="false"
                             // style={{ translate: `${-100 * index}%` }}
                         />         
+                        <p 
+                            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center
+                            p-1 lg:p-3 text-sm lg:text-xl text-white bg-black bg-opacity-40 rounded-md lg:rounded-lg"
+                        >
+                            {text}
+                        </p>
                     </div>
                 ))}
             </div>
