@@ -28,7 +28,7 @@ const Home = async () => {
     const popularProducts = await getPopularProducts();
 
     return (
-        <div>
+        <div className="max-w-full">
             <Navbar />
             <div className="w-full aspect-[10/3] my-0 mx-auto">
                 <Slider slides={sliderData} />

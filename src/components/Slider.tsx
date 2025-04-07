@@ -61,18 +61,21 @@ const Slider = ({ slides }: SliderProps) => {
                             transition: "transform 0.3s ease-in-out",
                             minWidth: "100%",
                             position: "relative",
+                            height: "100%",
                         }}
                     >
                         <Image
                             key={text}
                             src={image}
                             alt={text}
-                            width={1920}
-                            height={600}
+                            // width={1920}
+                            // height={600}
+                            fill
+                            sizes="100vw"
+                            quality={75}
                             aria-hidden={index !== i}
                             className="slider-img object-cover w-full h-full block shrink-0 grow-0"
                             draggable="false"
-                            // style={{ translate: `${-100 * index}%` }}
                         />         
                         <p 
                             className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center
@@ -100,7 +103,7 @@ const Slider = ({ slides }: SliderProps) => {
                 <ArrowCircleRightIcon aria-hidden />
             </button>
 
-            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex gap-2">
+            <div className="hidden lg:flex absolute bottom-2 left-1/2 -translate-x-1/2 -translate-y-1/2 gap-2">
                 {slides.map((_, i) => (
                     <button 
                         key={i}

@@ -25,7 +25,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <SessionProvider session={pageProps.session}>
             <CartProvider>
                 <ThemeProvider theme={theme}>
-                    <div className={montserrat.className}>
+                    <div className={`max-w-full ${montserrat.className}`}>
                         <Component {...pageProps} />
                     </div>
                 </ThemeProvider>
