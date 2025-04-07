@@ -59,17 +59,13 @@ const Slider = ({ slides }: SliderProps) => {
                         style={{
                             transform: `translateX(${-100 * index}%)`,
                             transition: "transform 0.3s ease-in-out",
-                            minWidth: "100%",
-                            position: "relative",
-                            height: "100%",
                         }}
+                        className="relative min-w-full h-full"
                     >
                         <Image
                             key={text}
                             src={image}
                             alt={text}
-                            // width={1920}
-                            // height={600}
                             fill
                             sizes="100vw"
                             quality={75}
