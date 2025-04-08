@@ -1,19 +1,12 @@
+import { Category } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 
-interface PopularCategoriesProps {
-    categories: {
-        name: string,
-        image: string,
-        link: string
-    }[]
-}
-
-const PopularCategories = ({ categories }: PopularCategoriesProps) => {
+const PopularCategories = ({ categories }: { categories: Category[] }) => {
     return (
-        <div className="pt-6 lg:pt-24 w-full xl:w-[75rem] mx-auto">
+        <div className="w-full xl:w-[75rem] pt-6 lg:pt-24 px-6 sm:px-12 lg:px-20 xl:px-0 mx-auto">
             <h2 className="mb-6 lg:mb-12 text-xl lg:text-4xl text-center uppercase text-primary">Популярни категории</h2>
-            <div className="flex flex-wrap justify-center xl:justify-between gap-x-4 md:gap-x-6 lg:gap-x-10 xl:gap-x-0">
+            <div className="flex flex-wrap justify-between ">
                 {categories.map(category => (
                     <div key={category.link} className="w-[45%]">
                         <Link 

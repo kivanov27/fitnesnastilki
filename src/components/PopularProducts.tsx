@@ -1,33 +1,31 @@
+import { Product } from "@/types";
 import Image from "next/image";
+import Link from "next/link";
 
-interface PopularProductsProps {
-    products: {
-        id: number;
-        name: string;
-        image1: string;
-    }[]
-}
-
-const PopularProducts = ({ products }: PopularProductsProps) => {
+const PopularProducts = ({ products }: { products: Product[] }) => {
     return (
-        <div className="my-24 w-[75rem] mx-auto">
-            <h2 className="mb-12 text-4xl text-center uppercase text-primary">Популярни продукти</h2>
+        <div className="w-full xl:w-[75rem] my-6 lg:my-24 mx-auto px-6 sm:px-12 lg:px-20 xl:px-0">
+            <h2 className="mb-6 lg:mb-12 text-xl lg:text-4xl text-center uppercase text-primary">Популярни продукти</h2>
             <div className="flex flex-wrap justify-between">
                 {products.map(product => (
-                    <div 
+                    <Link 
                         key={product.id}
-                        className="w-[24%]"
+                        href={`/katalog/vsichki/${product.link}`}
+                        className="w-[45%] sm:w-[30%] md:w-[22%] lg:w-[23%] xl:w-[24%]"
                     >
-                        <Image 
-                            src={product.image1} 
-                            alt={product.name} 
-                            className="min-h-[288px] mb-4 border border-gray-400 drop-shadow-md" 
-                            draggable="false"
-                            width={288}
-                            height={288}
-                        />
-                        <h3 className="text-center mb-8">{product.name}</h3>
-                    </div>
+                        <div className="relative w-full aspect-square mb-4 border border-gray-400 drop-shadow-md overflow-hidden">
+                            <Image 
+                                src={product.image1} 
+                                alt={product.name} 
+                                fill
+                                sizes="(max-width: 639px) 45vw, (max-width: 767px) 30vw, (max-width: 1023px) 22vw, 24vw"
+                                quality={75}
+                                draggable="false"
+                                className="object-cover hover:scale-105 transition-transform duration-300"
+                            />
+                        </div>
+                        <h3 className="text-center text-sm lg:text-base mb-6 lg:mb-8">{product.name}</h3>
+                    </Link>
                 ))}
             </div>
         </div>
