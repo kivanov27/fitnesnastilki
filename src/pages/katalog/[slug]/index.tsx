@@ -68,7 +68,7 @@ const Category = () => {
             <Navbar />
             <Breadcrumbs 
                 aria-label="breadcrumbs" 
-                className="w-[75rem] mx-auto"
+                className="w-full xl:w-[75rem] mx-auto px-6 sm:px-12 lg:px-20 xl:px-0"
                 sx={{ marginX: 'auto', marginY: '2rem' }}
             >
                 <Link href="/katalog" className="hover:underline hover:text-primary">
@@ -77,7 +77,7 @@ const Category = () => {
                 {renderBreadcrumb()}
             </Breadcrumbs>
 
-            <div className="flex flex-grow justify-center w-[75rem] mx-auto mb-20">
+            <div className="flex flex-grow justify-center w-full xl:w-[75rem] mx-auto px-6 sm:px-12 lg:px-20 xl:px-0 mb-20">
                 <Sidebar />
                 <Products products={products} category={slug} />
             </div>

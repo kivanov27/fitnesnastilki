@@ -1,4 +1,4 @@
-"use client" // remove if no copy functionality
+"use client"
 
 import Link from 'next/link';
 import StoreIcon from '@mui/icons-material/Store';
@@ -37,11 +37,11 @@ const Footer = () => {
 
     return (
         <div className="py-8 bg-primary text-white">
-            <div className='w-[75rem] mx-auto flex'>
+            <div className='w-fit xl:w-[75rem] mx-auto flex flex-col xl:flex-row'>
 
-                <div className="w-1/3">
-                    <h3 className='font-medium text-lg mb-4 underline underline-offset-8'>Информация</h3>
-                    <ul className=''>
+                <div className="xl:w-1/3 mb-6 xl:mb-0 px-6 xl:px-0">
+                    <h3 className='font-bold text-lg text-start uppercase mb-2 xl:mb-4 '>Информация</h3>
+                    <ul className='flex flex-col items-start'>
                         <li className='footer-li'>Общи условия</li>
                         <li className='footer-li'>Политика за поверителност</li>
                         <li className='footer-li'>Плащане и доставка</li>
@@ -49,9 +49,9 @@ const Footer = () => {
                     </ul>
                 </div>
 
-                <div className="w-1/3">
-                    <h3 className='font-medium text-lg mb-4 underline underline-offset-8'>Продукти</h3>
-                    <ul className=''>
+                <div className="xl:w-1/3 mb-6 xl:mb-0 px-6 xl:px-0">
+                    <h3 className='font-bold text-lg text-start uppercase mb-2 xl:mb-4'>Продукти</h3>
+                    <ul className='flex flex-col items-start'>
                         <li className='footer-li'>
                             <Link href='/katalog/plocha' className='hover:text-gray-300'>
                                 Настилки на плоча
@@ -90,9 +90,9 @@ const Footer = () => {
                     </ul>
                 </div>
 
-                <div className="w-1/3">
-                    <h3 className='font-medium text-lg mb-4 underline underline-offset-8'>Контакти</h3>
-                    <div className='relative flex items-center gap-x-4 mb-2'>
+                <div className="xl:w-1/3 px-6 xl:px-0">
+                    <h3 className='font-bold text-lg text-start uppercase mb-2 xl:mb-4'>Контакти</h3>
+                    <div className='relative flex items-center justify-start gap-x-4 mb-2'>
                         <EmailIcon />
                         <span 
                             className='cursor-pointer hover:text-gray-300' 
@@ -107,7 +107,7 @@ const Footer = () => {
                             Копирано
                         </span>
                     </div>
-                    <div className='relative flex items-center gap-x-4 mb-2'>
+                    <div className='relative flex items-center justify-start gap-x-4 mb-2'>
                         <PhoneIcon />
                         <span 
                             className='cursor-pointer hover:text-gray-300' 
@@ -120,7 +120,7 @@ const Footer = () => {
                             Копирано
                         </span>
                     </div>
-                    <div className='flex items-center gap-x-4'>
+                    <div className='flex items-center justify-start gap-x-4'>
                         <StoreIcon />
                         <Link href='' className='hover:text-gray-300'>olx: фитнес настилки</Link>
                     </div>

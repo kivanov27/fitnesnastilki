@@ -70,7 +70,7 @@ const Navbar = () => {
 
     return (
         <div className='border border-b-gray-400'>
-            <div className="flex justify-between items-centerw w-full lg:w-[75rem] mx-auto">
+            <div className="flex justify-between items-centerw w-full xl:w-[75rem] mx-auto lg:px-20 xl:px-0">
                 {/* Logo */}
                 {!isMobileView &&
                     <div className='border p-10 border-gray-900'>

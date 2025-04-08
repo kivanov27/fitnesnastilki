@@ -74,8 +74,8 @@ const Slider = ({ slides }: SliderProps) => {
                             draggable="false"
                         />         
                         <p 
-                            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center
-                            p-1 lg:p-3 text-sm lg:text-xl text-white bg-black bg-opacity-40 rounded-md lg:rounded-lg"
+                            className="absolute w-full lg:w-fit top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center
+                            p-1 lg:p-3 text-base lg:text-xl text-white font-medium bg-black bg-opacity-30 lg:rounded-lg"
                         >
                             {text}
                         </p>

@@ -8,7 +8,10 @@ const PopularCategories = ({ categories }: { categories: Category[] }) => {
             <h2 className="mb-6 lg:mb-12 text-xl lg:text-4xl text-center uppercase text-primary">Популярни категории</h2>
             <div className="flex flex-wrap justify-between ">
                 {categories.map(category => (
-                    <div key={category.link} className="w-[45%]">
+                    <div 
+                        key={category.link} 
+                        className="w-full md:w-[45%]"
+                    >
                         <Link 
                             href={`/katalog/${category.link}`} 
                             draggable="false"
@@ -21,7 +24,7 @@ const PopularCategories = ({ categories }: { categories: Category[] }) => {
                                     src={category.image} 
                                     alt={category.name} 
                                     fill
-                                    sizes="45vw"
+                                    sizes="(max-width: 767px) 100vw, 45vw"
                                     quality={75}
                                     draggable="false"
                                     className="object-cover hover:scale-105 transition-transform duration-300" 
@@ -29,7 +32,7 @@ const PopularCategories = ({ categories }: { categories: Category[] }) => {
                             </div>
                         </Link>
                         <h3 
-                            className="text-center uppercase mb-8 lg:mb-12 text-sm md:text-base lg:text-xl"
+                            className="text-center uppercase mb-8 lg:mb-12 text-base lg:text-xl"
                         >
                             {category.name}
                         </h3>

@@ -13,7 +13,7 @@ const PopularProducts = ({ products }: { products: Product[] }) => {
                         href={`/katalog/vsichki/${product.link}`}
                         className="w-[45%] sm:w-[30%] md:w-[22%] lg:w-[23%] xl:w-[24%]"
                     >
-                        <div className="relative w-full aspect-square mb-4 border border-gray-400 drop-shadow-md overflow-hidden">
+                        <div className="relative w-full aspect-square mb-2 lg:mb-4 border border-gray-400 drop-shadow-md overflow-hidden">
                             <Image 
                                 src={product.image1} 
                                 alt={product.name} 
