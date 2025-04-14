@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { CartItem, NewOrderItem } from "@/types";
+import { NewOrderItem } from "@/types";
 import prisma from "@/lib/prisma";
 import { isAdmin } from "@/lib/auth";
 

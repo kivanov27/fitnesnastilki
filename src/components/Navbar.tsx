@@ -9,10 +9,12 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import { Category } from '@/types';
+import { Category, Logo } from '@/types';
+import Image from 'next/image';
 
 const Navbar = () => {
     const { cart } = useCart();
+    const [logo, setLogo] = useState<Logo>();
     const [isMobileView, setIsMobileView] = useState<boolean>(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
     const [categories, setCategories] = useState<Category[]>([]);
@@ -38,6 +40,21 @@ const Navbar = () => {
             }
         }
 
+        const fetchLogo = async () => {
+            try {
+                const response = await fetch('/api/logo');
+                const data = await response.json();
+                setLogo(data);
+            }
+            catch (error) {
+                console.error("Error fetching logo: ", logo);
+            }
+            finally {
+                setIsLoading(false);
+            }
+        }
+
+        fetchLogo();
         fetchCategories();
 
         const handleResize = () => {
@@ -69,13 +86,21 @@ const Navbar = () => {
     };
 
     return (
-        <div className='border border-b-gray-400'>
+        <div className='border border-b-gray-400 lg:h-28'>
             <div className="flex justify-between items-centerw w-full xl:w-[75rem] mx-auto lg:px-20 xl:px-0">
                 {/* Logo */}
-                {!isMobileView &&
-                    <div className='border p-10 border-gray-900'>
-                        logo
-                    </div>
+                {!isMobileView && logo &&
+                    <Link href="/">
+                        <div className='relative w-28 h-28 p-10'>
+                            <Image
+                                src={logo.image}
+                                alt="logo"
+                                fill
+                                sizes='7rem'
+                                className='object-cover'
+                            />
+                        </div>
+                    </Link>
                 }
 
                 {/* Nav links */}
@@ -139,7 +164,7 @@ const Navbar = () => {
             )}
 
             {/* Mobile menu */}
-            {isMobileView &&
+            {isMobileView && logo &&
                 <div className={`fixed top-0 left-0 h-full w-64 bg-white z-50 shadow-lg
                                 transform transition-transform duration-300 ease-in-out
                                 ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}
@@ -151,6 +176,18 @@ const Navbar = () => {
                         >
                             <CloseIcon />
                         </button>
+
+                        <Link href="/" className='mb-2'>
+                            <div className='relative w-20 h-20 p-10'>
+                                <Image
+                                    src={logo.image}
+                                    alt="logo"
+                                    fill
+                                    sizes='5rem'
+                                    className='object-cover'
+                                />
+                            </div>
+                        </Link>
 
                         <nav className='flex-1 flex flex-col gap-6 overflow-y-auto'>
                             <Link 

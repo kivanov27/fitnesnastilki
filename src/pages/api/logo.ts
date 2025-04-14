@@ -11,16 +11,14 @@ const pool = new Pool({
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method !== "GET") {
-        res.setHeader("Allow", ["GET"]);
-        return res.status(405).json({ error: `Method ${req.method} is not allowed` });
+        return res.status(405).json({ error: "Method not allowed" });
     }
-
     try {
-        const result = await pool.query("SELECT * FROM categories ORDER BY id ASC;");
-        return res.status(200).json(result.rows);
+        const result = await pool.query("SELECT * FROM logo;");
+        return res.status(200).json(result.rows[0]);
     }
     catch (error) {
-        console.error("Error fetching popular categories:", error);
+        console.error("Error fetching logo: ", error);
         return res.status(500).json({ error: "Internal Server Error" });
     }
 }

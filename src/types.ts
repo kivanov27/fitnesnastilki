@@ -73,3 +73,8 @@ export interface NewOrder {
     notes?: string;
     order_items: NewOrderItem[];
 }
+
+export interface Logo {
+    image: string;
+    link: string;
+}

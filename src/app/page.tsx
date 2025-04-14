@@ -30,7 +30,7 @@ const Home = async () => {
     return (
         <div className="max-w-full">
             <Navbar />
-            <div className="w-full aspect-[10/3] my-0 mx-auto">
+            <div className="w-full aspect-[10/7] sm:aspect-[10/4] lg:aspect-[10/3] my-0 mx-auto">
                 <Slider slides={sliderData} />
             </div>
             <PopularCategories categories={popularCategories} />
