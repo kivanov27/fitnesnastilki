@@ -35,15 +35,17 @@ export interface CartItem {
     image: string;
 }
 
-export interface OrderItems {
+export interface OrderItem {
     id: string;
     order_id: string;
-    product_id: string;
+    product_id: number;
     product_name: string;
     price: number;
     quantity: number;
     subtotal: number;
 }
+
+export type NewOrderItem = Omit<OrderItem, 'id' | 'order_id'>;
 
 export interface Order {
     id: string;
@@ -52,8 +54,22 @@ export interface Order {
     customer_email: string;
     customer_phone: string;
     customer_address: string;
+    customer_city: string;
     total_price: number;
     status?: string;
-    created_at: Date;
-    order_items: OrderItems[];
+    order_items: OrderItem[];
+    notes?: string;
+}
+
+export interface NewOrder {
+    customer_name: string;
+    customer_surname: string;
+    customer_email: string;
+    customer_phone: string;
+    customer_address: string;
+    customer_city: string;
+    total_price: number;
+    status?: string;
+    notes?: string;
+    order_items: NewOrderItem[];
 }

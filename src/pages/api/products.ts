@@ -1,16 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { Pool } from 'pg';
 import { isAdmin } from "@/lib/auth";
 import prisma from "@/lib/prisma";
-
-// Create a PostgreSQL connection pool
-const pool = new Pool({
-    user: 'admin',
-    host: '164.90.174.87',
-    database: 'fitnesnastilkidb',
-    password: process.env.DB_PASSWORD,
-    port: 5432
-});
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
@@ -31,8 +21,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 }
 
 async function handleGetProducts(res: NextApiResponse) {
-    const result = await pool.query('SELECT * FROM product;');
-    return res.status(200).json(result.rows);
+    const products = await prisma.product.findMany();
+    return res.status(200).json(products);
 }
 
 async function handlePostProduct(req: NextApiRequest, res: NextApiResponse) {
@@ -40,7 +30,13 @@ async function handlePostProduct(req: NextApiRequest, res: NextApiResponse) {
         return res.status(403).json({ error: "Unauthorized" });
     }
 
-    const data = req.body;
-    const newProduct = await prisma.product.create({ data });
-    return res.status(201).json(newProduct);
+    try {
+        const data = req.body;
+        const newProduct = await prisma.product.create({ data });
+        return res.status(201).json(newProduct);
+    } 
+    catch (error) {
+        console.error("Create product error:", error);
+        return res.status(400).json({ error: "Failed to create product" });
+    }
 }

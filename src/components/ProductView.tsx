@@ -66,10 +66,13 @@ const ProductView = ({ product, category }: ProductViewProps) => {
     };
 
     return (
-        <div className="w-[75rem] mx-auto my-10 flex">
+        <div 
+            className="w-full xl:w-[75rem] mx-auto my-10 px-6 sm:px-12 lg:px-20 xl:px-0
+            flex flex-col md:flex-row gap-y-6 md:gap-y-0"
+        >
 
             {/* Left side */}
-            <div className="w-1/2 pe-2">
+            <div className="w-full md:w-1/2 md:pe-2">
 
                 {/* Main image */}
                 <div className="w-full flex overflow-hidden">
@@ -83,15 +86,17 @@ const ProductView = ({ product, category }: ProductViewProps) => {
                             }}
                             className="border border-gray-400"
                         >
-                            <Image 
-                                src={image} 
-                                alt={`Product image ${i+1}`} 
-                                width={600}
-                                height={600}
-                                aria-hidden={index !== i}
-                                className="slider-img w-[37.25rem] h-[37.25rem] object-contain block shrink-0 grow-0"
-                                draggable="false"
-                            />
+                            <div className="relative w-full aspect-square">
+                                <Image 
+                                    src={image} 
+                                    alt={`Product image ${i+1}`} 
+                                    aria-hidden={index !== i}
+                                    fill
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 37.25rem"
+                                    className="slider-img object-contain"
+                                    draggable="false"
+                                />
+                            </div>
                         </div>
                     ))}
                 </div>
@@ -118,13 +123,15 @@ const ProductView = ({ product, category }: ProductViewProps) => {
                                 className={`cursor-pointer border-2 ${index === i ? "border-gray-400" : "border-transparent"} transition-all duration-300`}
                                 onClick={() => setIndex(i)}
                             >
-                                <Image
-                                    src={image}
-                                    alt={`Product image ${i + 1}`}
-                                    width={200}
-                                    height={200}
-                                    className="w-40 min-w-40 h-40 object-cover"
-                                />
+                                <div className="relative w-24 h-24 lg:w-32 lg:h-32 xl:w-40 xl:h-40">
+                                    <Image
+                                        src={image}
+                                        alt={`Product image ${i + 1}`}
+                                        fill
+                                        sizes="(max-width: 1024px) 6rem, (max-width: 1280px) 8rem, 10rem"
+                                        className="object-cover"
+                                    />
+                                </div>
                             </div>
                         ))}
                     </div>
@@ -141,7 +148,7 @@ const ProductView = ({ product, category }: ProductViewProps) => {
             </div>
 
             {/* Right side */}
-            <div className="w-1/2 bg-white ms-2 shadow-lg border border-gray-400 p-8">
+            <div className="w-full md:w-1/2 bg-white md:ms-2 shadow-lg border border-gray-400 p-4 sm:p-8">
                 {/* Breadcrumbs */}
                 {category && 
                     <Breadcrumbs aria-label="breadcrumbs" sx={{ fontSize: "0.75rem", marginBottom: "2rem" }}>
@@ -154,18 +161,18 @@ const ProductView = ({ product, category }: ProductViewProps) => {
                 }
 
                 {/* Product name */}
-                <h2 className="text-3xl font-medium mb-8">{product.name}</h2>
+                <h2 className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-medium mb-8">{product.name}</h2>
 
                 {/* Price */}
                 {product.discount ?
                     <div className="mb-8">
-                        <p className="text-2xl text-primary font-medium">
+                        <p className="text-base sm:text-lg lg:text-xl xl:text-2xl text-primary font-medium">
                             <span className="font-normal text-gray-400 me-3 line-through">{product.price}лв.</span>
                             {product.price - (product.price * product.discount / 100)}лв.
                         </p>
                     </div>
                     :
-                    <p className="text-2xl text-primary font-medium mb-8">{product.price}лв.</p>
+                    <p className="text-base sm:text-lg lg:text-xl xl:text-2xl text-primary font-medium mb-8">{product.price}лв.</p>
                 }
 
                 {/* Add to cart */}

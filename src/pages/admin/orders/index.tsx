@@ -22,7 +22,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         }
     }
 
-    const orders = await prisma.orders.findMany({});
+    const orders = await prisma.orders.findMany({
+        include: {
+            order_items: true,
+        }
+    });
 
     return {
         props: {
@@ -35,15 +39,31 @@ const OrdersPage = ({ orders }: OrdersPageProps) => {
     return (
         <div className="flex flex-col min-h-screen w-full">
             <Navbar />
-            <div className="w-[75rem] mx-auto flex-1 flex flex-col">
+            <div className="w-full xl:w-[75rem] mx-auto flex-1 flex flex-col px-6 sm:px-12 lg:px-20 xl:px-0">
                 <h2 className="text-center text-2xl my-6">Поръчки</h2>
-                <ul>
+                <div className="flex flex-col mb-6">
                     {orders.map(order => (
-                        <li key={order.id}>
-                            Поръчка #{order.id} - {order.status} - {order.total_price}лв.
-                        </li>
+                        <div key={order.id} className="flex flex-col gap-y-2">
+                            <p className="font-medium">Поръчка #{order.id}</p>
+                            <p><span className="font-medium">Статус: </span>{order.status}</p>
+                            <p><span className="font-medium">Име: </span>{order.customer_name} {order.customer_surname}</p>
+                            <p><span className="font-medium">Тел: </span>{order.customer_phone}</p>
+                            <p><span className="font-medium">Имейл: </span>{order.customer_email}</p>
+                            <p><span className="font-medium">Адрес: </span>{order.customer_city}, {order.customer_address}</p>
+                            <p><span className="font-medium">Сума: </span>{order.total_price}лв.</p>
+                            {order.notes && <p>Бележки: {order.notes}</p>}
+                            <p className="font-medium">Продукти:</p>
+                            {order.order_items && order.order_items.map(item => (
+                                <div key={item.id} className="flex gap-x-4">
+                                    <p>{item.product_name}</p>
+                                    <p><span className="font-medium">Цена: </span>{item.price}лв.</p>
+                                    <p><span className="font-medium">Брой: </span>{item.quantity}</p>
+                                    <p><span className="font-medium">Общо: </span>{item.subtotal}лв.</p>
+                                </div>
+                            ))}
+                        </div>
                     ))}
-                </ul>
+                </div>
             </div>
             <Footer />
         </div>

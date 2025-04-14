@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { CartItem } from "@/types";
+import { CartItem, NewOrderItem } from "@/types";
 import prisma from "@/lib/prisma";
 import { isAdmin } from "@/lib/auth";
 
@@ -41,12 +41,13 @@ async function handlePostOrder(req: NextApiRequest, res: NextApiResponse) {
         customer_email,
         customer_phone,
         customer_address,
+        customer_city,
         total_price,
         order_items
     } = req.body;
 
     if (!customer_name || !customer_surname || !customer_email || !customer_phone || 
-        !customer_address || !total_price || !order_items.length) {
+        !customer_address || !customer_city || !total_price || !order_items.length) {
         return res.status(400).json({ error: "All fields are required." });
     }
 
@@ -57,15 +58,16 @@ async function handlePostOrder(req: NextApiRequest, res: NextApiResponse) {
             customer_email,
             customer_phone,
             customer_address,
+            customer_city,
             total_price,
             status: "Pending",
             order_items: {
-                create: order_items.map((item: CartItem) => ({
-                    product_id: item.id,
-                    product_name: item.name,
-                    price: item.price / item.quantity,
+                create: order_items.map((item: NewOrderItem) => ({
+                    product_id: item.product_id,
+                    product_name: item.product_name,
+                    price: item.price,
                     quantity: item.quantity,
-                    subtotal: item.price,
+                    subtotal: item.subtotal,
                 })),
             },
         },

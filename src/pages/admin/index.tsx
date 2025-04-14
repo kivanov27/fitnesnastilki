@@ -8,14 +8,23 @@ const AdminPage = () => {
             <Navbar />
             <div className="flex flex-col flex-1 items-center justify-center gap-y-10">
                 <h1 className="text-5xl">Admin Dashboard</h1>
-                <div className="flex gap-6">
-                    <Link href="/admin/orders" className="bg-primary text-white p-4 rounded-lg hover:bg-primaryDim transition-colors duration-300">
+                <div className="flex flex-col gap-6">
+                    <Link 
+                        href="/admin/orders" 
+                        className="bg-primary text-white text-center p-4 rounded-lg hover:bg-primaryDim transition-colors duration-300"
+                    >
                         Поръчки
                     </Link>
-                    <Link href="/admin/products" className="bg-primary text-white p-4 rounded-lg hover:bg-primaryDim transition-colors duration-300">
+                    <Link 
+                        href="/admin/products" 
+                        className="bg-primary text-white text-center p-4 rounded-lg hover:bg-primaryDim transition-colors duration-300"
+                    >
                         Продукти
                     </Link>
-                    <Link href="/admin/addProduct" className="bg-primary text-white p-4 rounded-lg hover:bg-primaryDim transition-colors duration-300">
+                    <Link 
+                        href="/admin/addProduct" 
+                        className="bg-primary text-white text-center p-4 rounded-lg hover:bg-primaryDim transition-colors duration-300"
+                    >
                         Добави продукт
                     </Link>
                 </div>

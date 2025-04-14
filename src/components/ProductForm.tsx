@@ -84,10 +84,10 @@ const ProductForm = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="w-[75rem] mx-auto mt-6">
+        <form onSubmit={handleSubmit} className="w-full xl:w-[75rem] mx-auto mt-6 px-6 sm:px-12 lg:px-20 xl:px-0">
             {error && <div className="text-red-500 mb-4">{error}</div>}
 
-            <div className="w-full flex gap-x-10">
+            <div className="w-full flex flex-col sm:flex-row gap-x-10">
                 {/* Name */}
                 <div className="w-full mb-4">
                     <label htmlFor="name" className="block mb-2 text-center">Име</label>
