@@ -46,13 +46,13 @@ const ProductTabs = ({ name, description, manufacturer, manufacturer_description
             <div className='mt-4'>
                 {activeTab === 'description' ? (
                     <div>
-                        <h2 className='text-xl font-medium mb-4'>{name}</h2>
-                        <p>{description}</p>
+                        <h2 className='text-base lg:text-xl font-medium mb-4'>{name}</h2>
+                        <div dangerouslySetInnerHTML={{ __html: description }} className='text-sm lg:text-base' />
                     </div>
                 ) : (
                     <div>
-                        <h2 className='text-xl font-medium mb-4'>{manufacturer}</h2>
-                        <p>{manufacturer_description}</p>
+                        <h2 className='text-base lg:text-xl font-medium mb-4'>{manufacturer}</h2>
+                        {manufacturer_description && <div dangerouslySetInnerHTML={{ __html: manufacturer_description }} className='text-sm lg:text-base' />}
                     </div>
                 )}
             </div>
