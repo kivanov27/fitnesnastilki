@@ -21,7 +21,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 }
 
 async function handleGetProducts(res: NextApiResponse) {
-    const products = await prisma.product.findMany();
+    const products = await prisma.product.findMany({
+        orderBy: {
+            id: 'asc'
+        }
+    });
     return res.status(200).json(products);
 }
 

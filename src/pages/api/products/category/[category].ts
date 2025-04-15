@@ -22,7 +22,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     try {
-        const result = await pool.query("SELECT * FROM product WHERE $1 = ANY(category);", [category]);
+        const result = await pool.query("SELECT * FROM product WHERE $1 = ANY(category) ORDER BY id ASC;", [category]);
 
         if (result.rows.length === 0) {
             return res.status(404).json({ error: `Products in category ${category} not found` });

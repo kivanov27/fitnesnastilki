@@ -165,12 +165,12 @@ const ProductView = ({ product, category }: ProductViewProps) => {
                     {product.discount ?
                         <div className="mb-8">
                             <p className="text-base sm:text-lg lg:text-xl xl:text-2xl text-primary font-medium">
-                                <span className="font-normal text-gray-400 me-3 line-through">{product.price}лв.</span>
-                                {product.price - (product.price * product.discount / 100)}лв.
+                                <span className="font-normal text-gray-400 me-3 line-through">{product.price.toFixed(2)}лв.</span>
+                                {(product.price - (product.price * product.discount / 100)).toFixed(2)}лв.
                             </p>
                         </div>
                         :
-                        <p className="text-base sm:text-lg lg:text-xl xl:text-2xl text-primary font-medium mb-8">{product.price}лв.</p>
+                        <p className="text-base sm:text-lg lg:text-xl xl:text-2xl text-primary font-medium mb-8">{product.price.toFixed(2)}лв.</p>
                     }
 
                     {/* Add to cart */}

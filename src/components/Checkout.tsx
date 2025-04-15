@@ -196,7 +196,7 @@ const Checkout = () => {
                                     {item.name} <span className="font-bold">x {item.quantity}</span>
                                 </div>
                                 <div className="text-sm text-center">
-                                    {item.price * item.quantity}лв.
+                                    {(item.price * item.quantity).toFixed(2)}лв.
                                 </div>
                             </div>
                         )}

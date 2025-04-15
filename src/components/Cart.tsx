@@ -53,7 +53,7 @@ const Cart = () => {
                                         </div>
                                     </td>
                                     <td className="pe-5 lg:pe-10 text-center text-base">{product.name}</td>
-                                    <td className="pe-5 lg:pe-10 text-center text-base">{product.price}лв.</td>
+                                    <td className="pe-5 lg:pe-10 text-center text-base">{product.price.toFixed(2)}лв.</td>
                                     <td className="h-24 pe-5 lg:pe-10 flex justify-center items-center">
                                         <div
                                             className="border border-gray-300 p-2 cursor-pointer transition-colors
@@ -124,7 +124,7 @@ const Cart = () => {
                                             <p className="font-semibold text-sm">{product.name}</p>
                                             <p className="text-sm flex justify-between">
                                                 <span className="font-medium">Цена: </span>
-                                                {product.price}лв.
+                                                {product.price.toFixed(2)}лв.
                                             </p>
                                             <div className="flex justify-between items-center">
                                                 <span className="font-medium">Количество: </span>

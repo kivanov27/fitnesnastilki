@@ -56,7 +56,7 @@ const Product = ({ product, category }: ProductProps) => {
                     </span>
                 </p>
                 :
-                <p className="text-primary font-medium xl:text-base">{product.price} лв.</p>
+                <p className="text-primary font-medium xl:text-base">{product.price.toFixed(2)} лв.</p>
             }
             <Button 
                 variant="contained" 
