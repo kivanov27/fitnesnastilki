@@ -33,9 +33,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 const AdminProductsPage = ({ products }: AdminProductsPageProps) => {
-    const deleteProduct = async (id: number) => {
-        await fetch(`/api/products/${id}`, { method: "DELETE" });
-        products.filter(product => product.id !== id);
+    const deleteProduct = async (link: string) => {
+        await fetch(`/api/products/${link}`, { method: "DELETE" });
+        products.filter(product => product.link !== link);
     };
 
     return (
@@ -57,10 +57,14 @@ const AdminProductsPage = ({ products }: AdminProductsPageProps) => {
                         <p className="font-medium">{product.name}</p>
                         <p>Цена: {product.price}лв.</p>
                         <p>Отстъпка: {product.discount}%</p>
-                        {product.discount && <p>Крайна: {product.price - (product.price * product.discount / 100)}</p>}
+                        {product.discount ?
+                            <p>Крайна: {product.price - (product.price * product.discount / 100)}лв.</p>
+                            :
+                            <p>Крайна: {product.price}лв.</p>
+                        }
                         <button 
                             className="text-white bg-primary p-2"
-                            onClick={() => deleteProduct(product.id)}
+                            onClick={() => deleteProduct(product.link)}
                         >
                             Изтрий
                         </button>
