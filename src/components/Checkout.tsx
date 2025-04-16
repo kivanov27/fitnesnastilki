@@ -6,19 +6,19 @@ import { NewOrder } from "@/types";
 
 const Checkout = () => {
     const [formData, setFormData] = useState<NewOrder>({
-        customer_name: '',
-        customer_surname: '',
-        customer_email: '',
-        customer_phone: '',
-        customer_address: '',
-        customer_city: '',
+        customer_name: "",
+        customer_surname: "",
+        customer_email: "",
+        customer_phone: "",
+        customer_address: "",
+        customer_city: "",
         total_price: 0,
         order_items: [],
-        notes: ''
+        notes: "",
     });
     const [agreed, setAgreed] = useState<boolean>(false);
-    const [error, setError] = useState<string>('');
-    const [success, setSuccess] = useState<string>('');
+    const [error, setError] = useState<string>("");
+    const [success, setSuccess] = useState<string>("");
     const { cart, totalPrice, clearCart } = useCart();
 
     const submitOrder = async () => {
@@ -33,10 +33,10 @@ const Checkout = () => {
             formData.customer_email,
             formData.customer_phone,
             formData.customer_address,
-            formData.customer_city
+            formData.customer_city,
         ];
 
-        if (requiredFields.some(field => !field.trim())) {
+        if (requiredFields.some((field) => !field.trim())) {
             setError("Моля, попълнете всички задължителни полета.");
             return;
         }
@@ -45,7 +45,7 @@ const Checkout = () => {
             ...formData,
             total_price: totalPrice,
             status: "Pending",
-            order_items: cart.map(item => ({
+            order_items: cart.map((item) => ({
                 product_id: item.id,
                 product_name: item.name,
                 price: item.price,
@@ -56,9 +56,9 @@ const Checkout = () => {
         };
 
         try {
-            const res = await fetch('/api/orders', {
+            const res = await fetch("/api/orders", {
                 method: "POST",
-                headers: { 'Content-Type': 'application/json' },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(newOrder),
             });
 
@@ -71,22 +71,21 @@ const Checkout = () => {
             setSuccess("Поръчката е изпратена успешно.");
             clearCart();
             setFormData({
-                customer_name: '',
-                customer_surname: '',
-                customer_email: '',
-                customer_phone: '',
-                customer_address: '',
-                customer_city: '',
+                customer_name: "",
+                customer_surname: "",
+                customer_email: "",
+                customer_phone: "",
+                customer_address: "",
+                customer_city: "",
                 total_price: 0,
                 order_items: [],
-                notes: ''
+                notes: "",
             });
-        }
-        catch (err) {
+        } catch (err) {
             console.error("Order submission failed: ", err);
             setError("Възникна грешка при изпращането на поръчката.");
         }
-    }
+    };
 
     return (
         <div
@@ -95,7 +94,9 @@ const Checkout = () => {
         >
             {/* Left side */}
             <div className="w-full lg:w-1/2 lg:pe-10">
-                <h1 className="text-2xl font-medium text-center mb-6 p-3">Адрес за фактуриране</h1>
+                <h1 className="text-2xl font-medium text-center mb-6 p-3">
+                    Адрес за фактуриране
+                </h1>
                 <div className="flex gap-x-4 mb-6">
                     <TextField
                         label="Име"
@@ -105,7 +106,12 @@ const Checkout = () => {
                         className="w-full"
                         required
                         value={formData.customer_name}
-                        onChange={({ target }) => setFormData({ ...formData, customer_name: target.value })}
+                        onChange={({ target }) =>
+                            setFormData({
+                                ...formData,
+                                customer_name: target.value,
+                            })
+                        }
                     />
                     <TextField
                         label="Фамилия"
@@ -115,7 +121,12 @@ const Checkout = () => {
                         className="w-full"
                         required
                         value={formData.customer_surname}
-                        onChange={({ target }) => setFormData({ ...formData, customer_surname: target.value })}
+                        onChange={({ target }) =>
+                            setFormData({
+                                ...formData,
+                                customer_surname: target.value,
+                            })
+                        }
                     />
                 </div>
                 <TextField
@@ -127,7 +138,12 @@ const Checkout = () => {
                     sx={{ marginBottom: "1.5rem" }}
                     required
                     value={formData.customer_address}
-                    onChange={({ target }) => setFormData({ ...formData, customer_address: target.value })}
+                    onChange={({ target }) =>
+                        setFormData({
+                            ...formData,
+                            customer_address: target.value,
+                        })
+                    }
                 />
                 <TextField
                     label="Населено място"
@@ -137,7 +153,12 @@ const Checkout = () => {
                     sx={{ marginBottom: "1.5rem" }}
                     required
                     value={formData.customer_city}
-                    onChange={({ target }) => setFormData({ ...formData, customer_city: target.value })}
+                    onChange={({ target }) =>
+                        setFormData({
+                            ...formData,
+                            customer_city: target.value,
+                        })
+                    }
                 />
                 <TextField
                     label="Телефон"
@@ -148,7 +169,12 @@ const Checkout = () => {
                     sx={{ marginBottom: "1.5rem" }}
                     required
                     value={formData.customer_phone}
-                    onChange={({ target }) => setFormData({ ...formData, customer_phone: target.value })}
+                    onChange={({ target }) =>
+                        setFormData({
+                            ...formData,
+                            customer_phone: target.value,
+                        })
+                    }
                 />
                 <TextField
                     label="Имейл адрес"
@@ -159,7 +185,12 @@ const Checkout = () => {
                     sx={{ marginBottom: "1.5rem" }}
                     required
                     value={formData.customer_email}
-                    onChange={({ target }) => setFormData({ ...formData, customer_email: target.value })}
+                    onChange={({ target }) =>
+                        setFormData({
+                            ...formData,
+                            customer_email: target.value,
+                        })
+                    }
                 />
                 <TextField
                     label="Бележки към поръчката (по избор)"
@@ -169,16 +200,20 @@ const Checkout = () => {
                     multiline
                     rows={5}
                     value={formData.notes}
-                    onChange={({ target }) => setFormData({ ...formData, notes: target.value })}
+                    onChange={({ target }) =>
+                        setFormData({ ...formData, notes: target.value })
+                    }
                 />
             </div>
 
             {/* Right side */}
             <div className="w-full lg:w-1/2 bg-gray-300 px-5 rounded-md">
-                <h1 className="text-2xl font-medium text-center mb-6 p-3">Вашата поръчка</h1>
+                <h1 className="text-2xl font-medium text-center mb-6 p-3">
+                    Вашата поръчка
+                </h1>
                 <div className="px-5 py-2 bg-gray-100 rounded-md">
                     <div className="bg-gray-100 w-full flex flex-col">
-                        {cart.map(item =>
+                        {cart.map((item) => (
                             <div
                                 key={item.id}
                                 className="border-b border-gray-300 flex items-center justify-between gap-x-2 py-2"
@@ -193,31 +228,42 @@ const Checkout = () => {
                                     />
                                 </div>
                                 <div className="text-xs md:text-sm">
-                                    {item.name} <span className="font-bold">x {item.quantity}</span>
+                                    {item.name}{" "}
+                                    <span className="font-bold">
+                                        x {item.quantity}
+                                    </span>
                                 </div>
                                 <div className="text-sm text-center">
                                     {(item.price * item.quantity).toFixed(2)}лв.
                                 </div>
                             </div>
-                        )}
+                        ))}
                     </div>
                     <div className="flex justify-between">
                         <p className="py-3 font-semibold">Общо</p>
-                        <p className="py-3 font-semibold text-primary">{totalPrice.toFixed(2)}лв.</p>
+                        <p className="py-3 font-semibold text-primary">
+                            {totalPrice.toFixed(2)}лв.
+                        </p>
                     </div>
                 </div>
 
                 <div className="border-b border-gray-500 text-sm md:text-base">
                     <p className="mt-6">Наложен платеж</p>
-                    <p className="my-2 bg-gray-100 p-3 rounded-md">Плащане в брой при доставка</p>
+                    <p className="my-2 bg-gray-100 p-3 rounded-md">
+                        Плащане в брой при доставка
+                    </p>
                 </div>
 
                 <p className="py-5 border-b border-gray-500 text-sm">
-                    Вашите лични данни ще бъдат използвани за обработка на вашата поръчка и за други цели, описани в нашата
+                    Вашите лични данни ще бъдат използвани за обработка на
+                    вашата поръчка и за други цели, описани в нашата
                     <a
                         href="politika-za-poveritelnost"
                         className="font-semibold hover:text-primary"
-                    > политиката за поверителност.</a>
+                    >
+                        {" "}
+                        политиката за поверителност.
+                    </a>
                 </p>
 
                 <div className="mt-2 flex items-center">
@@ -238,11 +284,15 @@ const Checkout = () => {
                         <a
                             href="/pravila-usloviya"
                             className="font-semibold hover:text-primary"
-                        > правилата и условията<span className="text-red-500"> *</span></a>
+                        >
+                            {" "}
+                            правилата и условията
+                            <span className="text-red-500"> *</span>
+                        </a>
                     </label>
                 </div>
 
-                <button 
+                <button
                     className="w-full p-3 my-4 bg-primary text-white hover:bg-primaryDim transition-colors duration-300 rounded-md"
                     onClick={submitOrder}
                 >
@@ -251,7 +301,6 @@ const Checkout = () => {
                 {error && <p className="text-red-500">{error}</p>}
                 {success && <p className="text-green-600">{success}</p>}
             </div>
-
         </div>
     );
 };
