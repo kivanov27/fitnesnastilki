@@ -49,6 +49,8 @@ CREATE TABLE "orders" (
     "total_price" DECIMAL(10,2) NOT NULL,
     "status" VARCHAR(20) DEFAULT 'Pending',
     "created_at" TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP,
+    "customer_city" VARCHAR(255) NOT NULL,
+    "notes" TEXT,
 
     CONSTRAINT "orders_pkey" PRIMARY KEY ("id")
 );
@@ -57,11 +59,11 @@ CREATE TABLE "orders" (
 CREATE TABLE "order_items" (
     "id" VARCHAR(36) NOT NULL,
     "order_id" VARCHAR(36) NOT NULL,
-    "product_id" VARCHAR(36) NOT NULL,
     "product_name" VARCHAR(255) NOT NULL,
     "price" DECIMAL(10,2) NOT NULL,
     "quantity" INTEGER NOT NULL,
     "subtotal" DECIMAL(10,2) NOT NULL,
+    "product_id" INTEGER NOT NULL,
 
     CONSTRAINT "order_items_pkey" PRIMARY KEY ("id")
 );
@@ -75,12 +77,29 @@ CREATE TABLE "user" (
     "address" VARCHAR(255) NOT NULL,
     "firstName" VARCHAR(25),
     "lastName" VARCHAR(25),
+    "city" VARCHAR(20) NOT NULL,
 
     CONSTRAINT "user_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateTable
+CREATE TABLE "logo" (
+    "image" VARCHAR(255) NOT NULL,
+    "link" VARCHAR(50) NOT NULL,
+    "id" SERIAL NOT NULL,
+
+    CONSTRAINT "logo_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateIndex
+CREATE UNIQUE INDEX "product_link_key" ON "product"("link");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "user_email_key" ON "user"("email");
 
 -- AddForeignKey
 ALTER TABLE "order_items" ADD CONSTRAINT "order_items_order_id_fkey" FOREIGN KEY ("order_id") REFERENCES "orders"("id") ON DELETE CASCADE ON UPDATE NO ACTION;
+
+-- AddForeignKey
+ALTER TABLE "order_items" ADD CONSTRAINT "order_items_product_id_fkey" FOREIGN KEY ("product_id") REFERENCES "product"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+

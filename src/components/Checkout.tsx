@@ -1,6 +1,6 @@
 import { TextField } from "@mui/material";
 import { useCart } from "@/context/CartContext";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { NewOrder } from "@/types";
 
@@ -20,6 +20,37 @@ const Checkout = () => {
     const [error, setError] = useState<string>("");
     const [success, setSuccess] = useState<string>("");
     const { cart, totalPrice, clearCart } = useCart();
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            const token = localStorage.getItem("fitnesnastilki-token");
+            if (!token) return;
+
+            try {
+                const res = await fetch("/api/user", {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                if (!res.ok) throw new Error("Failed to fetch user data");
+
+                const user = await res.json();
+
+                setFormData((prev) => ({
+                    ...prev,
+                    customer_name: user.firstName || "",
+                    customer_surname: user.lastName || "",
+                    customer_email: user.email || "",
+                    customer_phone: user.phone || "",
+                    customer_address: user.address || "",
+                    customer_city: user.city || "",
+                }));
+            } catch (err) {
+                console.error("Could not prefill user data");
+            }
+        };
+    }, []);
 
     const submitOrder = async () => {
         if (!agreed) {
