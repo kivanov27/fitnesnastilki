@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { Button, TextField } from "@mui/material";
+import { signIn } from "next-auth/react";
 
 const RegistrationForm = () => {
     const [formData, setFormData] = useState({
@@ -35,15 +36,19 @@ const RegistrationForm = () => {
                 body: JSON.stringify(formData),
             });
 
+            const data = await response.json();
+
             if (!response.ok) {
-                const data = await response.json();
-                throw new Error(data.message || "Registration failed");
+                throw new Error(data.error || "Registration failed");
             }
 
-            const user = await response.json();
+            const signInRes = await signIn("credentials", {
+                redirect: false,
+                email: formData.email,
+                password: formData.password,
+            });
+            if (signInRes?.error) throw new Error(signInRes.error);
 
-            // store token and redirect (might want to use context or state management)
-            localStorage.setItem("fitnesnastilki-token", user.token);
             router.push("/");
         } catch (error: unknown) {
             if (error instanceof Error) setError(error.message);

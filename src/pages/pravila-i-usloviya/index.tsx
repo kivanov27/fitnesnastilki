@@ -1,7 +1,13 @@
+import Head from "next/head";
+
 const RulesAndConditions = () => {
     return (
-        <div>
-        </div>
+        <>
+            <Head>
+                <title>Правила и условия</title>
+            </Head>
+            <div></div>
+        </>
     );
 };
 

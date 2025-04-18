@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useCompatibleRouter } from "@/lib/router-utils";
+import { useSession, signOut } from "next-auth/react";
 import { PersonOutline } from "@mui/icons-material";
 import Link from "next/link";
 import { User } from "@/types";
@@ -7,23 +7,15 @@ import { User } from "@/types";
 const ProfileMenu = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [user, setUser] = useState<User | null>();
-    const router = useCompatibleRouter();
+    const { data: session } = useSession();
 
-    // check auth status
     useEffect(() => {
-        const fetchUser = async () => {
-            const token = localStorage.getItem("fitnesnastilki-token");
-            if (!token) return;
+        const fetchUserData = async () => {
+            if (!session?.user?.email) return;
 
             try {
-                const res = await fetch("/api/user", {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
-
+                const res = await fetch("/api/user");
                 if (!res.ok) throw new Error("Not logged in");
-
                 const userData = await res.json();
                 setUser(userData);
             } catch (err) {
@@ -32,7 +24,7 @@ const ProfileMenu = () => {
             }
         };
 
-        fetchUser();
+        fetchUserData();
     }, []);
 
     // Handle outside click
@@ -48,11 +40,10 @@ const ProfileMenu = () => {
             document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
-    const handleLogout = () => {
-        localStorage.removeItem("fitnesnastilki-token");
+    const handleLogout = async () => {
         setUser(null);
         setIsOpen(false);
-        router.push("/");
+        await signOut({ callbackUrl: "/" });
     };
 
     const toggleMenu = () => {

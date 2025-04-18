@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { Button, TextField } from "@mui/material";
+import { signIn } from "next-auth/react";
 
 const LoginForm = () => {
     const [email, setEmail] = useState("");
@@ -14,24 +15,17 @@ const LoginForm = () => {
         setError("");
 
         try {
-            const res = await fetch("/api/auth/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ email, password }),
+            const res = await signIn("credentials", {
+                redirect: false,
+                email,
+                password,
             });
 
-            if (!res.ok) {
-                const data = await res.json();
-                throw new Error(data.error || "Login failed");
+            if (!res || !res.ok) {
+                setError("Invalid email or password");
+            } else {
+                router.push("/");
             }
-
-            const { token } = await res.json();
-
-            // store token and redirect
-            localStorage.setItem("fitnesnastilki-token", token);
-            router.push("/");
         } catch (error: unknown) {
             if (error instanceof Error) {
                 setError(error.message);

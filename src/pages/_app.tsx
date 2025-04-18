@@ -1,9 +1,9 @@
-import { CartProvider } from "../context/CartContext";
 import type { AppProps } from "next/app";
+import "../styles/globals.css";
 import { Montserrat } from "next/font/google";
-import "../app/globals.css";
-import { createTheme, ThemeProvider } from "@mui/material";
 import { SessionProvider } from "next-auth/react";
+import { CartProvider } from "../context/CartContext";
+import { createTheme, ThemeProvider } from "@mui/material";
 
 const montserrat = Montserrat({
     subsets: ["latin", "cyrillic"],
@@ -18,7 +18,6 @@ const theme = createTheme({
         },
     },
 });
-
 
 function MyApp({ Component, pageProps }: AppProps) {
     return (

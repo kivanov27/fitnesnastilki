@@ -1,14 +1,13 @@
-"use client"
-
-import { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
 import Products from "@/components/Products";
 import { Breadcrumbs, Typography } from "@mui/material";
 import Link from "next/link";
 import Footer from "@/components/Footer";
-import { Product } from '@/types';
+import { Product } from "@/types";
+import Head from "next/head";
 
 const Category = () => {
     const params = useParams();
@@ -16,22 +15,22 @@ const Category = () => {
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
-    const renderBreadcrumb = () => {
+    const renderCategoryName = () => {
         switch (slug) {
             case "vsichki":
-                return <Typography sx={{ fontWeight: '600' }}>Всички продукти</Typography>;
+                return "Всички продукти";
             case "plocha":
-                return <Typography sx={{ fontWeight: '600' }}>Настилки на плоча</Typography>;
+                return "Настилки на плоча";
             case "rulo":
-                return <Typography sx={{ fontWeight: '600' }}>Настилки на руло</Typography>;
+                return "Настилки на руло";
             case "izkustvena-treva":
-                return <Typography sx={{ fontWeight: '600' }}>Настилки изкуствена трева</Typography>;
+                return "Настилки изкуствена трева";
             case "tatami":
-                return <Typography sx={{ fontWeight: '600' }}>Настилки татами</Typography>;
+                return "Настилки татами";
             case "postelki":
-                return <Typography sx={{ fontWeight: '600' }}>Постелки за фитнес и йога</Typography>;
+                return "Постелки за фитнес и йога";
             case "platformi-podiumi":
-                return <Typography sx={{ fontWeight: '600' }}>Платформи и подиуми</Typography>;
+                return "Платформи и подиуми";
         }
     };
 
@@ -43,8 +42,7 @@ const Category = () => {
                     if (!res.ok) throw new Error("Couldn't fetch products");
                     const data = await res.json();
                     setProducts(data);
-                }
-                else {
+                } else {
                     const res = await fetch(`/api/products/category/${slug}`);
                     if (!res.ok) throw new Error("Couldn't fetch products");
                     const data = await res.json();
@@ -64,25 +62,35 @@ const Category = () => {
     if (!slug) return null;
 
     return (
-        <div className="min-h-screen flex flex-col">
-            <Navbar />
-            <Breadcrumbs 
-                aria-label="breadcrumbs" 
-                className="w-full xl:w-[75rem] mx-auto px-6 sm:px-12 lg:px-20 xl:px-0"
-                sx={{ marginX: 'auto', marginY: '2rem' }}
-            >
-                <Link href="/katalog" className="hover:underline hover:text-primary">
-                    Каталог
-                </Link>
-                {renderBreadcrumb()}
-            </Breadcrumbs>
+        <>
+            <Head>
+                <title>{renderCategoryName()}</title>
+            </Head>
+            <div className="min-h-screen flex flex-col">
+                <Navbar />
+                <Breadcrumbs
+                    aria-label="breadcrumbs"
+                    className="w-full xl:w-[75rem] mx-auto px-6 sm:px-12 lg:px-20 xl:px-0"
+                    sx={{ marginX: "auto", marginY: "2rem" }}
+                >
+                    <Link
+                        href="/katalog"
+                        className="hover:underline hover:text-primary"
+                    >
+                        Каталог
+                    </Link>
+                    <Typography sx={{ fontWeight: "600" }}>
+                        {renderCategoryName()}
+                    </Typography>
+                </Breadcrumbs>
 
-            <div className="flex flex-grow justify-center w-full xl:w-[75rem] mx-auto px-6 sm:px-12 lg:px-20 xl:px-0 mb-20">
-                <Sidebar />
-                <Products products={products} category={slug} />
+                <div className="flex flex-grow justify-center w-full xl:w-[75rem] mx-auto px-6 sm:px-12 lg:px-20 xl:px-0 mb-20">
+                    <Sidebar />
+                    <Products products={products} category={slug} />
+                </div>
+                <Footer />
             </div>
-            <Footer />
-        </div>
+        </>
     );
 };
 

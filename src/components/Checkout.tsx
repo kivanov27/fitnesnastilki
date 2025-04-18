@@ -1,6 +1,7 @@
 import { TextField } from "@mui/material";
 import { useCart } from "@/context/CartContext";
 import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { NewOrder } from "@/types";
 
@@ -20,21 +21,15 @@ const Checkout = () => {
     const [error, setError] = useState<string>("");
     const [success, setSuccess] = useState<string>("");
     const { cart, totalPrice, clearCart } = useCart();
+    const { data: session, status } = useSession();
 
     useEffect(() => {
         const fetchUserData = async () => {
-            const token = localStorage.getItem("fitnesnastilki-token");
-            if (!token) return;
+            if (!session?.user?.email) return;
 
             try {
-                const res = await fetch("/api/user", {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
-
+                const res = await fetch("/api/user");
                 if (!res.ok) throw new Error("Failed to fetch user data");
-
                 const user = await res.json();
 
                 setFormData((prev) => ({
@@ -50,6 +45,8 @@ const Checkout = () => {
                 console.error("Could not prefill user data");
             }
         };
+
+        fetchUserData();
     }, []);
 
     const submitOrder = async () => {
@@ -117,6 +114,10 @@ const Checkout = () => {
             setError("Възникна грешка при изпращането на поръчката.");
         }
     };
+
+    if (status === "loading") {
+        return <div>Loading...</div>;
+    }
 
     return (
         <div

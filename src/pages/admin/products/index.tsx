@@ -6,21 +6,26 @@ import Navbar from "../../../components/Navbar";
 import Footer from "../../../components/Footer";
 import { Product } from "@/types";
 import Image from "next/image";
+import Head from "next/head";
 
 interface AdminProductsPageProps {
     products: Product[];
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    const session = await getServerSession(context.req, context.res, authOptions);
+    const session = await getServerSession(
+        context.req,
+        context.res,
+        authOptions,
+    );
 
     if (!session?.user?.isAdmin) {
         return {
             redirect: {
-                destination: '/login',
-                permanent: false
-            }
-        }
+                destination: "/",
+                permanent: false,
+            },
+        };
     }
 
     const products = await prisma.product.findMany();
@@ -28,51 +33,67 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return {
         props: {
             products: JSON.parse(JSON.stringify(products)),
-        }
-    }
+        },
+    };
 };
 
 const AdminProductsPage = ({ products }: AdminProductsPageProps) => {
     const deleteProduct = async (link: string) => {
         await fetch(`/api/products/${link}`, { method: "DELETE" });
-        products.filter(product => product.link !== link);
+        products.filter((product) => product.link !== link);
     };
 
     return (
-        <div>
-            <Navbar />
-            <h2 className="text-lg lg:text-xl font-medium text-center my-6">Продукти</h2>
-            <ul className="p-4 lg:p-6 flex flex-row sm:flex-col flex-wrap gap-y-4">
-                {products.map(product => (
-                    <li key={product.id} className="flex flex-col sm:flex-row gap-x-4 items-center justify-center lg:justify-start">
-                        <div className="relative aspect-square w-20 h-20">
-                            <Image
-                                src={product.image1}
-                                alt={product.name}
-                                fill
-                                sizes="5rem"
-                                className="object-cover"
-                            />
-                        </div>
-                        <p className="font-medium">{product.name}</p>
-                        <p>Цена: {product.price}лв.</p>
-                        <p>Отстъпка: {product.discount}%</p>
-                        {product.discount ?
-                            <p>Крайна: {product.price - (product.price * product.discount / 100)}лв.</p>
-                            :
-                            <p>Крайна: {product.price}лв.</p>
-                        }
-                        <button 
-                            className="text-white bg-primary p-2"
-                            onClick={() => deleteProduct(product.link)}
+        <>
+            <Head>
+                <title>Всички продукти</title>
+            </Head>
+            <div>
+                <Navbar />
+                <h2 className="text-lg lg:text-xl font-medium text-center my-6">
+                    Продукти
+                </h2>
+                <ul className="p-4 lg:p-6 flex flex-row sm:flex-col flex-wrap gap-y-4">
+                    {products.map((product) => (
+                        <li
+                            key={product.id}
+                            className="flex flex-col sm:flex-row gap-x-4 items-center justify-center lg:justify-start"
                         >
-                            Изтрий
-                        </button>
-                    </li>
-                 ))}
-            </ul>
-            <Footer />
-        </div>
+                            <div className="relative aspect-square w-20 h-20">
+                                <Image
+                                    src={product.image1}
+                                    alt={product.name}
+                                    fill
+                                    sizes="5rem"
+                                    className="object-cover"
+                                />
+                            </div>
+                            <p className="font-medium">{product.name}</p>
+                            <p>Цена: {product.price}лв.</p>
+                            <p>Отстъпка: {product.discount}%</p>
+                            {product.discount ? (
+                                <p>
+                                    Крайна:{" "}
+                                    {product.price -
+                                        (product.price * product.discount) /
+                                            100}
+                                    лв.
+                                </p>
+                            ) : (
+                                <p>Крайна: {product.price}лв.</p>
+                            )}
+                            <button
+                                className="text-white bg-primary p-2"
+                                onClick={() => deleteProduct(product.link)}
+                            >
+                                Изтрий
+                            </button>
+                        </li>
+                    ))}
+                </ul>
+                <Footer />
+            </div>
+        </>
     );
 };
 

@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "@/lib/prisma";
-import { hashPassword, generateToken } from "@/lib/auth";
+import { hashPassword } from "@/lib/auth";
 
 export default async function handler(
     req: NextApiRequest,
@@ -40,12 +40,9 @@ export default async function handler(
                 lastName,
             },
         });
-
-        // Generate token
-        const token = generateToken(newUser);
         const { password: _, ...userWithoutPassword } = newUser;
 
-        return res.status(201).json({ user: userWithoutPassword, token });
+        return res.status(201).json({ user: userWithoutPassword });
     } catch (error) {
         console.error("Registration error: ", error);
         return res.status(500).json({ error: "Internal Server Error" });

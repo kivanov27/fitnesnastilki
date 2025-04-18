@@ -1,15 +1,17 @@
 import Navbar from "@/components/Navbar";
-import Categories from '@/components/Categories';
-import Footer from '@/components/Footer';
+import Categories from "@/components/Categories";
+import Footer from "@/components/Footer";
+import Head from "next/head";
 
 export async function getServerSideProps() {
     try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/categories`);
-        if (!res.ok) throw new Error('Failed to fetch categories.');
+        const res = await fetch(
+            `${process.env.NEXT_PUBLIC_BASE_URL}/api/categories`,
+        );
+        if (!res.ok) throw new Error("Failed to fetch categories.");
         const categories = await res.json();
         return { props: { categories } };
-    }
-    catch (error) {
+    } catch (error) {
         console.error(error);
         return { props: { categories: [] } };
     }
@@ -17,11 +19,16 @@ export async function getServerSideProps() {
 
 const Catalogue = ({ categories }: { categories: any[] }) => {
     return (
-        <div>
-            <Navbar />
-            <Categories categories={categories} />
-            <Footer />
-        </div>
+        <>
+            <Head>
+                <title>Каталог</title>
+            </Head>
+            <div>
+                <Navbar />
+                <Categories categories={categories} />
+                <Footer />
+            </div>
+        </>
     );
 };
 
