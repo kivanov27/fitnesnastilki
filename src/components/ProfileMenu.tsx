@@ -1,36 +1,58 @@
-import { useState, useEffect } from 'react';
-import { useCompatibleRouter } from '@/lib/router-utils';
-import { PersonOutline } from '@mui/icons-material';
-import Link from 'next/link';
+import { useState, useEffect } from "react";
+import { useCompatibleRouter } from "@/lib/router-utils";
+import { PersonOutline } from "@mui/icons-material";
+import Link from "next/link";
+import { User } from "@/types";
 
 const ProfileMenu = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+    const [user, setUser] = useState<User | null>();
     const router = useCompatibleRouter();
 
     // check auth status
     useEffect(() => {
-        const token = localStorage.getItem('fitnesnastilki-token');
-        setIsLoggedIn(!!token);
+        const fetchUser = async () => {
+            const token = localStorage.getItem("fitnesnastilki-token");
+            if (!token) return;
+
+            try {
+                const res = await fetch("/api/user", {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                if (!res.ok) throw new Error("Not logged in");
+
+                const userData = await res.json();
+                setUser(userData);
+            } catch (err) {
+                console.error("Failed to fetch user: ", err);
+                setUser(null);
+            }
+        };
+
+        fetchUser();
     }, []);
 
     // Handle outside click
-    // useEffect(() => {
-    //     const handleClickOutside = (e: MouseEvent) => {
-    //         const target = e.target as HTMLElement;
-    //         if (!target.closest('.profile-menu-container')) {
-    //             setIsOpen(false);
-    //         }
-    //     };
-    //     document.addEventListener('mousedown', handleClickOutside);
-    //     return () => document.removeEventListener('mousedown', handleClickOutside);
-    // }, []);
+    useEffect(() => {
+        const handleClickOutside = (e: MouseEvent) => {
+            const target = e.target as HTMLElement;
+            if (!target.closest(".profile-menu-container")) {
+                setIsOpen(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () =>
+            document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
 
     const handleLogout = () => {
-        localStorage.removeItem('fitnesnastilki-token');
-        setIsLoggedIn(false);
+        localStorage.removeItem("fitnesnastilki-token");
+        setUser(null);
         setIsOpen(false);
-        router.push('/');
+        router.push("/");
     };
 
     const toggleMenu = () => {
@@ -38,22 +60,22 @@ const ProfileMenu = () => {
     };
 
     return (
-        <div className='relative profile-menu-container'>
-            <button
-                onClick={toggleMenu}
-                aria-label='User menu'
-            >
-                <PersonOutline className='hover:text-primary cursor-pointer transition-colors duration-300' />
+        <div className="relative profile-menu-container">
+            <button onClick={toggleMenu} aria-label="User menu">
+                <PersonOutline className="hover:text-primary cursor-pointer transition-colors duration-300" />
             </button>
 
             {/* Dropdown Menu */}
             {isOpen && (
-                <div className='absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 border border-gray-200'>
-                    {isLoggedIn ? (
+                <div className="absolute right-0 mt-2 w-fit bg-white rounded-md shadow-lg py-1 z-50 border border-gray-200">
+                    {user ? (
                         <div>
+                            <p className="font-medium px-2">
+                                {user.firstName ? user.firstName : user.email}
+                            </p>
                             <button
                                 onClick={handleLogout}
-                                className='block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
+                                className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                             >
                                 Изход
                             </button>
@@ -62,14 +84,14 @@ const ProfileMenu = () => {
                         <div>
                             <Link
                                 href="/login"
-                                className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
+                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                 onClick={() => setIsOpen(false)}
                             >
                                 Вход
                             </Link>
                             <Link
                                 href="/registration"
-                                className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
+                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                 onClick={() => setIsOpen(false)}
                             >
                                 Регистрация

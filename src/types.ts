@@ -15,7 +15,7 @@ export interface Product {
     manufacturer_description?: string;
 }
 
-export type NewProduct = Omit<Product, 'id'>;
+export type NewProduct = Omit<Product, "id">;
 
 export interface Category {
     id: number;
@@ -25,7 +25,7 @@ export interface Category {
     popular: boolean;
 }
 
-export type NewCategory = Omit<Category, 'id'>;
+export type NewCategory = Omit<Category, "id">;
 
 export interface CartItem {
     id: number;
@@ -45,7 +45,7 @@ export interface OrderItem {
     subtotal: number;
 }
 
-export type NewOrderItem = Omit<OrderItem, 'id' | 'order_id'>;
+export type NewOrderItem = Omit<OrderItem, "id" | "order_id">;
 
 export interface Order {
     id: string;
@@ -77,4 +77,15 @@ export interface NewOrder {
 export interface Logo {
     image: string;
     link: string;
+}
+
+export interface User {
+    id: string;
+    firstName?: string;
+    lastName?: string;
+    email: string;
+    password: string;
+    phone: string;
+    address: string;
+    city: string;
 }
