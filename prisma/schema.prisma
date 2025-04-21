@@ -42,17 +42,17 @@ model slider {
 
 model orders {
     id               String        @id @default(uuid()) @db.VarChar(36)
-        customer_name    String        @db.VarChar(25)
-        customer_surname String        @db.VarChar(25)
-        customer_email   String        @db.VarChar(255)
-        customer_phone   String        @db.VarChar(20)
-        customer_address String        @db.VarChar(255)
-        total_price      Decimal       @db.Decimal(10, 2)
-        status           String?       @default("Pending") @db.VarChar(20)
-        created_at       DateTime?     @default(now()) @db.Timestamp(6)
-        customer_city    String        @db.VarChar(255)
-        notes            String?
-        order_items      order_items[]
+    customer_name    String        @db.VarChar(25)
+    customer_surname String        @db.VarChar(25)
+    customer_email   String        @db.VarChar(255)
+    customer_phone   String        @db.VarChar(20)
+    customer_address String        @db.VarChar(255)
+    total_price      Decimal       @db.Decimal(10, 2)
+    status           String?       @default("Pending") @db.VarChar(20)
+    created_at       DateTime?     @default(now()) @db.Timestamp(6)
+    customer_city    String        @db.VarChar(255)
+    notes            String?
+    order_items      order_items[]
 }
 
 model order_items {

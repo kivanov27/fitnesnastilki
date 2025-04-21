@@ -1,6 +1,8 @@
-"use client"
+"use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
+import Cookies from "js-cookie";
+import { useSession } from "next-auth/react";
 import { CartItem } from "@/types";
 
 type CartContextType = {
@@ -16,75 +18,181 @@ type CartContextType = {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
+    const { data: session } = useSession();
     const [cart, setCart] = useState<CartItem[]>([]);
 
-    const totalPrice = cart.reduce((acc, product) => acc + product.price * product.quantity, 0);
+    const totalPrice = cart.reduce(
+        (acc, product) => acc + product.price * product.quantity,
+        0,
+    );
 
     // load cart from localStorage
     useEffect(() => {
-        const storedCart = localStorage.getItem("fitnesnastilki-cart");
-        if (storedCart) {
-            setCart(JSON.parse(storedCart));
-        }
-    }, []);
-
-    // save cart to localStorage
-    useEffect(() => {
-        localStorage.setItem("fitnesnastilki-cart", JSON.stringify(cart));
-    }, [cart]);
-
-    const addToCart = (item: CartItem) => {
-        setCart(prevCart => {
-            const existingItem = prevCart.find(cartItem => cartItem.id === item.id);
-            if (existingItem) {
-                return prevCart.map(cartItem =>
-                    cartItem.id === item.id
-                        ? { ...cartItem, quantity: cartItem.quantity + item.quantity }
-                        : cartItem
-                );
+        const fetchCart = async () => {
+            if (session?.user) {
+                const res = await fetch("/api/cart");
+                const dbCart = await res.json();
+                setCart(dbCart);
+            } else {
+                const cookieCart = Cookies.get("fitnesnastilki-cart");
+                if (cookieCart) setCart(JSON.parse(cookieCart));
             }
-            return [...prevCart, item];
-        });
+        };
+
+        fetchCart();
+    }, [session]);
+
+    // sync guest cart to cookie
+    useEffect(() => {
+        if (!session?.user) {
+            Cookies.set("fitnesnastilki-cart", JSON.stringify(cart), {
+                expires: 7,
+            });
+        }
+    }, [cart, session]);
+
+    // migrate cookie cart to db on login
+    useEffect(() => {
+        const migrateCart = async () => {
+            if (session?.user) {
+                const cookieCart = Cookies.get("fitnesnastilki-cart");
+                if (!cookieCart) return;
+
+                const localCart = JSON.parse(cookieCart);
+                await Promise.all(
+                    localCart.map((item: CartItem) =>
+                        fetch("api/cart", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                                productId: item.id,
+                                quantity: item.quantity,
+                            }),
+                        }),
+                    ),
+                );
+
+                Cookies.remove("fitnesnastilki-cart");
+            }
+        };
+
+        migrateCart();
+    }, [session]);
+
+    const addToCart = async (item: CartItem) => {
+        if (session?.user) {
+            await fetch("/api/cart", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    productId: item.id,
+                    quantity: item.quantity,
+                }),
+            });
+
+            setCart((prev) => {
+                const existing = prev.find((p) => p.id === item.id);
+                if (existing) {
+                    return prev.map((p) =>
+                        p.id === item.id
+                            ? { ...p, quantity: p.quantity + item.quantity }
+                            : p,
+                    );
+                }
+                return [...prev, item];
+            });
+        } else {
+            setCart((prev) => {
+                const existing = prev.find((p) => p.id === item.id);
+                if (existing) {
+                    return prev.map((p) =>
+                        p.id === item.id
+                            ? { ...p, quantity: p.quantity + item.quantity }
+                            : p,
+                    );
+                }
+                return [...prev, item];
+            });
+        }
     };
 
-    const removeFromCart = (id: number) => {
-        setCart(prevCart => prevCart.filter(item => item.id !== id));
+    const removeFromCart = async (id: number) => {
+        if (session?.user) {
+            await fetch("/api/cart", {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ productId: id }),
+            });
+        }
+
+        setCart((prevCart) => prevCart.filter((item) => item.id !== id));
     };
 
-    const clearCart = () => {
+    const clearCart = async () => {
+        if (session?.user) {
+            await fetch("/api/cart", {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" },
+            });
+        }
+
         setCart([]);
     };
 
-    const increaseQuantity = (id: number) => {
-        setCart(prevCart => 
-            prevCart.map(item => 
-                item.id === id
-                    ? { ...item, quantity: item.quantity + 1 }
-                    : item
-            )
+    const increaseQuantity = async (id: number) => {
+        const updatedCart = cart.map((item) =>
+            item.id === id ? { ...item, quantity: item.quantity + 1 } : item,
         );
+
+        if (session?.user) {
+            const updatedItem = updatedCart.find((item) => item.id === id);
+            await fetch("/api/cart", {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    productId: id,
+                    quantity: updatedItem?.quantity,
+                }),
+            });
+        }
+
+        setCart(updatedCart);
     };
 
-    const decreaseQuantity = (id: number) => {
-        setCart(prevCart => 
-            prevCart.map(item => 
-                item.id === id
-                    ? { ...item, quantity: Math.max(1, item.quantity - 1) }
-                    : item
-            )
+    const decreaseQuantity = async (id: number) => {
+        const updatedCart = cart.map((item) =>
+            item.id === id
+                ? { ...item, quantity: Math.max(1, item.quantity - 1) }
+                : item,
         );
+
+        if (session?.user) {
+            const updatedItem = updatedCart.find((item) => item.id === id);
+            await fetch("/api/cart", {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    productId: id,
+                    quantity: updatedItem?.quantity,
+                }),
+            });
+        }
+
+        setCart(updatedCart);
     };
 
     return (
-        <CartContext.Provider value={{ 
-            cart, 
-            addToCart, 
-            removeFromCart, 
-            clearCart, 
-            increaseQuantity, 
-            decreaseQuantity,
-            totalPrice
-        }}>
+        <CartContext.Provider
+            value={{
+                cart,
+                addToCart,
+                removeFromCart,
+                clearCart,
+                increaseQuantity,
+                decreaseQuantity,
+                totalPrice,
+            }}
+        >
             {children}
         </CartContext.Provider>
     );
