@@ -27,6 +27,23 @@ const RegistrationForm = () => {
         e.preventDefault();
         setError("");
 
+        if (!formData.email.includes("@")) {
+            setError("Невалиден имейл");
+            return;
+        } else if (formData.password.length < 6) {
+            setError("Паролата трябва да е поне 6 символа");
+            return;
+        } else if (!formData.phone.match(/^\+?\d+$/)) {
+            setError("Невалиден телефонен номер");
+            return;
+        } else if (!formData.city) {
+            setError("Градът е задължителен");
+            return;
+        } else if (!formData.address) {
+            setError("Адресът е задължителен");
+            return;
+        }
+
         try {
             const response = await fetch("/api/auth/register", {
                 method: "POST",
@@ -39,7 +56,7 @@ const RegistrationForm = () => {
             const data = await response.json();
 
             if (!response.ok) {
-                throw new Error(data.error || "Registration failed");
+                throw new Error(data.error || "Грешка при регистрация");
             }
 
             const signInRes = await signIn("credentials", {
@@ -52,7 +69,7 @@ const RegistrationForm = () => {
             router.push("/");
         } catch (error: unknown) {
             if (error instanceof Error) setError(error.message);
-            else setError("Encountered an error when trying to register.");
+            else setError("Грешка при регистрация");
         }
     };
 
@@ -60,6 +77,7 @@ const RegistrationForm = () => {
         <form
             onSubmit={handleSubmit}
             className="w-full max-w-[30rem] sm:w-[30rem] mx-auto my-10 flex-1 flex flex-col justify-center gap-y-6 px-4 sm:px-0"
+            noValidate
         >
             <h2 className="text-center text-xl lg:text-3xl font-medium mb-2">
                 Регистрация

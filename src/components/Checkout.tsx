@@ -50,6 +50,9 @@ const Checkout = () => {
     }, []);
 
     const submitOrder = async () => {
+        setError("");
+        setSuccess("");
+
         if (!agreed) {
             setError("Моля съгласете се с правилата и условията.");
             return;
@@ -66,6 +69,20 @@ const Checkout = () => {
 
         if (requiredFields.some((field) => !field.trim())) {
             setError("Моля, попълнете всички задължителни полета.");
+            return;
+        }
+
+        if (!formData.customer_email.includes("@")) {
+            setError("Невалиден имейл");
+            return;
+        } else if (!formData.customer_phone.match(/^\+?\d+$/)) {
+            setError("Невалиден телефонен номер");
+            return;
+        } else if (!formData.customer_city) {
+            setError("Градът е задължителен");
+            return;
+        } else if (!formData.customer_address) {
+            setError("Адресът е задължителен");
             return;
         }
 

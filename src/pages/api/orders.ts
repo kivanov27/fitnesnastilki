@@ -3,7 +3,10 @@ import { NewOrderItem } from "@/types";
 import prisma from "@/lib/prisma";
 import { isAdmin } from "@/lib/auth";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+    req: NextApiRequest,
+    res: NextApiResponse,
+) {
     try {
         switch (req.method) {
             case "GET":
@@ -12,10 +15,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 return await handlePostOrder(req, res);
             default:
                 res.setHeader("Allow", ["GET", "POST"]);
-                return res.status(405).json({ error: `Method ${req.method} not allowed` })
+                return res
+                    .status(405)
+                    .json({ error: `Method ${req.method} not allowed` });
         }
-    }
-    catch (error) {
+    } catch (error) {
         console.error("Orders API error: ", error);
         return res.status(500).json({ error: "Internal Server Error" });
     }
@@ -35,7 +39,7 @@ async function handleGetOrders(req: NextApiRequest, res: NextApiResponse) {
 }
 
 async function handlePostOrder(req: NextApiRequest, res: NextApiResponse) {
-    const { 
+    const {
         customer_name,
         customer_surname,
         customer_email,
@@ -43,12 +47,22 @@ async function handlePostOrder(req: NextApiRequest, res: NextApiResponse) {
         customer_address,
         customer_city,
         total_price,
-        order_items
+        order_items,
     } = req.body;
 
-    if (!customer_name || !customer_surname || !customer_email || !customer_phone || 
-        !customer_address || !customer_city || !total_price || !order_items.length) {
-        return res.status(400).json({ error: "All fields are required." });
+    if (
+        !customer_name ||
+        !customer_surname ||
+        !customer_email ||
+        !customer_phone ||
+        !customer_address ||
+        !customer_city ||
+        !total_price ||
+        !order_items.length
+    ) {
+        return res
+            .status(400)
+            .json({ error: "Поръчката не може да бъде извършена" });
     }
 
     const newOrder = await prisma.orders.create({

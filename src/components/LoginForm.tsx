@@ -22,7 +22,7 @@ const LoginForm = () => {
             });
 
             if (!res || !res.ok) {
-                setError("Invalid email or password");
+                setError("Грешен имейл или парола");
             } else {
                 router.push("/");
             }
@@ -40,7 +40,11 @@ const LoginForm = () => {
             </h2>
             {error && <div className="text-red-500 mb-4">{error}</div>}
 
-            <form onSubmit={handleSubmit} className="flex flex-col gap-y-4">
+            <form
+                onSubmit={handleSubmit}
+                className="flex flex-col gap-y-4"
+                noValidate
+            >
                 <TextField
                     type="email"
                     id="email"
