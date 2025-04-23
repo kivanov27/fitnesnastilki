@@ -54,7 +54,7 @@ const OrdersPage = ({ orders }: OrdersPageProps) => {
                         {orders.map((order) => (
                             <div
                                 key={order.id}
-                                className="flex flex-col gap-y-2"
+                                className="flex flex-col gap-y-2 p-4 mb-4 border border-black"
                             >
                                 <p className="font-medium">
                                     Поръчка #{order.id}

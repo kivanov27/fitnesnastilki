@@ -87,7 +87,7 @@ const Navbar = () => {
 
     return (
         <div className='border border-b-gray-400 lg:h-28'>
-            <div className="flex justify-between items-centerw w-full xl:w-[75rem] mx-auto lg:px-20 xl:px-0">
+            <div className="flex justify-between items-center w-full xl:w-[75rem] mx-auto lg:px-20 xl:px-0">
                 {/* Logo */}
                 {!isMobileView && logo &&
                     <Link href="/">
@@ -105,7 +105,7 @@ const Navbar = () => {
 
                 {/* Nav links */}
                 {!isMobileView &&
-                    <div className='flex justify-between items-center gap-x-14'>
+                    <div className='flex justify-between items-center gap-x-14 lg:h-28'>
                         <Link
                             href="/"
                             className='nav-btn relative cursor-pointer text-xl hover:text-primary duration-300'
@@ -142,7 +142,7 @@ const Navbar = () => {
                 }
 
                 {/* Buttons */}
-                <div className='flex justify-between items-center p-3 lg:p-0 gap-x-4 lg:gap-x-6'>
+                <div className='flex justify-between items-center p-3 lg:p-0 gap-x-4 lg:gap-x-6 lg:h-28'>
                     <SearchIcon />
                     <ProfileMenu />
                     <Link
@@ -165,7 +165,7 @@ const Navbar = () => {
 
             {/* Mobile menu */}
             {isMobileView && logo &&
-                <div className={`fixed top-0 left-0 h-full w-64 bg-white z-50 shadow-lg
+                <div className={`fixed top-0 left-0 h-full w-72 bg-white z-50 shadow-lg
                                 transform transition-transform duration-300 ease-in-out
                                 ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}
                 >
@@ -225,7 +225,7 @@ const Navbar = () => {
                                         maxHeight: expandedCategories.catalogue ? `${categoriesHeight}px` : "0px"
                                     }}
                                 >
-                                    <div className='ml-4 pl-2'>
+                                    <div className=''>
                                         {!isLoading && categories.map(category => (
                                             <Link
                                                 key={category.id}

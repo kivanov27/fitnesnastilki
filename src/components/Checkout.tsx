@@ -347,8 +347,8 @@ const Checkout = () => {
                 >
                     Поръчване
                 </button>
-                {error && <p className="text-red-500">{error}</p>}
-                {success && <p className="text-green-600">{success}</p>}
+                {error && <p className="text-red-900 mb-4">{error}</p>}
+                {success && <p className="text-green-900 mb-4">{success}</p>}
             </div>
         </div>
     );
