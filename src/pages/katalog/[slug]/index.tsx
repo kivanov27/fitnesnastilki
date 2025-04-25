@@ -60,7 +60,9 @@ const Category = () => {
         if (slug) fetchProducts();
     }, [slug]);
 
-    if (loading) return null;
+    if (loading) {
+        return <div className="text-center mt-20">Зареждане...</div>;
+    }
     if (!slug) return null;
 
     return (

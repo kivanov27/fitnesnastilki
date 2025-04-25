@@ -133,7 +133,7 @@ const Checkout = () => {
     };
 
     if (status === "loading") {
-        return <div>Loading...</div>;
+        return <div className="text-center mt-20">Зареждане...</div>;
     }
 
     return (

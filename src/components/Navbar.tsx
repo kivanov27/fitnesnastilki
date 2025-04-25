@@ -115,10 +115,13 @@ const Navbar = () => {
                             Каталог
                             <div className="nav-btn-underline" />
                         </Link>
-                        <div className="nav-btn relative cursor-pointer text-xl hover:text-primary">
+                        <Link
+                            href="/about-us"
+                            className="nav-btn relative cursor-pointer text-xl hover:text-primary"
+                        >
                             За Нас
                             <div className="nav-btn-underline" />
-                        </div>
+                        </Link>
                     </div>
                 )}
 
@@ -247,9 +250,13 @@ const Navbar = () => {
                                 </div>
                             </div>
 
-                            <div className="py-3 text-xl active:text-primary border-b border-gray-100">
+                            <Link
+                                href="/about-us"
+                                className="py-3 text-xl active:text-primary border-b border-gray-100"
+                                onClick={() => setIsMobileMenuOpen(false)}
+                            >
                                 За Нас
-                            </div>
+                            </Link>
                         </nav>
                     </div>
                 </div>
