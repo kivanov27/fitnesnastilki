@@ -7,8 +7,8 @@ import Link from "next/link";
 import ProductTabs from "./ProductTabs";
 
 interface ProductViewProps {
-    product: Product,
-    category: string | string[] | undefined
+    product: Product;
+    category: string | string[] | undefined;
 }
 
 const ProductView = ({ product, category }: ProductViewProps) => {
@@ -18,16 +18,31 @@ const ProductView = ({ product, category }: ProductViewProps) => {
     const [quantityError, setQuantityError] = useState<string | null>(null);
 
     const scrollContainerRef = useRef<HTMLDivElement>(null);
-    const images = [product.image1, product.image2, product.image3, product.image4].filter((img): img is string => Boolean(img));
+    const images = [
+        product.image1,
+        product.image2,
+        product.image3,
+        product.image4,
+        product.image5,
+        product.image6,
+        product.image7,
+        product.image8,
+    ].filter((img): img is string => Boolean(img));
     const { addToCart } = useCart();
 
     const scrollThumbnails = (direction: "left" | "right") => {
         if (scrollContainerRef.current) {
             const scrollAmount = 200;
             if (direction === "left") {
-                scrollContainerRef.current.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+                scrollContainerRef.current.scrollBy({
+                    left: -scrollAmount,
+                    behavior: "smooth",
+                });
             } else {
-                scrollContainerRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
+                scrollContainerRef.current.scrollBy({
+                    left: scrollAmount,
+                    behavior: "smooth",
+                });
             }
         }
     };
@@ -35,23 +50,74 @@ const ProductView = ({ product, category }: ProductViewProps) => {
     const renderCategoryBreadcrumb = () => {
         switch (category) {
             case "vsichki":
-                    return <Link href="/katalog/vsichki" className="hover:underline hover:text-primary">Всички продукти</Link>;
+                return (
+                    <Link
+                        href="/katalog/vsichki"
+                        className="hover:underline hover:text-primary"
+                    >
+                        Всички продукти
+                    </Link>
+                );
             case "plocha":
-                return <Link href="/katalog/plocha" className="hover:underline hover:text-primary">Настилки на плоча</Link>;
+                return (
+                    <Link
+                        href="/katalog/plocha"
+                        className="hover:underline hover:text-primary"
+                    >
+                        Настилки на плоча
+                    </Link>
+                );
             case "rulo":
-                return <Link href="/katalog/rulo" className="hover:underline hover:text-primary">Настилки на руло</Link>;
+                return (
+                    <Link
+                        href="/katalog/rulo"
+                        className="hover:underline hover:text-primary"
+                    >
+                        Настилки на руло
+                    </Link>
+                );
             case "izkustvena-treva":
-                return <Link href="/katalog/izkustvena-treva" className="hover:underline hover:text-primary">Настилки изкуствена трева</Link>;
+                return (
+                    <Link
+                        href="/katalog/izkustvena-treva"
+                        className="hover:underline hover:text-primary"
+                    >
+                        Настилки изкуствена трева
+                    </Link>
+                );
             case "tatami":
-                return <Link href="/katalog/tatami" className="hover:underline hover:text-primary">Настилки татами</Link>;
+                return (
+                    <Link
+                        href="/katalog/tatami"
+                        className="hover:underline hover:text-primary"
+                    >
+                        Настилки татами
+                    </Link>
+                );
             case "postelki":
-                return <Link href="/katalog/postelki" className="hover:underline hover:text-primary">Постелки за фитнес и йога</Link>;
+                return (
+                    <Link
+                        href="/katalog/postelki"
+                        className="hover:underline hover:text-primary"
+                    >
+                        Постелки за фитнес и йога
+                    </Link>
+                );
             case "platformi-podiumi":
-                return <Link href="/katalog/platformi-podiumi" className="hover:underline hover:text-primary">Платформи и подиуми</Link>;
+                return (
+                    <Link
+                        href="/katalog/platformi-podiumi"
+                        className="hover:underline hover:text-primary"
+                    >
+                        Платформи и подиуми
+                    </Link>
+                );
         }
     };
 
-    const handleQuantitySet = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    const handleQuantitySet = (
+        event: React.KeyboardEvent<HTMLInputElement>,
+    ) => {
         if (event.key === "Enter") {
             const num = Number(quantityInput);
 
@@ -71,23 +137,22 @@ const ProductView = ({ product, category }: ProductViewProps) => {
             <div className="w-full flex flex-col md:flex-row gap-y-6 md:gap-y-0">
                 {/* Left side */}
                 <div className="w-full md:w-1/2 md:pe-2">
-
                     {/* Main image */}
                     <div className="w-full flex overflow-hidden">
-                        {images.map((image, i)=> (
+                        {images.map((image, i) => (
                             <div
                                 key={i}
                                 style={{
                                     transform: `translateX(${-100 * index}%)`,
                                     transition: "transform 0.3s ease-in-out",
-                                    minWidth: "100%"
+                                    minWidth: "100%",
                                 }}
                                 className="border border-gray-400"
                             >
                                 <div className="relative w-full aspect-square">
-                                    <Image 
-                                        src={image} 
-                                        alt={`Product image ${i+1}`} 
+                                    <Image
+                                        src={image}
+                                        alt={`Product image ${i + 1}`}
                                         aria-hidden={index !== i}
                                         fill
                                         sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 37.25rem"
@@ -101,9 +166,8 @@ const ProductView = ({ product, category }: ProductViewProps) => {
 
                     {/* Thumbnail images */}
                     <div className="w-full relative flex pt-2 bg-gray-200">
-
                         {/* Left arrow */}
-                        <button 
+                        <button
                             className="bg-gray-200 hover:bg-gray-400 border border-gray-400 px-1 text-gray-800 transition-colors duration-300 me-1"
                             onClick={() => scrollThumbnails("left")}
                         >
@@ -113,7 +177,7 @@ const ProductView = ({ product, category }: ProductViewProps) => {
                         {/* Thumbnails */}
                         <div
                             ref={scrollContainerRef}
-                            className="flex overflow-hidden w-full" 
+                            className="flex overflow-hidden w-full"
                         >
                             {images.map((image, i) => (
                                 <div
@@ -135,7 +199,7 @@ const ProductView = ({ product, category }: ProductViewProps) => {
                         </div>
 
                         {/* Right arrow */}
-                        <button 
+                        <button
                             className="bg-gray-200 border border-gray-400 px-1 text-gray-800 
                             hover:bg-gray-400 transition-colors duration-300 ms-1"
                             onClick={() => scrollThumbnails("right")}
@@ -148,35 +212,55 @@ const ProductView = ({ product, category }: ProductViewProps) => {
                 {/* Right side */}
                 <div className="w-full md:w-1/2 bg-white md:ms-2 shadow-lg border border-gray-400 p-4 sm:p-8">
                     {/* Breadcrumbs */}
-                    {category && 
-                        <Breadcrumbs aria-label="breadcrumbs" sx={{ fontSize: "0.75rem", marginBottom: "2rem" }}>
-                            <Link href="/katalog" className="hover:underline hover:text-primary">
+                    {category && (
+                        <Breadcrumbs
+                            aria-label="breadcrumbs"
+                            sx={{ fontSize: "0.75rem", marginBottom: "2rem" }}
+                        >
+                            <Link
+                                href="/katalog"
+                                className="hover:underline hover:text-primary"
+                            >
                                 Каталог
                             </Link>
                             {renderCategoryBreadcrumb()}
-                            <Typography sx={{ fontWeight: 600, fontSize: "0.75rem" }}>{product.name}</Typography>
+                            <Typography
+                                sx={{ fontWeight: 600, fontSize: "0.75rem" }}
+                            >
+                                {product.name}
+                            </Typography>
                         </Breadcrumbs>
-                    }
+                    )}
 
                     {/* Product name */}
-                    <h2 className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-medium mb-8">{product.name}</h2>
+                    <h2 className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-medium mb-8">
+                        {product.name}
+                    </h2>
 
                     {/* Price */}
-                    {product.discount ?
+                    {product.discount ? (
                         <div className="mb-8">
                             <p className="text-base sm:text-lg lg:text-xl xl:text-2xl text-primary font-medium">
-                                <span className="font-normal text-gray-400 me-3 line-through">{product.price.toFixed(2)}лв.</span>
-                                {(product.price - (product.price * product.discount / 100)).toFixed(2)}лв.
+                                <span className="font-normal text-gray-400 me-3 line-through">
+                                    {product.price.toFixed(2)}лв.
+                                </span>
+                                {(
+                                    product.price -
+                                    (product.price * product.discount) / 100
+                                ).toFixed(2)}
+                                лв.
                             </p>
                         </div>
-                        :
-                        <p className="text-base sm:text-lg lg:text-xl xl:text-2xl text-primary font-medium mb-8">{product.price.toFixed(2)}лв.</p>
-                    }
+                    ) : (
+                        <p className="text-base sm:text-lg lg:text-xl xl:text-2xl text-primary font-medium mb-8">
+                            {product.price.toFixed(2)}лв.
+                        </p>
+                    )}
 
                     {/* Add to cart */}
                     <div className="flex gap-x-6">
                         <div className="flex">
-                            <div 
+                            <div
                                 className="border border-gray-300 p-2 cursor-pointer transition-colors
                                 hover:bg-primary hover:border-primary hover:text-white duration-300 select-none"
                                 onClick={() => {
@@ -188,10 +272,12 @@ const ProductView = ({ product, category }: ProductViewProps) => {
                             >
                                 -
                             </div>
-                            <input 
-                                className="border border-gray-300 w-14 p-2 text-center" 
-                                value={quantityInput} 
-                                onChange={({ target }) => setQuantityInput(target.value)}
+                            <input
+                                className="border border-gray-300 w-14 p-2 text-center"
+                                value={quantityInput}
+                                onChange={({ target }) =>
+                                    setQuantityInput(target.value)
+                                }
                                 onKeyDown={handleQuantitySet}
                             />
                             <div
@@ -206,32 +292,39 @@ const ProductView = ({ product, category }: ProductViewProps) => {
                             </div>
                         </div>
 
-                        <button 
+                        <button
                             className="border border-primary bg-primary uppercase text-white text-xs font-bold px-2 
                             hover:bg-primaryDim hover:border-primaryDim transition-colors duration-300"
                             onClick={() => {
-                                addToCart({ 
-                                    ...product, 
-                                    price: product.discount ? product.price - (product.price * product.discount / 100) : product.price,
+                                addToCart({
+                                    ...product,
+                                    price: product.discount
+                                        ? product.price -
+                                          (product.price * product.discount) /
+                                              100
+                                        : product.price,
                                     quantity: quantity,
-                                    image: product.image1
+                                    image: product.image1,
                                 });
                             }}
                         >
                             Добавяне в количката
                         </button>
                     </div>
-                    {quantityError &&
-                        <p className="w-fit mt-1 p-3 bg-gray-700 rounded-md text-white text-sm">{quantityError}</p>
-                    }
+                    {quantityError && (
+                        <p className="w-fit mt-1 p-3 bg-gray-700 rounded-md text-white text-sm">
+                            {quantityError}
+                        </p>
+                    )}
                 </div>
             </div>
 
-            <ProductTabs 
-                name={product.name} 
-                description={product.description} 
-                manufacturer={product.manufacturer} 
-                manufacturer_description={product.manufacturer_description} />
+            <ProductTabs
+                name={product.name}
+                description={product.description}
+                manufacturer={product.manufacturer}
+                manufacturer_description={product.manufacturer_description}
+            />
         </div>
     );
 };

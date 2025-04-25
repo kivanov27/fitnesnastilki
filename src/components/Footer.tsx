@@ -145,7 +145,10 @@ const Footer = () => {
                     </div>
                     <div className="flex items-center justify-start gap-x-4">
                         <StoreIcon />
-                        <Link href="" className="hover:text-gray-300">
+                        <Link
+                            href="https://fitnesnastilki.olx.bg/home/"
+                            className="hover:text-gray-300"
+                        >
                             olx: фитнес настилки
                         </Link>
                     </div>
