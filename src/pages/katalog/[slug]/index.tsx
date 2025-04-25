@@ -31,6 +31,8 @@ const Category = () => {
                 return "Постелки за фитнес и йога";
             case "platformi-podiumi":
                 return "Платформи и подиуми";
+            case "lepilo":
+                return "Лепило за настилки";
         }
     };
 

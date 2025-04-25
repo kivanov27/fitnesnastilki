@@ -297,9 +297,10 @@ const Checkout = () => {
                 </div>
 
                 <div className="border-b border-gray-500 text-sm md:text-base">
-                    <p className="mt-6">Наложен платеж</p>
+                    <p className="mt-6">Начин на плащане</p>
                     <p className="my-2 bg-gray-100 p-3 rounded-md">
-                        Плащане в брой при доставка
+                        Наш представител ще се свърже с вас, за да уточни
+                        подробностите по поръчката ви.
                     </p>
                 </div>
 

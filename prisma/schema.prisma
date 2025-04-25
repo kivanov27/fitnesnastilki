@@ -17,6 +17,10 @@ model product {
     image2                   String?       @db.VarChar(255)
     image3                   String?       @db.VarChar(255)
     image4                   String?       @db.VarChar(255)
+    image5                   String?       @db.VarChar(255)
+    image6                   String?       @db.VarChar(255)
+    image7                   String?       @db.VarChar(255)
+    image8                   String?       @db.VarChar(255)
     category                 String[]      @db.VarChar(20)
     popular                  Boolean?      @default(false)
     description              String?

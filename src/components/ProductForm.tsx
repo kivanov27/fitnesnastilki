@@ -3,69 +3,80 @@ import React, { useState } from "react";
 
 const ProductForm = () => {
     const [formData, setFormData] = useState<NewProduct>({
-        name: '',
+        name: "",
         price: 0,
         discount: 0,
-        link: '',
-        image1: '',
-        image2: '',
-        image3: '',
-        image4: '',
+        link: "",
+        image1: "",
+        image2: "",
+        image3: "",
+        image4: "",
+        image5: "",
+        image6: "",
+        image7: "",
+        image8: "",
         category: [],
         popular: false,
-        description: '',
-        manufacturer: '',
-        manufacturer_description: ''
+        description: "",
+        manufacturer: "",
+        manufacturer_description: "",
     });
-    const [error, setError] = useState<string>('');
-    const [categoryInput, setCategoryInput] = useState<string>('');
+    const [error, setError] = useState<string>("");
+    const [categoryInput, setCategoryInput] = useState<string>("");
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    ) => {
         const { name, value } = e.target;
-        const checked = e.target.type === "checkbox" ? (e.target as HTMLInputElement).checked : undefined;
+        const checked =
+            e.target.type === "checkbox"
+                ? (e.target as HTMLInputElement).checked
+                : undefined;
 
         if (name === "price" || name === "discount") {
             setFormData({
                 ...formData,
-                [name]: value === "" ? 0 : Number(value)
+                [name]: value === "" ? 0 : Number(value),
             });
-        }
-        else {
+        } else {
             setFormData({
                 ...formData,
-                [name]: checked !== undefined ? checked : value
+                [name]: checked !== undefined ? checked : value,
             });
         }
     };
 
     const handleCategoryAdd = () => {
-        if (categoryInput.trim() && !formData.category.includes(categoryInput.trim())) {
+        if (
+            categoryInput.trim() &&
+            !formData.category.includes(categoryInput.trim())
+        ) {
             setFormData({
                 ...formData,
-                category: [...formData.category, categoryInput.trim()]
+                category: [...formData.category, categoryInput.trim()],
             });
-            setCategoryInput('');
+            setCategoryInput("");
         }
     };
 
     const handleCategoryRemove = (categoryToRemove: string) => {
         setFormData({
             ...formData,
-            category: formData.category.filter(c => c !== categoryToRemove)
+            category: formData.category.filter((c) => c !== categoryToRemove),
         });
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setError('');
+        setError("");
 
         try {
-            const response = await fetch('/api/products', {
+            const response = await fetch("/api/products", {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
                 },
-                body: JSON.stringify(formData)
+                body: JSON.stringify(formData),
             });
 
             if (!response.ok) {
@@ -76,21 +87,28 @@ const ProductForm = () => {
             const data = await response.json();
 
             alert(`Продукт ${data.name} беше добавен`);
-        }
-        catch (error) {
+        } catch (error) {
             if (error instanceof Error) setError(error.message);
-            else setError("Encountered an error when trying to create a product");
+            else
+                setError(
+                    "Encountered an error when trying to create a product",
+                );
         }
     };
 
     return (
-        <form onSubmit={handleSubmit} className="w-full xl:w-[75rem] mx-auto mt-6 px-6 sm:px-12 lg:px-20 xl:px-0">
+        <form
+            onSubmit={handleSubmit}
+            className="w-full xl:w-[75rem] mx-auto mt-6 px-6 sm:px-12 lg:px-20 xl:px-0"
+        >
             {error && <div className="text-red-500 mb-4">{error}</div>}
 
             <div className="w-full flex flex-col sm:flex-row gap-x-10">
                 {/* Name */}
                 <div className="w-full mb-4">
-                    <label htmlFor="name" className="block mb-2 text-center">Име</label>
+                    <label htmlFor="name" className="block mb-2 text-center">
+                        Име
+                    </label>
                     <input
                         type="text"
                         id="name"
@@ -103,7 +121,9 @@ const ProductForm = () => {
                 </div>
                 {/* Link */}
                 <div className="w-full mb-4">
-                    <label htmlFor="link" className="block mb-2 text-center">Линк</label>
+                    <label htmlFor="link" className="block mb-2 text-center">
+                        Линк
+                    </label>
                     <input
                         type="text"
                         id="link"
@@ -119,7 +139,9 @@ const ProductForm = () => {
             <div className="w-full flex gap-x-10">
                 {/* Price */}
                 <div className="w-full mb-4">
-                    <label htmlFor="price" className="block mb-2 text-center">Цена</label>
+                    <label htmlFor="price" className="block mb-2 text-center">
+                        Цена
+                    </label>
                     <input
                         type="number"
                         id="price"
@@ -133,7 +155,12 @@ const ProductForm = () => {
 
                 {/* Discount */}
                 <div className="w-full mb-4">
-                    <label htmlFor="discount" className="block mb-2 text-center">Отстъпка</label>
+                    <label
+                        htmlFor="discount"
+                        className="block mb-2 text-center"
+                    >
+                        Отстъпка
+                    </label>
                     <input
                         type="number"
                         id="discount"
@@ -147,7 +174,9 @@ const ProductForm = () => {
 
             {/* Image1 */}
             <div className="w-full mb-4">
-                <label htmlFor="image1" className="block mb-2 text-center">Първа снимка</label>
+                <label htmlFor="image1" className="block mb-2 text-center">
+                    Първа снимка
+                </label>
                 <input
                     type="text"
                     id="image1"
@@ -161,7 +190,9 @@ const ProductForm = () => {
 
             {/* Image2 */}
             <div className="w-full mb-4">
-                <label htmlFor="image2" className="block mb-2 text-center">Втора снимка</label>
+                <label htmlFor="image2" className="block mb-2 text-center">
+                    Втора снимка
+                </label>
                 <input
                     type="text"
                     id="image2"
@@ -174,7 +205,9 @@ const ProductForm = () => {
 
             {/* Image3 */}
             <div className="w-full mb-4">
-                <label htmlFor="image3" className="block mb-2 text-center">Трета снимка</label>
+                <label htmlFor="image3" className="block mb-2 text-center">
+                    Трета снимка
+                </label>
                 <input
                     type="text"
                     id="image3"
@@ -187,7 +220,9 @@ const ProductForm = () => {
 
             {/* Image4 */}
             <div className="w-full mb-4">
-                <label htmlFor="image4" className="block mb-2 text-center">Четвърта снимка</label>
+                <label htmlFor="image4" className="block mb-2 text-center">
+                    Четвърта снимка
+                </label>
                 <input
                     type="text"
                     id="image4"
@@ -198,10 +233,71 @@ const ProductForm = () => {
                 />
             </div>
 
+            {/* Image5 */}
+            <div className="w-full mb-4">
+                <label htmlFor="image5" className="block mb-2 text-center">
+                    Петта снимка
+                </label>
+                <input
+                    type="text"
+                    id="image5"
+                    name="image5"
+                    value={formData.image5}
+                    onChange={handleChange}
+                    className="w-full p-2 border rounded-md"
+                />
+            </div>
+
+            {/* Image6 */}
+            <div className="w-full mb-4">
+                <label htmlFor="image6" className="block mb-2 text-center">
+                    Шестта снимка
+                </label>
+                <input
+                    type="text"
+                    id="image6"
+                    name="image6"
+                    value={formData.image6}
+                    onChange={handleChange}
+                    className="w-full p-2 border rounded-md"
+                />
+            </div>
+
+            {/* Image7 */}
+            <div className="w-full mb-4">
+                <label htmlFor="image7" className="block mb-2 text-center">
+                    Седма снимка
+                </label>
+                <input
+                    type="text"
+                    id="image7"
+                    name="image7"
+                    value={formData.image7}
+                    onChange={handleChange}
+                    className="w-full p-2 border rounded-md"
+                />
+            </div>
+
+            {/* Image8 */}
+            <div className="w-full mb-4">
+                <label htmlFor="image8" className="block mb-2 text-center">
+                    Осма снимка
+                </label>
+                <input
+                    type="text"
+                    id="image8"
+                    name="image8"
+                    value={formData.image8}
+                    onChange={handleChange}
+                    className="w-full p-2 border rounded-md"
+                />
+            </div>
+
             {/* Category */}
             <div className="w-full mb-4">
                 <label htmlFor="category" className="block mb-2 text-center">
-                    Категории (plocha, rulo, izkustvena-treva, tatami, postelki, platformi-podiumi, lepilo)
+                    Категории (plocha, rulo, izkustvena-treva, tatami, postelki,
+                    platformi-podiumi, lepilo, fitnes-ured)
                 </label>
                 <div className="flex">
                     <input
@@ -209,7 +305,9 @@ const ProductForm = () => {
                         id="category"
                         name="category"
                         value={categoryInput}
-                        onChange={({ target }) => setCategoryInput(target.value)}
+                        onChange={({ target }) =>
+                            setCategoryInput(target.value)
+                        }
                         className="flex-1 p-2 border rounded-l-md"
                         placeholder="Добави категория"
                     />
@@ -225,7 +323,7 @@ const ProductForm = () => {
 
             {/* Display categories */}
             <div className="mt-2 flex flex-wrap gap-2">
-                {formData.category.map(c => (
+                {formData.category.map((c) => (
                     <span
                         key={c}
                         className="bg-gray-100 px-3 py-1 rounded-full flex items-center"
@@ -257,7 +355,9 @@ const ProductForm = () => {
 
             {/* Description */}
             <div className="mb-4">
-                <label htmlFor="description" className="block mb-2">Описание</label>
+                <label htmlFor="description" className="block mb-2">
+                    Описание
+                </label>
                 <textarea
                     id="description"
                     name="description"
@@ -270,7 +370,9 @@ const ProductForm = () => {
 
             {/* Manufacturer */}
             <div className="mb-4">
-                <label htmlFor="manufacturer" className="block mb-2">Производител</label>
+                <label htmlFor="manufacturer" className="block mb-2">
+                    Производител
+                </label>
                 <input
                     type="text"
                     id="manufacturer"
@@ -283,7 +385,12 @@ const ProductForm = () => {
 
             {/* Manufacturer_description */}
             <div className="mb-4">
-                <label htmlFor="manufacturer_description" className="block mb-2">Описание на производител</label>
+                <label
+                    htmlFor="manufacturer_description"
+                    className="block mb-2"
+                >
+                    Описание на производител
+                </label>
                 <textarea
                     id="manufacturer_description"
                     name="manufacturer_description"
@@ -293,8 +400,8 @@ const ProductForm = () => {
                     rows={6}
                 />
             </div>
-            <button 
-                type="submit" 
+            <button
+                type="submit"
                 className="block mx-auto p-2 mb-4 bg-primary text-white rounded-md hover:bg-primaryDim transition-colors duration-300"
             >
                 Създаване
