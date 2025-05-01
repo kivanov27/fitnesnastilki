@@ -308,7 +308,7 @@ const Checkout = () => {
                     Вашите лични данни ще бъдат използвани за обработка на
                     вашата поръчка и за други цели, описани в нашата
                     <a
-                        href="politika-za-poveritelnost"
+                        href="/privacy-policy"
                         className="font-semibold hover:text-primary"
                     >
                         {" "}
@@ -332,7 +332,7 @@ const Checkout = () => {
                     <label htmlFor="terms" className="ms-2 text-sm">
                         Прочетох и се съгласявам с
                         <a
-                            href="/pravila-usloviya"
+                            href="/obshti-usloviya"
                             className="font-semibold hover:text-primary"
                         >
                             {" "}
