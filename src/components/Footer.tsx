@@ -42,10 +42,22 @@ const Footer = () => {
                         Информация
                     </h3>
                     <ul className="flex flex-col items-start">
-                        <li className="footer-li">Общи условия</li>
-                        <li className="footer-li">Политика за поверителност</li>
-                        <li className="footer-li">Плащане и доставка</li>
-                        <li className="footer-li">Свържете се с нас</li>
+                        <li className="footer-li">
+                            <Link
+                                href="/obshti-usloviya"
+                                className="hover:text-gray-300"
+                            >
+                                Общи условия
+                            </Link>
+                        </li>
+                        <li className="footer-li">
+                            <Link
+                                href="/privacy-policy"
+                                className="hover:text-gray-300"
+                            >
+                                Политика за поверителност
+                            </Link>
+                        </li>
                     </ul>
                 </div>
 
@@ -92,6 +104,14 @@ const Footer = () => {
                                 className="hover:text-gray-300"
                             >
                                 Постелки за фитнес и йога
+                            </Link>
+                        </li>
+                        <li className="footer-li">
+                            <Link
+                                href="/katalog/fitnes-ured"
+                                className="hover:text-gray-300"
+                            >
+                                Фитнес уреди
                             </Link>
                         </li>
                         <li className="footer-li">

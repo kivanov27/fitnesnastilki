@@ -46,7 +46,10 @@ const Category = () => {
                     setProducts(data);
                 } else {
                     const res = await fetch(`/api/products/category/${slug}`);
-                    if (!res.ok) throw new Error("Couldn't fetch products");
+                    if (!res.ok) {
+                        setProducts([]);
+                        throw new Error("Couldn't fetch products");
+                    }
                     const data = await res.json();
                     setProducts(data);
                 }

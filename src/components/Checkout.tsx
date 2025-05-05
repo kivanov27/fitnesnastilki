@@ -265,7 +265,7 @@ const Checkout = () => {
                         {cart.map((item) => (
                             <div
                                 key={item.id}
-                                className="border-b border-gray-300 flex items-center justify-between gap-x-2 py-2"
+                                className="border-b border-gray-300 flex flex-col sm:flex-row items-center justify-between gap-y-2 sm:gap-y-0 gap-x-2 py-2"
                             >
                                 <div className="relative aspect-square w-20 h-20">
                                     <Image
