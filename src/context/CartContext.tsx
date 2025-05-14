@@ -21,10 +21,9 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     const { data: session } = useSession();
     const [cart, setCart] = useState<CartItem[]>([]);
 
-    const totalPrice = cart.reduce(
-        (acc, product) => acc + product.price * product.quantity,
-        0,
-    );
+    const totalPrice = Array.isArray(cart)
+        ? cart.reduce((acc, product) => acc + product.price * product.quantity, 0,)
+        : 0;
 
     // load cart from localStorage
     useEffect(() => {
@@ -59,18 +58,20 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
                 if (!cookieCart) return;
 
                 const localCart = JSON.parse(cookieCart);
-                await Promise.all(
-                    localCart.map((item: CartItem) =>
-                        fetch("api/cart", {
-                            method: "POST",
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({
-                                productId: item.id,
-                                quantity: item.quantity,
+                if (Array.isArray(localCart)) {
+                    await Promise.all(
+                        localCart.map((item: CartItem) =>
+                            fetch("api/cart", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({
+                                    productId: item.id,
+                                    quantity: item.quantity,
+                                }),
                             }),
-                        }),
-                    ),
-                );
+                        ),
+                    );
+                }
 
                 Cookies.remove("fitnesnastilki-cart");
             }
