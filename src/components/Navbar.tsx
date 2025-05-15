@@ -19,11 +19,6 @@ const Navbar = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
     const [categories, setCategories] = useState<Category[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [expandedCategories, setExpandedCategories] = useState({
-        catalogue: true,
-    });
-    const categoriesRef = useRef<HTMLDivElement>(null);
-    const [categoriesHeight, setCategoriesHeight] = useState<number>(0);
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -64,21 +59,6 @@ const Navbar = () => {
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
     }, []);
-
-    useEffect(() => {
-        if (categoriesRef.current && expandedCategories.catalogue) {
-            setCategoriesHeight(categoriesRef.current.scrollHeight);
-        } else {
-            setCategoriesHeight(0);
-        }
-    }, [expandedCategories.catalogue, categories]);
-
-    const toggleCategory = (category: keyof typeof expandedCategories) => {
-        setExpandedCategories((prev) => ({
-            ...prev,
-            [category]: !prev[category],
-        }));
-    };
 
     return (
         <div className="border border-b-gray-400 lg:h-28">
@@ -195,42 +175,14 @@ const Navbar = () => {
                             </Link>
 
                             <div className="border-b border-gray-100 flex flex-col">
-                                <div className="flex items-center justify-between py-3">
-                                    <Link
-                                        href="/katalog"
-                                        className="text-xl active:text-primary"
-                                    >
-                                        Каталог
-                                    </Link>
-                                    <button
-                                        onClick={() =>
-                                            toggleCategory("catalogue")
-                                        }
-                                        className="p-1 transform transition-transform duration-300"
-                                        style={{
-                                            transform:
-                                                expandedCategories.catalogue
-                                                    ? "rotate(90deg)"
-                                                    : "rotate(0deg)",
-                                        }}
-                                        aria-expanded={
-                                            expandedCategories.catalogue
-                                        }
-                                        aria-label="Toggle categories"
-                                    >
-                                        <ChevronRightIcon />
-                                    </button>
-                                </div>
-                                <div
-                                    ref={categoriesRef}
-                                    className="overflow-hidden transition-all duration-300 ease-in-out"
-                                    style={{
-                                        maxHeight: expandedCategories.catalogue
-                                            ? `${categoriesHeight}px`
-                                            : "0px",
-                                    }}
+                                <Link
+                                    href="/katalog"
+                                    className="py-3 text-xl active:text-primary"
                                 >
-                                    <div className="">
+                                    Каталог
+                                </Link>
+                                <div>
+                                    <div>
                                         {!isLoading &&
                                             categories.map((category) => (
                                                 <Link
@@ -238,9 +190,7 @@ const Navbar = () => {
                                                     href={`/katalog/${category.link}`}
                                                     className="block py-2 text-base active:text-primary"
                                                     onClick={() =>
-                                                        setIsMobileMenuOpen(
-                                                            false,
-                                                        )
+                                                        setIsMobileMenuOpen(false)
                                                     }
                                                 >
                                                     {"•"} {category.name}

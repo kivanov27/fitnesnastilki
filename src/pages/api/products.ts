@@ -9,6 +9,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 return await handleGetProducts(res);
             case "POST":
                 return await handlePostProduct(req, res);
+            case "PUT":
+                return await handlePutProduct(req, res);
             default:
                 res.setHeader("Allow", ["GET", "POST"]);
                 return res.status(405).json({ error: `Method ${req.method} not allowed` });
@@ -38,9 +40,25 @@ async function handlePostProduct(req: NextApiRequest, res: NextApiResponse) {
         const data = req.body;
         const newProduct = await prisma.product.create({ data });
         return res.status(201).json(newProduct);
-    } 
+    }
     catch (error) {
-        console.error("Create product error:", error);
+        console.error("Create product error: ", error);
         return res.status(400).json({ error: "Failed to create product" });
+    }
+}
+
+async function handlePutProduct(req: NextApiRequest, res: NextApiResponse) {
+    if (!(await isAdmin(req, res))) {
+        return res.status(403).json({ error: "Unauthorized" });
+    }
+
+    try {
+        const data = req.body;
+        const updatedProduct = await prisma.product.update({ where: { id: data.id }, data });
+        return res.status(200).json(updatedProduct);
+    }
+    catch (error) {
+        console.error("Update product error: ", error);
+        return res.status(400).json({ error: "Failed to update product" });
     }
 }
