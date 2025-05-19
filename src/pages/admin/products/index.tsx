@@ -76,12 +76,17 @@ const AdminProductsPage = ({ products }: AdminProductsPageProps) => {
                                     Крайна:{" "}
                                     {product.price -
                                         (product.price * product.discount) /
-                                            100}
+                                        100}
                                     лв.
                                 </p>
                             ) : (
                                 <p>Крайна: {product.price}лв.</p>
                             )}
+                            <button
+                                className="text-white bg-primary p-2"
+                            >
+                                Промени
+                            </button>
                             <button
                                 className="text-white bg-primary p-2"
                                 onClick={() => deleteProduct(product.link)}

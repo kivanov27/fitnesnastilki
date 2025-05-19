@@ -1,11 +1,17 @@
 import { NewProduct } from "@/types";
 import React, { useState } from "react";
+import Editor from "./Editor";
+
+type ProductFormData = Omit<NewProduct, "price" | "discount"> & {
+    price: string;
+    discount: string;
+};
 
 const ProductForm = () => {
-    const [formData, setFormData] = useState<NewProduct>({
+    const [formData, setFormData] = useState<ProductFormData>({
         name: "",
-        price: 0,
-        discount: 0,
+        price: "",
+        discount: "",
         link: "",
         image1: "",
         image2: "",
@@ -23,6 +29,7 @@ const ProductForm = () => {
     });
     const [error, setError] = useState<string>("");
     const [categoryInput, setCategoryInput] = useState<string>("");
+    const [imageFiles, setImageFiles] = useState<Partial<Record<keyof NewProduct, File>>>({});
 
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -33,17 +40,25 @@ const ProductForm = () => {
                 ? (e.target as HTMLInputElement).checked
                 : undefined;
 
-        if (name === "price" || name === "discount") {
-            setFormData({
-                ...formData,
-                [name]: value === "" ? 0 : Number(value),
-            });
-        } else {
-            setFormData({
-                ...formData,
-                [name]: checked !== undefined ? checked : value,
-            });
-        }
+        setFormData({
+            ...formData,
+            [name]: checked !== undefined ? checked : value,
+        });
+    };
+
+    const handleDescriptionChange = (html: string) => {
+        setFormData(prev => ({ ...prev, description: html }));
+    };
+
+    const handleImageSelect = async (
+        e: React.ChangeEvent<HTMLInputElement>,
+        imageField: keyof NewProduct
+    ) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        setImageFiles(prev => ({ ...prev, [imageField]: file }));
+        setFormData(prev => ({ ...prev, [imageField]: file.name }));
     };
 
     const handleCategoryAdd = () => {
@@ -71,12 +86,67 @@ const ProductForm = () => {
         setError("");
 
         try {
+            const uploadedImageUrls: Partial<Record<keyof NewProduct, string>> = {};
+
+            // upload each image file
+            for (const [field, file] of Object.entries(imageFiles)) {
+                if (!file) continue;
+
+                const formDataFile = new FormData();
+                formDataFile.append("image", file);
+                formDataFile.append("category", formData.category[0]);
+                formDataFile.append("productLink", formData.link);
+                formDataFile.append("imageNumber", field.replace("image", ""));
+
+                const response = await fetch("/api/upload", {
+                    method: "POST",
+                    body: formDataFile,
+                });
+
+                const data = await response.json();
+                if (!response.ok) throw new Error(data.message || "Upload failed");
+
+                uploadedImageUrls[field as keyof NewProduct] = data.imageUrl;
+            }
+
+            const price = Number(formData.price);
+            const discount = Number(formData.discount);
+
+            if (isNaN(price) || price < 0) {
+                setError("Моля, въведете валидна цена.");
+                return;
+            }
+            if (isNaN(discount) || discount < 0) {
+                setError("Моля, въведете валидна отстъпка.");
+                return;
+            }
+
+            const finalFormData: NewProduct = {
+                name: formData.name,
+                price,
+                discount,
+                link: formData.link,
+                image1: formData.image1,
+                image2: formData.image2,
+                image3: formData.image3,
+                image4: formData.image4,
+                image5: formData.image5,
+                image6: formData.image6,
+                image7: formData.image7,
+                image8: formData.image8,
+                category: formData.category,
+                popular: formData.popular,
+                description: formData.description,
+                manufacturer: formData.manufacturer,
+                manufacturer_description: formData.manufacturer_description,
+            };
+
             const response = await fetch("/api/products", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(formData),
+                body: JSON.stringify(finalFormData),
             });
 
             if (!response.ok) {
@@ -177,15 +247,22 @@ const ProductForm = () => {
                 <label htmlFor="image1" className="block mb-2 text-center">
                     Първа снимка
                 </label>
-                <input
-                    type="text"
-                    id="image1"
-                    name="image1"
-                    value={formData.image1}
-                    onChange={handleChange}
-                    required
-                    className="w-full p-2 border rounded-md"
-                />
+                <div className="flex">
+                    <input
+                        type="text"
+                        id="image1"
+                        name="image1"
+                        value={formData.image1}
+                        readOnly
+                        className="flex-1 p-2 border rounded-md"
+                    />
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => handleImageSelect(e, "image1")}
+                        className="p-2"
+                    />
+                </div>
             </div>
 
             {/* Image2 */}
@@ -193,14 +270,22 @@ const ProductForm = () => {
                 <label htmlFor="image2" className="block mb-2 text-center">
                     Втора снимка
                 </label>
-                <input
-                    type="text"
-                    id="image2"
-                    name="image2"
-                    value={formData.image2}
-                    onChange={handleChange}
-                    className="w-full p-2 border rounded-md"
-                />
+                <div className="flex">
+                    <input
+                        type="text"
+                        id="image2"
+                        name="image2"
+                        value={formData.image2}
+                        readOnly
+                        className="flex-1 p-2 border rounded-md"
+                    />
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => handleImageSelect(e, "image2")}
+                        className="p-2"
+                    />
+                </div>
             </div>
 
             {/* Image3 */}
@@ -208,14 +293,22 @@ const ProductForm = () => {
                 <label htmlFor="image3" className="block mb-2 text-center">
                     Трета снимка
                 </label>
-                <input
-                    type="text"
-                    id="image3"
-                    name="image3"
-                    value={formData.image3}
-                    onChange={handleChange}
-                    className="w-full p-2 border rounded-md"
-                />
+                <div className="flex">
+                    <input
+                        type="text"
+                        id="image3"
+                        name="image3"
+                        value={formData.image3}
+                        readOnly
+                        className="flex-1 p-2 border rounded-md"
+                    />
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => handleImageSelect(e, "image3")}
+                        className="p-2"
+                    />
+                </div>
             </div>
 
             {/* Image4 */}
@@ -223,44 +316,68 @@ const ProductForm = () => {
                 <label htmlFor="image4" className="block mb-2 text-center">
                     Четвърта снимка
                 </label>
-                <input
-                    type="text"
-                    id="image4"
-                    name="image4"
-                    value={formData.image4}
-                    onChange={handleChange}
-                    className="w-full p-2 border rounded-md"
-                />
+                <div className="flex">
+                    <input
+                        type="text"
+                        id="image4"
+                        name="image4"
+                        value={formData.image4}
+                        readOnly
+                        className="flex-1 p-2 border rounded-md"
+                    />
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => handleImageSelect(e, "image4")}
+                        className="p-2"
+                    />
+                </div>
             </div>
 
             {/* Image5 */}
             <div className="w-full mb-4">
                 <label htmlFor="image5" className="block mb-2 text-center">
-                    Петта снимка
+                    Пета снимка
                 </label>
-                <input
-                    type="text"
-                    id="image5"
-                    name="image5"
-                    value={formData.image5}
-                    onChange={handleChange}
-                    className="w-full p-2 border rounded-md"
-                />
+                <div className="flex">
+                    <input
+                        type="text"
+                        id="image5"
+                        name="image5"
+                        value={formData.image5}
+                        readOnly
+                        className="flex-1 p-2 border rounded-md"
+                    />
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => handleImageSelect(e, "image5")}
+                        className="p-2"
+                    />
+                </div>
             </div>
 
             {/* Image6 */}
             <div className="w-full mb-4">
                 <label htmlFor="image6" className="block mb-2 text-center">
-                    Шестта снимка
+                    Шеста снимка
                 </label>
-                <input
-                    type="text"
-                    id="image6"
-                    name="image6"
-                    value={formData.image6}
-                    onChange={handleChange}
-                    className="w-full p-2 border rounded-md"
-                />
+                <div className="flex">
+                    <input
+                        type="text"
+                        id="image6"
+                        name="image6"
+                        value={formData.image6}
+                        readOnly
+                        className="flex-1 p-2 border rounded-md"
+                    />
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => handleImageSelect(e, "image6")}
+                        className="p-2"
+                    />
+                </div>
             </div>
 
             {/* Image7 */}
@@ -268,14 +385,22 @@ const ProductForm = () => {
                 <label htmlFor="image7" className="block mb-2 text-center">
                     Седма снимка
                 </label>
-                <input
-                    type="text"
-                    id="image7"
-                    name="image7"
-                    value={formData.image7}
-                    onChange={handleChange}
-                    className="w-full p-2 border rounded-md"
-                />
+                <div className="flex">
+                    <input
+                        type="text"
+                        id="image7"
+                        name="image7"
+                        value={formData.image7}
+                        readOnly
+                        className="flex-1 p-2 border rounded-md"
+                    />
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => handleImageSelect(e, "image7")}
+                        className="p-2"
+                    />
+                </div>
             </div>
 
             {/* Image8 */}
@@ -283,14 +408,22 @@ const ProductForm = () => {
                 <label htmlFor="image8" className="block mb-2 text-center">
                     Осма снимка
                 </label>
-                <input
-                    type="text"
-                    id="image8"
-                    name="image8"
-                    value={formData.image8}
-                    onChange={handleChange}
-                    className="w-full p-2 border rounded-md"
-                />
+                <div className="flex">
+                    <input
+                        type="text"
+                        id="image8"
+                        name="image8"
+                        value={formData.image8}
+                        readOnly
+                        className="flex-1 p-2 border rounded-md"
+                    />
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => handleImageSelect(e, "image8")}
+                        className="p-2"
+                    />
+                </div>
             </div>
 
             {/* Category */}
@@ -358,14 +491,7 @@ const ProductForm = () => {
                 <label htmlFor="description" className="block mb-2">
                     Описание
                 </label>
-                <textarea
-                    id="description"
-                    name="description"
-                    value={formData.description}
-                    onChange={handleChange}
-                    className="w-full p-2 border rounded-md"
-                    rows={6}
-                />
+                <Editor content={formData.description} onChangeAction={handleDescriptionChange} />
             </div>
 
             {/* Manufacturer */}

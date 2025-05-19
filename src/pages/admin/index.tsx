@@ -13,8 +13,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         authOptions,
     );
 
-    console.log("Session: ", session); // DELETE MEEEE
-
     if (!session?.user?.isAdmin) {
         return {
             redirect: {
