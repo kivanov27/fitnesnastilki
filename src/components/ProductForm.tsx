@@ -50,6 +50,10 @@ const ProductForm = () => {
         setFormData(prev => ({ ...prev, description: html }));
     };
 
+    const handleManufacturerDescriptionChange = (html: string) => {
+        setFormData(prev => ({ ...prev, manufacturer_description: html }));
+    };
+
     const handleImageSelect = async (
         e: React.ChangeEvent<HTMLInputElement>,
         imageField: keyof NewProduct
@@ -517,13 +521,9 @@ const ProductForm = () => {
                 >
                     Описание на производител
                 </label>
-                <textarea
-                    id="manufacturer_description"
-                    name="manufacturer_description"
-                    value={formData.manufacturer_description}
-                    onChange={handleChange}
-                    className="w-full p-2 border rounded-md"
-                    rows={6}
+                <Editor
+                    content={formData.manufacturer_description}
+                    onChangeAction={handleManufacturerDescriptionChange}
                 />
             </div>
             <button
