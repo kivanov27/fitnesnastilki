@@ -19,9 +19,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         return res.status(405).json({ error: "Method not allowed" });
     }
 
-    const form = new IncomingForm();
+    const form = new IncomingForm({
+        maxFileSize: 10 * 1024 * 1024, // 10MB
+    });
 
-    form.parse(req, async (err, fields: Fields, files: Files) => {
+    form.parse(req, async (err: any, fields: Fields, files: Files) => {
         if (err) {
             console.error(err);
             return res.status(500).json({ error: "Form parsing error" });
@@ -45,7 +47,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             // move the uploaded file to the desired location
             fs.renameSync(imageFile.filepath, filePath);
 
-            const imageUrl = `/images/${category}/${productLink}/${imageNumber}.webp`;
+            const imageUrl = `http://164.90.174.87/images/${category}/${productLink}/${imageNumber}.webp`; // needs to change when we apply domain name
 
             return res.status(200).json({ imageUrl });
         }

@@ -27,8 +27,10 @@ export default async function handler(
                 return handleGetProduct(link, res);
             case "DELETE":
                 return handleDeleteProduct(link, req, res);
+            case "PUT":
+                return handleEditProduct(link, req, res);
             default:
-                res.setHeader("Allow", ["GET", "DELETE"]);
+                res.setHeader("Allow", ["GET", "DELETE", "PUT"]);
                 return res
                     .status(405)
                     .json({ error: `Method ${req.method} not allowed` });
@@ -73,4 +75,29 @@ async function handleDeleteProduct(
 
     await prisma.product.delete({ where: { id: product.id } });
     return res.status(200).json({ message: "Product deleted" });
+}
+
+async function handleEditProduct(
+    link: string,
+    req: NextApiRequest,
+    res: NextApiResponse,
+) {
+    if (!(await isAdmin(req, res))) {
+        return res.status(403).json({ error: "Unauthorized" });
+    }
+
+    const product = await prisma.product.findFirst({ where: { link } });
+    if (!product) {
+        return res.status(404).json({ error: "Product not found" });
+    }
+
+    try {
+        const data = req.body;
+        await prisma.product.update({ where: { id: product.id }, data });
+        return res.status(200).json({ message: "Product updated" });
+    }
+    catch (error) {
+        console.error("Update product error: ", error);
+        return res.status(400).json({ error: "Failed to update product" });
+    }
 }

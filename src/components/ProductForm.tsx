@@ -1,31 +1,42 @@
-import { NewProduct } from "@/types";
+import { NewProduct, Product } from "@/types";
 import React, { useState } from "react";
 import Editor from "./Editor";
 
+interface ProductFormProps {
+    product?: Product;
+}
+
 type ProductFormData = Omit<NewProduct, "price" | "discount"> & {
     price: string;
-    discount: string;
+    discount: string | undefined;
 };
 
-const ProductForm = () => {
-    const [formData, setFormData] = useState<ProductFormData>({
-        name: "",
-        price: "",
-        discount: "",
-        link: "",
-        image1: "",
-        image2: "",
-        image3: "",
-        image4: "",
-        image5: "",
-        image6: "",
-        image7: "",
-        image8: "",
-        category: [],
-        popular: false,
-        description: "",
-        manufacturer: "",
-        manufacturer_description: "",
+const ProductForm = ({ product }: ProductFormProps) => {
+    const [formData, setFormData] = useState<ProductFormData>(() => {
+        if (!product) return {
+            name: "",
+            price: "",
+            discount: "",
+            link: "",
+            image1: "",
+            image2: "",
+            image3: "",
+            image4: "",
+            image5: "",
+            image6: "",
+            image7: "",
+            image8: "",
+            category: [],
+            popular: false,
+            description: "",
+            manufacturer: "",
+            manufacturer_description: "",
+        }
+        return {
+            ...product,
+            price: product.price.toString(),
+            discount: product.discount?.toString() || undefined,
+        }
     });
     const [error, setError] = useState<string>("");
     const [categoryInput, setCategoryInput] = useState<string>("");
@@ -125,19 +136,23 @@ const ProductForm = () => {
                 return;
             }
 
+            if (!uploadedImageUrls.image1 && !product) {
+                throw new Error("Failed to upload images");
+            }
+
             const finalFormData: NewProduct = {
                 name: formData.name,
                 price,
                 discount,
                 link: formData.link,
-                image1: formData.image1,
-                image2: formData.image2,
-                image3: formData.image3,
-                image4: formData.image4,
-                image5: formData.image5,
-                image6: formData.image6,
-                image7: formData.image7,
-                image8: formData.image8,
+                image1: uploadedImageUrls.image1 ?? formData.image1,
+                image2: uploadedImageUrls.image2 ?? (formData.image2 || undefined),
+                image3: uploadedImageUrls.image3 ?? (formData.image3 || undefined),
+                image4: uploadedImageUrls.image4 ?? (formData.image4 || undefined),
+                image5: uploadedImageUrls.image5 ?? (formData.image5 || undefined),
+                image6: uploadedImageUrls.image6 ?? (formData.image6 || undefined),
+                image7: uploadedImageUrls.image7 ?? (formData.image7 || undefined),
+                image8: uploadedImageUrls.image8 ?? (formData.image8 || undefined),
                 category: formData.category,
                 popular: formData.popular,
                 description: formData.description,
@@ -145,22 +160,41 @@ const ProductForm = () => {
                 manufacturer_description: formData.manufacturer_description,
             };
 
-            const response = await fetch("/api/products", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(finalFormData),
-            });
+            if (product) {
+                const response = await fetch(`/api/products/${product.link}`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(finalFormData),
+                });
 
-            if (!response.ok) {
+                if (!response.ok) {
+                    const data = await response.json();
+                    throw new Error(data.message || "Product update failed");
+                }
+
                 const data = await response.json();
-                throw new Error(data.message || "Product creation failed");
+                alert(`Продукт ${data.name} беше редактиран`);
+
             }
+            else {
+                const response = await fetch("/api/products", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(finalFormData),
+                });
 
-            const data = await response.json();
+                if (!response.ok) {
+                    const data = await response.json();
+                    throw new Error(data.message || "Product creation failed");
+                }
 
-            alert(`Продукт ${data.name} беше добавен`);
+                const data = await response.json();
+                alert(`Продукт ${data.name} беше добавен`);
+            }
         } catch (error) {
             if (error instanceof Error) setError(error.message);
             else
