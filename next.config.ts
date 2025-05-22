@@ -10,6 +10,13 @@ const nextConfig: NextConfig = {
                 pathname: '/images/**',
                 search: '',
             },
+            {
+                protocol: 'https',
+                hostname: 'fitnesnastilki.com',
+                port: '',
+                pathname: '/images/**',
+                search: '',
+            },
         ],
     },
 };
