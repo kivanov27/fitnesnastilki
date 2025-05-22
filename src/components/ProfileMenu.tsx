@@ -43,7 +43,7 @@ const ProfileMenu = () => {
     const handleLogout = async () => {
         setUser(null);
         setIsOpen(false);
-        await signOut({ callbackUrl: "/" });
+        await signOut({ callbackUrl: `${window.location.origin}` });
     };
 
     const toggleMenu = () => {
@@ -72,6 +72,12 @@ const ProfileMenu = () => {
                                     Admin dashboard
                                 </Link>
                             }
+                            <Link
+                                href="/change-password"
+                                className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                            >
+                                Смяна на парола
+                            </Link>
                             <button
                                 onClick={handleLogout}
                                 className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"

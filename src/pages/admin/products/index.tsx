@@ -42,10 +42,18 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 const AdminProductsPage = ({ products }: AdminProductsPageProps) => {
     const [formOpen, setFormOpen] = useState<boolean>(false);
     const [selectedProduct, setSelectedProduct] = useState<Product>();
+    const [productList, setProductList] = useState<Product[]>(products);
 
     const deleteProduct = async (link: string) => {
         await fetch(`/api/products/${link}`, { method: "DELETE" });
         products.filter((product) => product.link !== link);
+        setProductList(productList.filter(p => p.link !== link));
+    };
+
+    const refreshProducts = async () => {
+        const res = await fetch('/api/products');
+        const updatedProducts = await res.json();
+        setProductList(updatedProducts);
     };
 
     return (
@@ -59,10 +67,16 @@ const AdminProductsPage = ({ products }: AdminProductsPageProps) => {
                     Продукти
                 </h2>
                 {formOpen ?
-                    <ProductForm product={selectedProduct} />
+                    <ProductForm
+                        product={selectedProduct}
+                        onSuccess={() => {
+                            setFormOpen(false);
+                            refreshProducts();
+                        }}
+                    />
                     :
                     <ul className="p-4 lg:p-6 flex flex-row sm:flex-col flex-wrap gap-y-4">
-                        {products.map((product) => (
+                        {productList.map((product) => (
                             <li
                                 key={product.id}
                                 className="flex flex-col sm:flex-row gap-x-4 items-center justify-center lg:justify-start"

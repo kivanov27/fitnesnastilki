@@ -242,18 +242,17 @@ const ProductView = ({ product, category }: ProductViewProps) => {
                         <div className="mb-8">
                             <p className="text-base sm:text-lg lg:text-xl xl:text-2xl text-primary font-medium">
                                 <span className="font-normal text-gray-400 me-3 line-through">
-                                    {product.price.toFixed(2)}лв.
+                                    {product.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} лв.
                                 </span>
                                 {(
                                     product.price -
                                     (product.price * product.discount) / 100
-                                ).toFixed(2)}
-                                лв.
+                                ).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} лв.
                             </p>
                         </div>
                     ) : (
                         <p className="text-base sm:text-lg lg:text-xl xl:text-2xl text-primary font-medium mb-8">
-                            {product.price.toFixed(2)}лв.
+                            {product.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} лв.
                         </p>
                     )}
 
@@ -300,8 +299,8 @@ const ProductView = ({ product, category }: ProductViewProps) => {
                                     ...product,
                                     price: product.discount
                                         ? product.price -
-                                          (product.price * product.discount) /
-                                              100
+                                        (product.price * product.discount) /
+                                        100
                                         : product.price,
                                     quantity: quantity,
                                     image: product.image1,

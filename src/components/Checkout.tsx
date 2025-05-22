@@ -283,7 +283,7 @@ const Checkout = () => {
                                     </span>
                                 </div>
                                 <div className="text-sm text-center">
-                                    {(item.price * item.quantity).toFixed(2)}лв.
+                                    {(item.price * item.quantity).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} лв.
                                 </div>
                             </div>
                         ))}
@@ -291,7 +291,7 @@ const Checkout = () => {
                     <div className="flex justify-between">
                         <p className="py-3 font-semibold">Общо</p>
                         <p className="py-3 font-semibold text-primary">
-                            {totalPrice.toFixed(2)}лв.
+                            {totalPrice.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} лв.
                         </p>
                     </div>
                 </div>

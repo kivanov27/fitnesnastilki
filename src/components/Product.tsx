@@ -49,19 +49,19 @@ const Product = ({ product, category }: ProductProps) => {
             {product.discount ? (
                 <p className="font-medium flex flex-col md:flex-row gap-x-2 xl:text-base">
                     <span className="text-gray-400 line-through">
-                        {product.price.toFixed(2)} лв.
+                        {product.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} лв.
                     </span>
                     <span className="text-primary">
                         {(
                             product.price -
                             (product.price * product.discount) / 100
-                        ).toFixed(2)}{" "}
+                        ).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}{" "}
                         лв.
                     </span>
                 </p>
             ) : (
                 <p className="text-primary font-medium xl:text-base">
-                    {product.price.toFixed(2)} лв.
+                    {product.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} лв.
                 </p>
             )}
             <Button
@@ -78,7 +78,7 @@ const Product = ({ product, category }: ProductProps) => {
                         ...product,
                         price: product.discount
                             ? product.price -
-                              (product.price * product.discount) / 100
+                            (product.price * product.discount) / 100
                             : product.price,
                         quantity: 1,
                         image: product.image1,

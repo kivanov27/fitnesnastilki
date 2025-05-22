@@ -78,7 +78,7 @@ const Cart = () => {
                                         {product.name}
                                     </td>
                                     <td className="pe-5 lg:pe-10 text-center text-base">
-                                        {product.price.toFixed(2)}лв.
+                                        {product.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}лв.
                                     </td>
                                     <td className="h-24 pe-5 lg:pe-10 flex justify-center items-center">
                                         <div
@@ -104,10 +104,7 @@ const Cart = () => {
                                         </div>
                                     </td>
                                     <td className="text-center text-base">
-                                        {(
-                                            product.price * product.quantity
-                                        ).toFixed(2)}
-                                        лв.
+                                        {(product.price * product.quantity).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} лв.
                                     </td>
                                 </tr>
                             ))}
@@ -132,7 +129,7 @@ const Cart = () => {
                         <div className="text-xl xl:text-2xl font-semibold">
                             Общо:
                             <span className="ms-2">
-                                {totalPrice.toFixed(2)}лв.
+                                {totalPrice.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} лв.
                             </span>
                         </div>
                     </div>
@@ -163,7 +160,7 @@ const Cart = () => {
                                                 <span className="font-medium">
                                                     Цена:{" "}
                                                 </span>
-                                                {product.price.toFixed(2)}лв.
+                                                {product.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} лв.
                                             </p>
                                             <div className="flex justify-between items-center">
                                                 <span className="font-medium">
@@ -198,11 +195,7 @@ const Cart = () => {
                                             <p className="text-sm flex justify-between font-medium">
                                                 Общо:
                                                 <span className="text-primary">
-                                                    {(
-                                                        product.price *
-                                                        product.quantity
-                                                    ).toFixed(2)}
-                                                    лв.
+                                                    {(product.price * product.quantity).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} лв.
                                                 </span>
                                             </p>
                                         </div>
@@ -221,7 +214,7 @@ const Cart = () => {
                             <div className="text-lg md:text-xl font-semibold text-right flex justify-between">
                                 Общо:
                                 <span className="text-primary">
-                                    {totalPrice.toFixed(2)}лв.
+                                    {totalPrice.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} лв.
                                 </span>
                             </div>
                             <button

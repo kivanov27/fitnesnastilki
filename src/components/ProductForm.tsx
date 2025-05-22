@@ -4,6 +4,7 @@ import Editor from "./Editor";
 
 interface ProductFormProps {
     product?: Product;
+    onSuccess?: () => void;
 }
 
 type ProductFormData = Omit<NewProduct, "price" | "discount"> & {
@@ -11,7 +12,7 @@ type ProductFormData = Omit<NewProduct, "price" | "discount"> & {
     discount: string | undefined;
 };
 
-const ProductForm = ({ product }: ProductFormProps) => {
+const ProductForm = ({ product, onSuccess }: ProductFormProps) => {
     const [formData, setFormData] = useState<ProductFormData>(() => {
         if (!product) return {
             name: "",
@@ -176,7 +177,7 @@ const ProductForm = ({ product }: ProductFormProps) => {
 
                 const data = await response.json();
                 alert(`Продукт ${data.name} беше редактиран`);
-
+                if (onSuccess) onSuccess();
             }
             else {
                 const response = await fetch("/api/products", {
