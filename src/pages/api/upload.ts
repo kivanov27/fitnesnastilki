@@ -47,7 +47,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             // move the uploaded file to the desired location
             fs.renameSync(imageFile.filepath, filePath);
 
-            const imageUrl = `http://164.90.174.87/images/${category}/${productLink}/${imageNumber}.webp`; // needs to change when we apply domain name
+            const imageUrl = `https://fitnesnastilki/images/${category}/${productLink}/${imageNumber}.webp`;
 
             return res.status(200).json({ imageUrl });
         }
