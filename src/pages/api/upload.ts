@@ -47,7 +47,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             // move the uploaded file to the desired location
             fs.renameSync(imageFile.filepath, filePath);
 
-            const imageUrl = `https://fitnesnastilki/images/${category}/${productLink}/${imageNumber}.webp`;
+            const imageUrl = `https://fitnesnastilki.com/images/${category}/${productLink}/${imageNumber}.webp`;
 
             return res.status(200).json({ imageUrl });
         }
