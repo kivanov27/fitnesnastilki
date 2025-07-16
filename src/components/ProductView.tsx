@@ -242,17 +242,35 @@ const ProductView = ({ product, category }: ProductViewProps) => {
                         <div className="mb-8">
                             <p className="text-base sm:text-lg lg:text-xl xl:text-2xl text-primary font-medium">
                                 <span className="font-normal text-gray-400 me-3 line-through">
-                                    {product.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} лв.
+                                    {product.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}{" лв."}
                                 </span>
                                 {(
                                     product.price -
                                     (product.price * product.discount) / 100
-                                ).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} лв.
+                                ).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}{" лв."}
                             </p>
                         </div>
                     ) : (
                         <p className="text-base sm:text-lg lg:text-xl xl:text-2xl text-primary font-medium mb-8">
-                            {product.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} лв.
+                            {product.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}{" лв."}
+                        </p>
+                    )}
+
+                    {/* Price in Euros */}
+                    {product.discount ? (
+                        <div className="mb-8">
+                            <p className="text-base sm:text-lg lg:text-xl xl:text-2xl text-primary font-medium">
+                                <span className="font-normal text-gray-400 me-3 line-through">
+                                    {(product.price * 0.51129188).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}{" €"}
+                                </span>
+                                {((product.price - (product.price * product.discount) / 100) * 0.51129188
+                                ).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}{" €"}
+
+                            </p>
+                        </div>
+                    ) : (
+                        <p className="text-base sm:text-lg lg:text-xl xl:text-2xl text-primary font-medium mb-8">
+                            {(product.price * 0.51129188).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}{" €"}
                         </p>
                     )}
 
