@@ -1,6 +1,5 @@
 import { GetServerSideProps } from "next";
 import { getServerSession } from "next-auth";
-import prisma from "@/lib/prisma";
 import { authOptions } from "@/lib/authOptions";
 import Navbar from "../../../components/Navbar";
 import Footer from "../../../components/Footer";
@@ -27,16 +26,20 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         };
     }
 
-    const orders = await prisma.orders.findMany({
-        include: {
-            order_items: true,
+    const response = await fetch(`${process.env.BASE_URL}/api/orders`, {
+        headers: {
+            Cookie: context.req.headers.cookie || "",
         },
     });
+    if (!response.ok) {
+        return {
+            props: { orders: [] },
+        };
+    }
 
+    const orders = await response.json();
     return {
-        props: {
-            orders: JSON.parse(JSON.stringify(orders)),
-        },
+        props: { orders },
     };
 };
 
@@ -59,6 +62,20 @@ const OrdersPage = ({ orders }: OrdersPageProps) => {
                                 <p className="font-medium">
                                     Поръчка #{order.id}
                                 </p>
+                                {order.created_at &&
+                                    <p>
+                                        <span className="font-medium">
+                                            Дата:{" "}
+                                        </span>
+                                        {new Date(order.created_at).toLocaleString('en-GB', {
+                                            day: "2-digit",
+                                            month: "2-digit",
+                                            year: "2-digit",
+                                            hour: "2-digit",
+                                            minute: "2-digit",
+                                        })}
+                                    </p>
+                                }
                                 <p>
                                     <span className="font-medium">
                                         Статус:{" "}
@@ -87,7 +104,10 @@ const OrdersPage = ({ orders }: OrdersPageProps) => {
                                     <span className="font-medium">Сума: </span>
                                     {order.total_price}лв.
                                 </p>
-                                {order.notes && <p>Бележки: {order.notes}</p>}
+                                {order.notes && <p>
+                                    <span className="font-medium">Бележки: </span>
+                                    {order.notes}
+                                </p>}
                                 <p className="font-medium">Продукти:</p>
                                 {order.order_items &&
                                     order.order_items.map((item) => (

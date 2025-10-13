@@ -47,6 +47,7 @@ async function handlePostOrder(req: NextApiRequest, res: NextApiResponse) {
         customer_address,
         customer_city,
         total_price,
+        notes,
         order_items,
     } = req.body;
 
@@ -75,6 +76,7 @@ async function handlePostOrder(req: NextApiRequest, res: NextApiResponse) {
             customer_city,
             total_price,
             status: "Pending",
+            notes,
             order_items: {
                 create: order_items.map((item: NewOrderItem) => ({
                     product_id: item.product_id,

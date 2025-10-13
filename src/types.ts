@@ -61,8 +61,9 @@ export interface Order {
     customer_city: string;
     total_price: number;
     status?: string;
-    order_items: OrderItem[];
     notes?: string;
+    created_at?: string;
+    order_items: OrderItem[];
 }
 
 export interface NewOrder {
