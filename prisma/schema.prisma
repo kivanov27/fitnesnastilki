@@ -53,7 +53,7 @@ model orders {
     customer_address String        @db.VarChar(255)
     customer_city    String        @db.VarChar(255)
     total_price      Decimal       @db.Decimal(10, 2)
-    status           String?       @default("Pending") @db.VarChar(20)
+    status           String?       @default("Очаква се") @db.VarChar(20)
     created_at       DateTime?     @default(now()) @db.Timestamp(6)
     notes            String?
     order_items      order_items[]
