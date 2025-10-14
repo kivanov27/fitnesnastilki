@@ -80,7 +80,15 @@ const OrdersPage = ({ orders }: OrdersPageProps) => {
                                     <span className="font-medium">
                                         Статус:{" "}
                                     </span>
-                                    {order.status}
+                                    <select 
+                                        value={order.status}
+                                        className="border border-black px-2"
+                                    >
+                                        <option value="Очаква се">Очаква се</option>
+                                        <option value="Изпратена">Изпратена</option>
+                                        <option value="Извършена">Извършена</option>
+                                        <option value="Отказана">Отказана</option>
+                                    </select>
                                 </p>
                                 <p>
                                     <span className="font-medium">Име: </span>

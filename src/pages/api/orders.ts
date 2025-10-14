@@ -13,8 +13,10 @@ export default async function handler(
                 return await handleGetOrders(req, res);
             case "POST":
                 return await handlePostOrder(req, res);
+            // case "PUT":
+            //     return await handlePutOrder(req, res);
             default:
-                res.setHeader("Allow", ["GET", "POST"]);
+                res.setHeader("Allow", ["GET", "POST", "PUT"]);
                 return res
                     .status(405)
                     .json({ error: `Method ${req.method} not allowed` });
@@ -94,3 +96,8 @@ async function handlePostOrder(req: NextApiRequest, res: NextApiResponse) {
 
     return res.status(201).json(newOrder);
 }
+
+// async function handlePutOrder(req: NextApiRequest, res: NextApiResponse) {
+//     const { id, status } = req.body;
+//
+// }

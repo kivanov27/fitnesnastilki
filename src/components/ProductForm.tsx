@@ -40,7 +40,6 @@ const ProductForm = ({ product, onSuccess }: ProductFormProps) => {
         }
     });
     const [error, setError] = useState<string>("");
-    const [categoryInput, setCategoryInput] = useState<string>("");
     const [imageFiles, setImageFiles] = useState<Partial<Record<keyof NewProduct, File>>>({});
 
     const handleChange = (
@@ -77,24 +76,19 @@ const ProductForm = ({ product, onSuccess }: ProductFormProps) => {
         setFormData(prev => ({ ...prev, [imageField]: file.name }));
     };
 
-    const handleCategoryAdd = () => {
-        if (
-            categoryInput.trim() &&
-            !formData.category.includes(categoryInput.trim())
-        ) {
+    const handleCategoryToggle = (category: string) => {
+        if (!formData.category.includes(category)) {
             setFormData({
                 ...formData,
-                category: [...formData.category, categoryInput.trim()],
+                category: [...formData.category, category],
             });
-            setCategoryInput("");
         }
-    };
-
-    const handleCategoryRemove = (categoryToRemove: string) => {
-        setFormData({
-            ...formData,
-            category: formData.category.filter((c) => c !== categoryToRemove),
-        });
+        else {
+            setFormData({
+                ...formData,
+                category: formData.category.filter((c) => c !== category),
+            });
+        }
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -281,7 +275,7 @@ const ProductForm = ({ product, onSuccess }: ProductFormProps) => {
                 </div>
             </div>
 
-            {/* Image1 */}
+            {/* Image 1 */}
             <div className="w-full mb-4">
                 <label htmlFor="image1" className="block mb-2 text-center">
                     Първа снимка
@@ -299,12 +293,12 @@ const ProductForm = ({ product, onSuccess }: ProductFormProps) => {
                         type="file"
                         accept="image/*"
                         onChange={(e) => handleImageSelect(e, "image1")}
-                        className="p-2"
+                        className="p-2 cursor-pointer"
                     />
                 </div>
             </div>
 
-            {/* Image2 */}
+            {/* Image 2 */}
             <div className="w-full mb-4">
                 <label htmlFor="image2" className="block mb-2 text-center">
                     Втора снимка
@@ -322,12 +316,12 @@ const ProductForm = ({ product, onSuccess }: ProductFormProps) => {
                         type="file"
                         accept="image/*"
                         onChange={(e) => handleImageSelect(e, "image2")}
-                        className="p-2"
+                        className="p-2 cursor-pointer"
                     />
                 </div>
             </div>
 
-            {/* Image3 */}
+            {/* Image 3 */}
             <div className="w-full mb-4">
                 <label htmlFor="image3" className="block mb-2 text-center">
                     Трета снимка
@@ -345,12 +339,12 @@ const ProductForm = ({ product, onSuccess }: ProductFormProps) => {
                         type="file"
                         accept="image/*"
                         onChange={(e) => handleImageSelect(e, "image3")}
-                        className="p-2"
+                        className="p-2 cursor-pointer"
                     />
                 </div>
             </div>
 
-            {/* Image4 */}
+            {/* Image 4 */}
             <div className="w-full mb-4">
                 <label htmlFor="image4" className="block mb-2 text-center">
                     Четвърта снимка
@@ -368,12 +362,12 @@ const ProductForm = ({ product, onSuccess }: ProductFormProps) => {
                         type="file"
                         accept="image/*"
                         onChange={(e) => handleImageSelect(e, "image4")}
-                        className="p-2"
+                        className="p-2 cursor-pointer"
                     />
                 </div>
             </div>
 
-            {/* Image5 */}
+            {/* Image 5 */}
             <div className="w-full mb-4">
                 <label htmlFor="image5" className="block mb-2 text-center">
                     Пета снимка
@@ -391,12 +385,12 @@ const ProductForm = ({ product, onSuccess }: ProductFormProps) => {
                         type="file"
                         accept="image/*"
                         onChange={(e) => handleImageSelect(e, "image5")}
-                        className="p-2"
+                        className="p-2 cursor-pointer"
                     />
                 </div>
             </div>
 
-            {/* Image6 */}
+            {/* Image 6 */}
             <div className="w-full mb-4">
                 <label htmlFor="image6" className="block mb-2 text-center">
                     Шеста снимка
@@ -414,12 +408,12 @@ const ProductForm = ({ product, onSuccess }: ProductFormProps) => {
                         type="file"
                         accept="image/*"
                         onChange={(e) => handleImageSelect(e, "image6")}
-                        className="p-2"
+                        className="p-2 cursor-pointer"
                     />
                 </div>
             </div>
 
-            {/* Image7 */}
+            {/* Image 7 */}
             <div className="w-full mb-4">
                 <label htmlFor="image7" className="block mb-2 text-center">
                     Седма снимка
@@ -437,12 +431,12 @@ const ProductForm = ({ product, onSuccess }: ProductFormProps) => {
                         type="file"
                         accept="image/*"
                         onChange={(e) => handleImageSelect(e, "image7")}
-                        className="p-2"
+                        className="p-2 cursor-pointer"
                     />
                 </div>
             </div>
 
-            {/* Image8 */}
+            {/* Image 8 */}
             <div className="w-full mb-4">
                 <label htmlFor="image8" className="block mb-2 text-center">
                     Осма снимка
@@ -460,7 +454,7 @@ const ProductForm = ({ product, onSuccess }: ProductFormProps) => {
                         type="file"
                         accept="image/*"
                         onChange={(e) => handleImageSelect(e, "image8")}
-                        className="p-2"
+                        className="p-2 cursor-pointer"
                     />
                 </div>
             </div>
@@ -468,48 +462,84 @@ const ProductForm = ({ product, onSuccess }: ProductFormProps) => {
             {/* Category */}
             <div className="w-full mb-4">
                 <label htmlFor="category" className="block mb-2 text-center">
-                    Категории (plocha, rulo, izkustvena-treva, tatami, postelki,
-                    platformi-podiumi, lepilo, fitnes-ured)
+                    Категории
+                    {/* Категории (plocha, rulo, izkustvena-treva, tatami, postelki, */}
+                    {/* platformi-podiumi, lepilo, fitnes-ured) */}
                 </label>
-                <div className="flex">
-                    <input
-                        type="text"
-                        id="category"
-                        name="category"
-                        value={categoryInput}
-                        onChange={({ target }) =>
-                            setCategoryInput(target.value)
-                        }
-                        className="flex-1 p-2 border rounded-l-md"
-                        placeholder="Добави категория"
-                    />
-                    <button
-                        type="button"
-                        onClick={handleCategoryAdd}
-                        className="bg-gray-300 px-4 rounded-r-md hover:bg-gray-400"
+                <div className="flex gap-x-4">
+                    <div className={`${formData.category.includes("plocha") ? 
+                        "bg-primary hover:bg-primaryDim text-white" : 
+                        "bg-background hover:bg-gray-300 text-black"} border
+                        border-black p-2 mb-4 rounded-md transition-colors 
+                        duration-300 cursor-pointer`}
+                        onClick={() => handleCategoryToggle("plocha")}
                     >
-                        +
-                    </button>
+                        Плоча
+                    </div>
+                    <div className={`${formData.category.includes("rulo") ? 
+                        "bg-primary hover:bg-primaryDim text-white" : 
+                        "bg-background hover:bg-gray-300 text-black"} border
+                        border-black p-2 mb-4 rounded-md transition-colors 
+                        duration-300 cursor-pointer`}
+                        onClick={() => handleCategoryToggle("rulo")}
+                    >
+                        Руло
+                    </div>
+                    <div className={`${formData.category.includes("izkustvena-treva") ? 
+                        "bg-primary hover:bg-primaryDim text-white" : 
+                        "bg-background hover:bg-gray-300 text-black"} border
+                        border-black p-2 mb-4 rounded-md transition-colors 
+                        duration-300 cursor-pointer`}
+                        onClick={() => handleCategoryToggle("izkustvena-treva")}
+                    >
+                        Изкуствена Трева
+                    </div>
+                    <div className={`${formData.category.includes("tatami") ? 
+                        "bg-primary hover:bg-primaryDim text-white" : 
+                        "bg-background hover:bg-gray-300 text-black"} border
+                        border-black p-2 mb-4 rounded-md transition-colors 
+                        duration-300 cursor-pointer`}
+                        onClick={() => handleCategoryToggle("tatami")}
+                    >
+                        Татами
+                    </div>
+                    <div className={`${formData.category.includes("postelki") ? 
+                        "bg-primary hover:bg-primaryDim text-white" : 
+                        "bg-background hover:bg-gray-300 text-black"} border
+                        border-black p-2 mb-4 rounded-md transition-colors 
+                        duration-300 cursor-pointer`}
+                        onClick={() => handleCategoryToggle("postelki")}
+                    >
+                        Постелки
+                    </div>
+                    <div className={`${formData.category.includes("platformi-podiumi") ? 
+                        "bg-primary hover:bg-primaryDim text-white" : 
+                        "bg-background hover:bg-gray-300 text-black"} border
+                        border-black p-2 mb-4 rounded-md transition-colors 
+                        duration-300 cursor-pointer`}
+                        onClick={() => handleCategoryToggle("platformi-podiumi")}
+                    >
+                        Платформи и Подиуми
+                    </div>
+                    <div className={`${formData.category.includes("lepilo") ? 
+                        "bg-primary hover:bg-primaryDim text-white" : 
+                        "bg-background hover:bg-gray-300 text-black"} border
+                        border-black p-2 mb-4 rounded-md transition-colors 
+                        duration-300 cursor-pointer`}
+                        onClick={() => handleCategoryToggle("lepilo")}
+                    >
+                        Лепило
+                    </div>
+                    <div className={`${formData.category.includes("fitnes-ured") ? 
+                        "bg-primary hover:bg-primaryDim text-white" : 
+                        "bg-background hover:bg-gray-300 text-black"} border
+                        border-black p-2 mb-4 rounded-md transition-colors 
+                        duration-300 cursor-pointer`}
+                        onClick={() => handleCategoryToggle("fitnes-ured")}
+                    >
+                        Фитнес Уред
+                    </div>
                 </div>
-            </div>
-
-            {/* Display categories */}
-            <div className="mt-2 flex flex-wrap gap-2">
-                {formData.category.map((c) => (
-                    <span
-                        key={c}
-                        className="bg-gray-100 px-3 py-1 rounded-full flex items-center"
-                    >
-                        {c}
-                        <button
-                            type="button"
-                            onClick={() => handleCategoryRemove(c)}
-                            className="ml-2 text-red-500"
-                        >
-                            x
-                        </button>
-                    </span>
-                ))}
             </div>
 
             {/* Popular */}
