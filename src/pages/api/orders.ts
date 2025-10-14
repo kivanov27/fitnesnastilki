@@ -13,8 +13,8 @@ export default async function handler(
                 return await handleGetOrders(req, res);
             case "POST":
                 return await handlePostOrder(req, res);
-            // case "PUT":
-            //     return await handlePutOrder(req, res);
+            case "PUT":
+                return await handlePutOrder(req, res);
             default:
                 res.setHeader("Allow", ["GET", "POST", "PUT"]);
                 return res
@@ -63,9 +63,7 @@ async function handlePostOrder(req: NextApiRequest, res: NextApiResponse) {
         !total_price ||
         !order_items.length
     ) {
-        return res
-            .status(400)
-            .json({ error: "Поръчката не може да бъде извършена" });
+        return res.status(400).json({ error: "Поръчката не може да бъде извършена" });
     }
 
     const newOrder = await prisma.orders.create({
@@ -97,7 +95,20 @@ async function handlePostOrder(req: NextApiRequest, res: NextApiResponse) {
     return res.status(201).json(newOrder);
 }
 
-// async function handlePutOrder(req: NextApiRequest, res: NextApiResponse) {
-//     const { id, status } = req.body;
-//
-// }
+async function handlePutOrder(req: NextApiRequest, res: NextApiResponse) {
+    const { id, status } = req.body;
+    if (!id || !status) {
+        return res.status(400).json({ error: "Статуса на поръчката не може да бъде променен." });
+    }
+
+    const updatedOrder = await prisma.orders.update({
+        where: { 
+            id: id 
+        },
+        data: {
+            status: status
+        },
+    });
+
+    return res.status(200).json(updatedOrder);
+}

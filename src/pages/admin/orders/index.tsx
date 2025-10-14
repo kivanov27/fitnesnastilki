@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { GetServerSideProps } from "next";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOptions";
@@ -43,7 +44,27 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
 };
 
-const OrdersPage = ({ orders }: OrdersPageProps) => {
+const OrdersPage = ({ orders: initialOrders }: OrdersPageProps) => {
+    const [orders, setOrders] = useState<Order[]>(initialOrders);
+
+    const changeStatus = async (id:string, status: string) => {
+        const response = await fetch(`/api/orders`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ id, status }),
+        });
+        if (!response.ok) {
+            console.error("Couldn't update order status");
+        }
+        else {
+            setOrders(prev =>
+                prev.map(o => o.id === id ? { ...o, status } : o)
+            );
+        }
+    };
+
     return (
         <>
             <Head>
@@ -83,6 +104,7 @@ const OrdersPage = ({ orders }: OrdersPageProps) => {
                                     <select 
                                         value={order.status}
                                         className="border border-black px-2"
+                                        onChange={({ target }) => changeStatus(order.id, target.value)}
                                     >
                                         <option value="Очаква се">Очаква се</option>
                                         <option value="Изпратена">Изпратена</option>
