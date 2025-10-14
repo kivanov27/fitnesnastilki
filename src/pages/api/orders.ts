@@ -15,8 +15,10 @@ export default async function handler(
                 return await handlePostOrder(req, res);
             case "PUT":
                 return await handlePutOrder(req, res);
+            case "DELETE":
+                return await handleDeleteOrder(req, res);
             default:
-                res.setHeader("Allow", ["GET", "POST", "PUT"]);
+                res.setHeader("Allow", ["GET", "POST", "PUT", "DELETE"]);
                 return res
                     .status(405)
                     .json({ error: `Method ${req.method} not allowed` });
@@ -111,4 +113,15 @@ async function handlePutOrder(req: NextApiRequest, res: NextApiResponse) {
     });
 
     return res.status(200).json(updatedOrder);
+}
+
+async function handleDeleteOrder(req: NextApiRequest, res: NextApiResponse) {
+    const { id } = req.body;
+    if (!id) {
+        return res.status(400).json({ error: "Поръчката не може да бъде изтрита."});
+    }
+
+    await prisma.orders.delete({ where: { id } });
+
+    return res.status(204).end();
 }

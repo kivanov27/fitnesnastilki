@@ -48,7 +48,7 @@ const OrdersPage = ({ orders: initialOrders }: OrdersPageProps) => {
     const [orders, setOrders] = useState<Order[]>(initialOrders);
 
     const changeStatus = async (id:string, status: string) => {
-        const response = await fetch(`/api/orders`, {
+        const response = await fetch("/api/orders", {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
@@ -62,6 +62,29 @@ const OrdersPage = ({ orders: initialOrders }: OrdersPageProps) => {
             setOrders(prev =>
                 prev.map(o => o.id === id ? { ...o, status } : o)
             );
+        }
+    };
+    
+    const deleteOrder = async (id: string) => {
+        try {
+            const res = await fetch("/api/orders", {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ id }),
+            });
+            
+            if (!res.ok) {
+                console.error("Couldn't delete order")
+            }
+
+            setOrders(prev =>
+                prev.filter(o => o.id != id)
+            );
+        }
+        catch (err) {
+            console.error(err);
         }
     };
 
@@ -166,6 +189,13 @@ const OrdersPage = ({ orders: initialOrders }: OrdersPageProps) => {
                                             </p>
                                         </div>
                                     ))}
+                                <button
+                                    className="w-fit p-2 mt-3 border border-black
+                                    rounded-md hover:bg-slate-300"
+                                    onClick={() => deleteOrder(order.id)}
+                                >
+                                    Изтрий поръчка
+                                </button>
                             </div>
                         ))}
                     </div>
