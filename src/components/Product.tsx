@@ -47,7 +47,7 @@ const Product = ({ product, category }: ProductProps) => {
 
             {/* Product Name */}
             <Link href={`/katalog/${category}/${product.link}`}>
-                <p className="h-20 flex items-center text-[0.8rem] leading-4 sm:text-base sm:leading-tight font-medium hover:text-primary">
+                <p className="h-20 text-xs sm:text-sm font-medium hover:text-primary overflow-y-scroll">
                     {product.name}
                 </p>
             </Link>

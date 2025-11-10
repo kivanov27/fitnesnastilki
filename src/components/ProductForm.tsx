@@ -280,7 +280,7 @@ const ProductForm = ({ product, onSuccess }: ProductFormProps) => {
                 <label htmlFor="image1" className="block mb-2 text-center">
                     Първа снимка
                 </label>
-                <div className="flex">
+                <div className="flex flex-col sm:flex-row">
                     <input
                         type="text"
                         id="image1"
@@ -303,7 +303,7 @@ const ProductForm = ({ product, onSuccess }: ProductFormProps) => {
                 <label htmlFor="image2" className="block mb-2 text-center">
                     Втора снимка
                 </label>
-                <div className="flex">
+                <div className="flex flex-col sm:flex-row">
                     <input
                         type="text"
                         id="image2"
@@ -326,7 +326,7 @@ const ProductForm = ({ product, onSuccess }: ProductFormProps) => {
                 <label htmlFor="image3" className="block mb-2 text-center">
                     Трета снимка
                 </label>
-                <div className="flex">
+                <div className="flex flex-col sm:flex-row">
                     <input
                         type="text"
                         id="image3"
@@ -349,7 +349,7 @@ const ProductForm = ({ product, onSuccess }: ProductFormProps) => {
                 <label htmlFor="image4" className="block mb-2 text-center">
                     Четвърта снимка
                 </label>
-                <div className="flex">
+                <div className="flex flex-col sm:flex-row">
                     <input
                         type="text"
                         id="image4"
@@ -372,7 +372,7 @@ const ProductForm = ({ product, onSuccess }: ProductFormProps) => {
                 <label htmlFor="image5" className="block mb-2 text-center">
                     Пета снимка
                 </label>
-                <div className="flex">
+                <div className="flex flex-col sm:flex-row">
                     <input
                         type="text"
                         id="image5"
@@ -395,7 +395,7 @@ const ProductForm = ({ product, onSuccess }: ProductFormProps) => {
                 <label htmlFor="image6" className="block mb-2 text-center">
                     Шеста снимка
                 </label>
-                <div className="flex">
+                <div className="flex flex-col sm:flex-row">
                     <input
                         type="text"
                         id="image6"
@@ -418,7 +418,7 @@ const ProductForm = ({ product, onSuccess }: ProductFormProps) => {
                 <label htmlFor="image7" className="block mb-2 text-center">
                     Седма снимка
                 </label>
-                <div className="flex">
+                <div className="flex flex-col sm:flex-row">
                     <input
                         type="text"
                         id="image7"
@@ -441,7 +441,7 @@ const ProductForm = ({ product, onSuccess }: ProductFormProps) => {
                 <label htmlFor="image8" className="block mb-2 text-center">
                     Осма снимка
                 </label>
-                <div className="flex">
+                <div className="flex flex-col sm:flex-row">
                     <input
                         type="text"
                         id="image8"
@@ -466,7 +466,7 @@ const ProductForm = ({ product, onSuccess }: ProductFormProps) => {
                     {/* Категории (plocha, rulo, izkustvena-treva, tatami, postelki, */}
                     {/* platformi-podiumi, lepilo, fitnes-ured) */}
                 </label>
-                <div className="flex gap-x-4">
+                <div className="flex gap-x-4 flex-wrap">
                     <div className={`${formData.category.includes("plocha") ? 
                         "bg-primary hover:bg-primaryDim text-white" : 
                         "bg-background hover:bg-gray-300 text-black"} border

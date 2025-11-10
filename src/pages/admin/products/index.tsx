@@ -79,7 +79,7 @@ const AdminProductsPage = ({ products }: AdminProductsPageProps) => {
                         {productList.map((product) => (
                             <li
                                 key={product.id}
-                                className="flex flex-col sm:flex-row gap-x-4 items-center justify-center lg:justify-start"
+                                className="flex flex-col sm:flex-row gap-x-4 items-center justify-center lg:justify-start mb-10 sm:mb-0"
                             >
                                 <div className="relative aspect-square w-20 h-20">
                                     <Image
@@ -105,7 +105,7 @@ const AdminProductsPage = ({ products }: AdminProductsPageProps) => {
                                     <p>Крайна: {product.price}лв.</p>
                                 )}
                                 <button
-                                    className="text-white bg-primary p-2"
+                                    className="text-white bg-primary p-2 mb-2 sm:mb-0"
                                     onClick={() => {
                                         setSelectedProduct(product);
                                         setFormOpen(true);

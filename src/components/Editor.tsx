@@ -13,6 +13,7 @@ export default function Editor({ content, onChangeAction }: EditorProps) {
     const editor = useEditor({
         extensions: [StarterKit],
         content,
+        immediatelyRender: false,
         onUpdate: ({ editor }) => {
             onChangeAction(editor.getHTML());
         },

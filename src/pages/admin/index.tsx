@@ -35,8 +35,8 @@ const AdminPage = () => {
             </Head>
             <div className="min-h-screen flex flex-col">
                 <Navbar />
-                <div className="flex flex-col flex-1 items-center justify-center gap-y-10">
-                    <h1 className="text-5xl">Admin Dashboard</h1>
+                <div className="flex flex-col flex-1 items-center justify-center gap-y-10 mb-10">
+                    <h1 className="text-xl sm:text-5xl">Admin Dashboard</h1>
                     <div className="flex flex-col gap-6">
                         <Link
                             href="/admin/orders"
