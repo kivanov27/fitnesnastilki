@@ -6,7 +6,6 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
     "postbuild": "next-sitemap"
   },
   "dependencies": {
@@ -18,7 +17,6 @@
     "@prisma/client": "^6.17.1",
     "@tiptap/react": "^2.12.0",
     "@tiptap/starter-kit": "^2.12.0",
-    "@types/nodemailer": "^6.4.17",
     "bcryptjs": "^3.0.2",
     "dotenv": "^16.4.7",
     "formidable": "^3.5.4",
@@ -27,11 +25,11 @@
     "next": "^15.2.4",
     "next-auth": "^4.24.11",
     "next-sitemap": "^4.2.3",
-    "nodemailer": "^6.10.1",
     "pg": "^8.13.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-swipeable": "^7.0.2"
+    "react-swipeable": "^7.0.2",
+    "resend": "^6.4.2"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
