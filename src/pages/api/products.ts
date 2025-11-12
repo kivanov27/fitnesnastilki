@@ -6,6 +6,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     try {
         switch (req.method) {
             case "GET":
+                if (req.query.q) {
+                    return await handleGetSearchProducts(req, res);
+                }
                 return await handleGetProducts(res);
             case "POST":
                 return await handlePostProduct(req, res);
@@ -27,6 +30,25 @@ async function handleGetProducts(res: NextApiResponse) {
         }
     });
     return res.status(200).json(products);
+}
+
+async function handleGetSearchProducts(req: NextApiRequest, res: NextApiResponse) {
+    try {
+        const query = req.query.q as string;
+        const products = await prisma.product.findMany({
+            where: {
+                name: {
+                    contains: query,
+                    mode: "insensitive",
+                },
+            },
+        });
+        res.status(200).json(products);
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Something went wrong" });
+    }
 }
 
 async function handlePostProduct(req: NextApiRequest, res: NextApiResponse) {

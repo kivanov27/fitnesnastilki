@@ -1,14 +1,13 @@
 "use client";
 
 import { useCart } from "@/context/CartContext";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import ProfileMenu from "./ProfileMenu";
-import SearchIcon from "@mui/icons-material/Search";
+import SearchBar from "./SearchBar";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { Category, Logo } from "@/types";
 import Image from "next/image";
 
@@ -121,7 +120,7 @@ const Navbar = () => {
 
                 {/* Buttons */}
                 <div className="flex justify-between items-center p-3 lg:p-0 gap-x-4 lg:gap-x-6 lg:h-28">
-                    <SearchIcon />
+                    <SearchBar />
                     <ProfileMenu />
                     <Link className="flex hover:text-primary" href="/kolichka">
                         <ShoppingCartIcon />

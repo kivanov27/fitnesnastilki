@@ -1,6 +1,7 @@
 import { NewProduct, Product } from "@/types";
 import React, { useState } from "react";
 import Editor from "./Editor";
+import { useRouter } from "next/router";
 
 interface ProductFormProps {
     product?: Product;
@@ -41,6 +42,7 @@ const ProductForm = ({ product, onSuccess }: ProductFormProps) => {
     });
     const [error, setError] = useState<string>("");
     const [imageFiles, setImageFiles] = useState<Partial<Record<keyof NewProduct, File>>>({});
+    const router = useRouter();
 
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -189,6 +191,7 @@ const ProductForm = ({ product, onSuccess }: ProductFormProps) => {
 
                 const data = await response.json();
                 alert(`Продукт ${data.name} беше добавен`);
+                router.push("/admin/addProduct");
             }
         } catch (error) {
             if (error instanceof Error) setError(error.message);
