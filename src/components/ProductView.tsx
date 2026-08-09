@@ -200,7 +200,7 @@ const ProductView = ({ product, category }: ProductViewProps) => {
 
                         {/* Right arrow */}
                         <button
-                            className="bg-gray-200 border border-gray-400 px-1 text-gray-800 
+                            className="bg-gray-200 border border-gray-400 px-1 text-gray-800
                             hover:bg-gray-400 transition-colors duration-300 ms-1"
                             onClick={() => scrollThumbnails("right")}
                         >
@@ -238,23 +238,23 @@ const ProductView = ({ product, category }: ProductViewProps) => {
                     </h2>
 
                     {/* Price */}
-                    {product.discount ? (
-                        <div className="mb-8">
-                            <p className="text-base sm:text-lg lg:text-xl xl:text-2xl text-primary font-medium">
-                                <span className="font-normal text-gray-400 me-3 line-through">
-                                    {product.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}{" лв."}
-                                </span>
-                                {(
-                                    product.price -
-                                    (product.price * product.discount) / 100
-                                ).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}{" лв."}
-                            </p>
-                        </div>
-                    ) : (
-                        <p className="text-base sm:text-lg lg:text-xl xl:text-2xl text-primary font-medium mb-8">
-                            {product.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}{" лв."}
-                        </p>
-                    )}
+                    {/* {product.discount ? ( */}
+                    {/*     <div className="mb-8"> */}
+                    {/*         <p className="text-base sm:text-lg lg:text-xl xl:text-2xl text-primary font-medium"> */}
+                    {/*             <span className="font-normal text-gray-400 me-3 line-through"> */}
+                    {/*                 {product.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}{" лв."} */}
+                    {/*             </span> */}
+                    {/*             {( */}
+                    {/*                 product.price - */}
+                    {/*                 (product.price * product.discount) / 100 */}
+                    {/*             ).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}{" лв."} */}
+                    {/*         </p> */}
+                    {/*     </div> */}
+                    {/* ) : ( */}
+                    {/*     <p className="text-base sm:text-lg lg:text-xl xl:text-2xl text-primary font-medium mb-8"> */}
+                    {/*         {product.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}{" лв."} */}
+                    {/*     </p> */}
+                    {/* )} */}
 
                     {/* Price in Euros */}
                     {product.discount ? (
@@ -310,7 +310,7 @@ const ProductView = ({ product, category }: ProductViewProps) => {
                         </div>
 
                         <button
-                            className="border border-primary bg-primary uppercase text-white text-xs font-bold px-2 
+                            className="border border-primary bg-primary uppercase text-white text-xs font-bold px-2
                             hover:bg-primaryDim hover:border-primaryDim transition-colors duration-300"
                             onClick={() => {
                                 addToCart({

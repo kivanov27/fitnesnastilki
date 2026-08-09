@@ -17,7 +17,7 @@ const Product = ({ product, category }: ProductProps) => {
         <div
             key={product.id}
             className="w-[48%] sm:w-[32%] xl:w-[24%] lg:ms-2 relative bg-gray-100
-            border border-gray-400 p-4 flex flex-col gap-y-2 hover:scale-105 
+            border border-gray-400 p-4 flex flex-col gap-y-2 hover:scale-105
             transition duration-300 ease-in-out"
         >
             {/* Discount dot */}
@@ -54,23 +54,23 @@ const Product = ({ product, category }: ProductProps) => {
 
             <div className="flex-grow">
                 {/* Price Leva */}
-                {product.discount ? (
-                    <p className="font-medium flex flex-col md:flex-row gap-x-2 xl:text-base">
-                        <span className="text-gray-400 line-through">
-                            {product.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}{" лв."}
-                        </span>
-                        <span className="text-primary">
-                            {(
-                                product.price -
-                                (product.price * product.discount) / 100
-                            ).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}{" лв."}
-                        </span>
-                    </p>
-                ) : (
-                    <p className="text-primary font-medium xl:text-base">
-                        {product.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}{" лв."}
-                    </p>
-                )}
+                {/* {product.discount ? ( */}
+                {/*     <p className="font-medium flex flex-col md:flex-row gap-x-2 xl:text-base"> */}
+                {/*         <span className="text-gray-400 line-through"> */}
+                {/*             {product.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}{" лв."} */}
+                {/*         </span> */}
+                {/*         <span className="text-primary"> */}
+                {/*             {( */}
+                {/*                 product.price - */}
+                {/*                 (product.price * product.discount) / 100 */}
+                {/*             ).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}{" лв."} */}
+                {/*         </span> */}
+                {/*     </p> */}
+                {/* ) : ( */}
+                {/*     <p className="text-primary font-medium xl:text-base"> */}
+                {/*         {product.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}{" лв."} */}
+                {/*     </p> */}
+                {/* )} */}
 
                 {/* Price Euro */}
                 {product.discount ? (
