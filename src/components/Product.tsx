@@ -53,7 +53,7 @@ const Product = ({ product, category }: ProductProps) => {
             </Link>
 
             <div className="flex-grow">
-                {/* Price Leva */}
+	        {/* Price Leva */}
                 {/* {product.discount ? ( */}
                 {/*     <p className="font-medium flex flex-col md:flex-row gap-x-2 xl:text-base"> */}
                 {/*         <span className="text-gray-400 line-through"> */}
